@@ -70,12 +70,29 @@ def balance_enquiry():
     '''
     pass
 
-def change_pin():
-    '''
-        This function takes in the new pin as input and
-        prints the new pin
-    '''
-    pass
+def change_pin(account_number): 
+   while True:
+    old_pin = int(input("Enter your old 4-digit PIN: "))
+    if old_pin in data[data["Account Number"] == account_number]["Pin"].values:
+        print("Old PIN verified.")
+        break
+    else:
+        print("Incorrect old PIN. Please try again.")
+
+   while True:
+    new_pin = input("Enter your new 4-digit PIN: ")
+    
+    if new_pin.isdigit() and len(new_pin) == 4:
+        index = data[data["Account Number"] == account_number].index[0]
+        data.at[index, "Pin"] = int(new_pin)
+        print(f"Your new PIN has been set to: {new_pin}")
+        break
+    else:
+        print("Invalid PIN. Please enter a 4-digit number.")
+
+
+
+
 
 def exit():
     '''
@@ -109,7 +126,22 @@ if __name__ == "__main__":
         pin = int(input("Enter your pin: "))
         if card_handling(account_number, pin):
             print("Card accepted")
-            operations()
+            while True:
+                choice = input("Choose an option (1: Change PIN, 2: Withdraw, 3: Deposit,4: Balance Enquiry,5: Exit): ")
+                if choice == "1":
+                    change_pin(account_number)
+                elif choice == "2":
+                    withdraw(account_number)
+                elif choice == "3":
+                    deposit(account_number)
+                elif choice == "4":
+                    balance_enquiry(account_number)
+                elif choice == "5":
+                    exit()  
+                else:
+                    print("Invalid option. Please try again.")
         else:
             print("Card not accepted")
             print("Please try again")
+ 
+        
