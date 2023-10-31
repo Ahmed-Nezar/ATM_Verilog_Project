@@ -60,6 +60,7 @@ def operations():
             balance_enquiry(account_number)
         elif choice == "5":
             exit()  
+            break
         else:
             print("Invalid option. Please try again.")
     
@@ -120,7 +121,7 @@ def exit():
         This function prints "Thank you for using ATM"
     '''
     print("Thank you for using ATM. Have a great day!")
-    sys.exit(0)
+    
     
 
 # main function
