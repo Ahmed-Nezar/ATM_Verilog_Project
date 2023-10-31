@@ -119,6 +119,8 @@ def exit():
     '''
         This function prints "Thank you for using ATM"
     '''
+    print("Thank you for using ATM")
+
     pass
 
 
