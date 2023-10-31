@@ -18,13 +18,17 @@ def generate_data():
 
     return pd.DataFrame(data)
 
-def card_handling(data):
+def card_handling(account_number, pin):
     
     '''
         This function takes in the account number and pin as input and 
         prints wheather the account is valid or not (card accepted or not)
     '''
-    pass
+    card_accepted = False
+    if account_number in data["Account Number"].values:
+        if pin in data[data["Account Number"] == account_number]["Pin"].values:
+            card_accepted = True
+    return card_accepted
 
 def choose_language(language):
     '''
@@ -33,7 +37,7 @@ def choose_language(language):
     '''
     pass
 
-def operations(operation):
+def operations():
     '''
         This function takes in the operation as input and
         performs the following operations:
@@ -44,6 +48,41 @@ def operations(operation):
             - Exit
     '''
     pass
+    
+
+def withdraw():
+    '''
+        This function takes in the amount to be withdrawn as input and
+        prints the balance after withdrawal
+    '''
+    pass
+
+def deposit():
+    '''
+        This function takes in the amount to be deposited as input and
+        prints the balance after deposit
+    '''
+    pass
+
+def balance_enquiry():
+    '''
+        This function prints the balance
+    '''
+    pass
+
+def change_pin():
+    '''
+        This function takes in the new pin as input and
+        prints the new pin
+    '''
+    pass
+
+def exit():
+    '''
+        This function prints "Thank you for using ATM"
+    '''
+    pass
+
 
 # main function
 if __name__ == "__main__":
@@ -58,3 +97,19 @@ if __name__ == "__main__":
     # print(data["Account Number"][0])
     # to filter the data
     # print(data[data["Account Number"] == 1])
+    print("Welcome to ATM")
+
+    # choose language
+
+    # Main Pragram Loop
+    while True:
+        # card handling
+        print("Enter your card")
+        account_number = int(input("Enter your account number: "))
+        pin = int(input("Enter your pin: "))
+        if card_handling(account_number, pin):
+            print("Card accepted")
+            operations()
+        else:
+            print("Card not accepted")
+            print("Please try again")
