@@ -80,16 +80,15 @@ def deposit(account_number):
     data.at[index, "Balance"] += amount
     print(f"Deposit successful. Your new balance is: {data.at[index, 'Balance']}")
 
-    pass
 
 def balance_enquiry(account_number):
-    index = data[data["Account Number"] == account_number].index[0]
-    balance = data.at[index, "Balance"]
-    print(f"Your current balance is: {balance}")
     '''
         This function prints the balance
     '''
-    pass
+    index = data[data["Account Number"] == account_number].index[0]
+    balance = data.at[index, "Balance"]
+    print(f"Your current balance is: {balance}")
+
 
 def change_pin(account_number): 
    while True:
