@@ -47,7 +47,20 @@ def operations():
             - Change Pin
             - Exit
     '''
-    pass
+    while True:
+        choice = input("Choose an option (1: Change PIN, 2: Withdraw, 3: Deposit, 4: Balance Enquiry, 5: Exit): ")
+        if choice == "1":
+            change_pin(account_number)
+        elif choice == "2":
+            withdraw(account_number)
+        elif choice == "3":
+            deposit(account_number)
+        elif choice == "4":
+            balance_enquiry(account_number)
+        elif choice == "5":
+            exit()  
+        else:
+            print("Invalid option. Please try again.")
     
 
 def withdraw():
@@ -57,14 +70,22 @@ def withdraw():
     '''
     pass
 
-def deposit():
+def deposit(account_number):
     '''
         This function takes in the amount to be deposited as input and
         prints the balance after deposit
     '''
+    amount = float(input("Enter the amount to deposit: "))
+    index = data[data["Account Number"] == account_number].index[0]
+    data.at[index, "Balance"] += amount
+    print(f"Deposit successful. Your new balance is: {data.at[index, 'Balance']}")
+
     pass
 
-def balance_enquiry():
+def balance_enquiry(account_number):
+    index = data[data["Account Number"] == account_number].index[0]
+    balance = data.at[index, "Balance"]
+    print(f"Your current balance is: {balance}")
     '''
         This function prints the balance
     '''
@@ -120,28 +141,13 @@ if __name__ == "__main__":
 
     # Main Pragram Loop
     while True:
-        # card handling
         print("Enter your card")
         account_number = int(input("Enter your account number: "))
         pin = int(input("Enter your pin: "))
         if card_handling(account_number, pin):
             print("Card accepted")
-            while True:
-                choice = input("Choose an option (1: Change PIN, 2: Withdraw, 3: Deposit,4: Balance Enquiry,5: Exit): ")
-                if choice == "1":
-                    change_pin(account_number)
-                elif choice == "2":
-                    withdraw(account_number)
-                elif choice == "3":
-                    deposit(account_number)
-                elif choice == "4":
-                    balance_enquiry(account_number)
-                elif choice == "5":
-                    exit()  
-                else:
-                    print("Invalid option. Please try again.")
+            operations()
         else:
             print("Card not accepted")
             print("Please try again")
- 
         
