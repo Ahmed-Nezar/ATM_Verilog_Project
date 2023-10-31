@@ -1,4 +1,5 @@
 import pandas as pd
+import sys
 
 def generate_data():
     '''
@@ -118,10 +119,9 @@ def exit():
     '''
         This function prints "Thank you for using ATM"
     '''
-    print("Thank you for using ATM")
-
-    pass
-
+    print("Thank you for using ATM. Have a great day!")
+    sys.exit(0)
+    
 
 # main function
 if __name__ == "__main__":
