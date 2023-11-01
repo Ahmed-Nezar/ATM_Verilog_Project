@@ -65,12 +65,25 @@ def operations():
             print("Invalid option. Please try again.")
     
 
-def withdraw():
+def withdraw(account_number):
     '''
         This function takes in the amount to be withdrawn as input and
         prints the balance after withdrawal
     '''
-    pass
+    while True:
+        amount = float(input("Enter the amount to withdraw: "))
+        index = data[data["Account Number"] == account_number].index[0]
+        balance = data.at[index, "Balance"]
+
+        if amount <= 0:
+            print("Invalid amount. Please enter a positive value.")
+        elif amount > balance:
+            print("Insufficient balance. Your current balance is:", balance)
+        else:
+            data.at[index, "Balance"] -= amount
+            print("Withdrawal successful. Your new balance is:", data.at[index, "Balance"])
+            break
+
 
 def deposit(account_number):
     '''
