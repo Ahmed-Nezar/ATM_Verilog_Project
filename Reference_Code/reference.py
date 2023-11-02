@@ -1,5 +1,5 @@
 import pandas as pd
-import sys
+import os,time
 
 def generate_data():
     '''
@@ -54,6 +54,8 @@ def operations():
             change_pin(account_number)
         elif choice == "2":
             withdraw(account_number)
+            exit()
+            break
         elif choice == "3":
             deposit(account_number)
         elif choice == "4":
@@ -70,19 +72,18 @@ def withdraw(account_number):
         This function takes in the amount to be withdrawn as input and
         prints the balance after withdrawal
     '''
-    while True:
-        amount = float(input("Enter the amount to withdraw: "))
-        index = data[data["Account Number"] == account_number].index[0]
-        balance = data.at[index, "Balance"]
+    amount = float(input("Enter the amount to withdraw: "))
+    index = data[data["Account Number"] == account_number].index[0]
+    balance = data.at[index, "Balance"]
 
-        if amount <= 0:
+    if amount <= 0:
             print("Invalid amount. Please enter a positive value.")
-        elif amount > balance:
+    elif amount > balance:
             print("Insufficient balance. Your current balance is:", balance)
-        else:
+    else:
             data.at[index, "Balance"] -= amount
             print("Withdrawal successful. Your new balance is:", data.at[index, "Balance"])
-            break
+            
 
 
 def deposit(account_number):
@@ -134,24 +135,15 @@ def exit():
         This function prints "Thank you for using ATM"
     '''
     print("Thank you for using ATM. Have a great day!")
+    time.sleep(3)
+    os.system('cls')
     
     
 
 # main function
 if __name__ == "__main__":
     data = generate_data()
-    # Uncomment print statements for illustration
-    # print(data)
-    # to access a specific row
-    # print(data.loc[0])
-    # to access a specific column
-    # print(data["Account Number"])
-    # to access a specific cell
-    # print(data["Account Number"][0])
-    # to filter the data
-    # print(data[data["Account Number"] == 1])
     print("Welcome to ATM")
-
     # choose language
 
     # Main Pragram Loop
@@ -165,4 +157,6 @@ if __name__ == "__main__":
         else:
             print("Card not accepted")
             print("Please try again")
+            time.sleep(3)
+            os.system("cls")
         
