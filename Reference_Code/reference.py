@@ -31,12 +31,21 @@ def card_handling(account_number, pin):
             card_accepted = True
     return card_accepted
 
-def choose_language(language):
+def choose_language():
     '''
-        This function takes in the language as input and
-        makes user choose language
+    This function prompts the user to choose a language (English or Arabic).
     '''
-    pass
+    print("Choose your language:")
+    print("1. English")
+    print("2. Arabic")
+    language_choice = input("Enter your choice (1 or 2): ")
+    if language_choice == "1":
+        return "English"
+    elif language_choice == "2":
+        return "Arabic"
+    else:
+        print("Invalid language choice. Defaulting to English.")
+        return "English"
 
 def operations():
     '''
@@ -48,8 +57,31 @@ def operations():
             - Change Pin
             - Exit
     '''
+    language = choose_language()
+    if language == "English":
+        instructions = {
+            "1": "Change PIN",
+            "2": "Withdraw",
+            "3": "Deposit",
+            "4": "Balance Enquiry",
+            "5": "Exit"
+        }
+    else:
+        instructions = {
+            "1":"تغير الرقم السري",
+            "2": "سحب",
+            "3": "ايداع",
+            "4": "استعلام الرصيد",
+            "5": "الخروج"
+        }
+
     while True:
-        choice = input("Choose an option (1: Change PIN, 2: Withdraw, 3: Deposit, 4: Balance Enquiry, 5: Exit): ")
+        print("\nChoose an option:")
+        for key, value in instructions.items():
+            print(f"{key}. {value}")
+
+        choice = input(f"Enter your choice ({language}): ")
+
         if choice == "1":
             change_pin(account_number)
         elif choice == "2":
@@ -61,8 +93,7 @@ def operations():
         elif choice == "4":
             balance_enquiry(account_number)
         elif choice == "5":
-            exit()  
-            break
+            exit()
         else:
             print("Invalid option. Please try again.")
     
@@ -159,4 +190,3 @@ if __name__ == "__main__":
             print("Please try again")
             time.sleep(3)
             os.system("cls")
-        
