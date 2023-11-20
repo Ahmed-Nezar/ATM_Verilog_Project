@@ -40,5 +40,3 @@
 ## Additional Information
 - This code is a basic representation of an ATM system and may require further enhancements for real-world usage.
 - Ensure that you have Python and Pandas installed to run the script successfully.
-
-Feel free to modify and expand the code based on your specific requirements.
