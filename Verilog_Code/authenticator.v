@@ -1,5 +1,5 @@
 `include "definitions.v"
-module authenticator (acc_num, pin, acc_index_out, acc_found_stat);
+module Authenticator (acc_num, pin, acc_index_out, acc_found_stat);
 
 input [3:0] acc_num;
 input [15:0] pin;
