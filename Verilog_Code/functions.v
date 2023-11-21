@@ -15,5 +15,19 @@ module ATM_Functions;
         end
     endfunction
 
+    // balance function
+    function void showBalanceInfo(input [31:0] balance, input bit includeReceipt);
+        // Assuming a 32-bit balance variable
+
+        // display the balance information
+        $display("Account Balance: $%0d.%02d", balance / 100, balance % 100);
+
+        // Check if a receipt is requested
+        if (includeReceipt) begin
+            $display("Receipt: Thank you for using our ATM. Have a nice day!");
+        end
+    endfunction
+
+
 
 endmodule
