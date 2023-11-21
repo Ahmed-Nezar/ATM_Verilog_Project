@@ -10,16 +10,16 @@ reg [10:0] pin_db [15:0];
 
 // intializing the account number and pin in decimal format as in reference model
 initial begin
-    acc_num_db[0] = 0; pin_db[0] = 1234;
-    acc_num_db[1] = 1; pin_db[1] = 2345;
-    acc_num_db[2] = 2; pin_db[2] = 3456;
-    acc_num_db[3] = 3; pin_db[3] = 4567;
-    acc_num_db[4] = 4; pin_db[4] = 5678;
-    acc_num_db[5] = 5; pin_db[5] = 6789;
-    acc_num_db[6] = 6; pin_db[6] = 7890;
-    acc_num_db[7] = 7; pin_db[7] = 8901;
-    acc_num_db[8] = 8; pin_db[8] = 9012;
-    acc_num_db[9] = 9; pin_db[9] = 7123;
+    acc_num_db[0] = 1; pin_db[0] = 1234;
+    acc_num_db[1] = 2; pin_db[1] = 2345;
+    acc_num_db[2] = 3; pin_db[2] = 3456;
+    acc_num_db[3] = 4; pin_db[3] = 4567;
+    acc_num_db[4] = 5; pin_db[4] = 5678;
+    acc_num_db[5] = 6; pin_db[5] = 6789;
+    acc_num_db[6] = 7; pin_db[6] = 7890;
+    acc_num_db[7] = 8; pin_db[7] = 8901;
+    acc_num_db[8] = 9; pin_db[8] = 9012;
+    acc_num_db[9] = 10; pin_db[9] = 7123;
 end
 
 // find the account number in the database & adjusting mask
