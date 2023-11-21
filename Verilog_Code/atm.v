@@ -33,7 +33,7 @@ reg [3:0] acc_index;
 reg acc_found_stat;
 reg acc_auth_stat;
 
-Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat);
+Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat);
 
 always @(posedge clk or acc_found_stat or operation or `EXIT) begin
     if (acc_found_stat == `TRUE) begin

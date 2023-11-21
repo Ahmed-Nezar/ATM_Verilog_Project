@@ -1,10 +1,11 @@
 `include "definitions.v"
-module Authenticator (acc_num, pin, acc_index_out, acc_found_stat);
+module Authenticator (acc_num, pin, acc_index_out, acc_found_stat, acc_auth_stat);
 
 input [3:0] acc_num;
 input [15:0] pin;
 output reg [3:0] acc_index_out;
 output reg acc_found_stat;
+output reg acc_auth_stat;
 reg [10:0] acc_num_db [3:0];
 reg [10:0] pin_db [15:0];
 
@@ -27,6 +28,7 @@ integer i;
 reg [3:0] acc_index;
 
 always @(*) begin
+    acc_auth_stat = `ACCOUNT_NOT_AUTHENTICATED;
     begin : find_account
         
         for (i = 0; i < 10 ; i = i +1 ) 
@@ -43,10 +45,24 @@ always @(*) begin
             end
     
     end 
+    
+
+    // Check the PIN for authentication
+    begin : check_pin
+        if (acc_found_stat == `ACCOUNT_FOUND) begin
+            
+            if (pin_db[acc_index] == pin) begin  // If the PIN matches the one in the database, set the authentication status to authenticated
+                acc_auth_stat = `ACCOUNT_AUTHENTICATED;
+            end
+           
+            else begin                          // If the PIN does not match, set the authentication status to not authenticated
+                acc_auth_stat = `ACCOUNT_NOT_AUTHENTICATED;
+            end
+        end
+    end
+
+
 end
-
-
-
 
 
 endmodule
