@@ -1,7 +1,7 @@
 module ATM_Functions;
 
   // Define registers for storing balance and deposit amount
-reg [31:0] current_balance;
+  reg [31:0] current_balance;
 
    // Task to perform the deposit operation
   task deposit_money;
@@ -17,7 +17,7 @@ reg [31:0] current_balance;
 
 
   // Task to show balance info
-   task showBalanceInfo;
+  task showBalanceInfo;
     input reg [31:0] balance;
     input reg includeReceipt; 
 
@@ -33,7 +33,7 @@ reg [31:0] current_balance;
     end
   endtask
 
-task withdrawAndUpdate;
+  task withdrawAndUpdate;
     input [15:0] amount;
     input [31:0] currentBalance;
     output [31:0] newBalance;
@@ -55,48 +55,48 @@ task withdrawAndUpdate;
     end
   endtask
 
-task changePinProcess;
-    input [3:0] keypadInput;
-    input enterKey;
-    begin
-        case (state)
-            ENTER_OLD_PIN: begin
-                if (enterKey) begin
-                    if (keypadInput == currentPin)
-                        nextState = ENTER_NEW_PIN;
-                    else 
-                        nextState = ENTER_OLD_PIN; 
-                end
-            end
-            ENTER_NEW_PIN: begin
-                if (enterKey) begin
-                    newPin = keypadInput;
-                    nextState = CONFIRM_NEW_PIN;
-                end
-            end
-            CONFIRM_NEW_PIN: begin
-                if (enterKey) begin
-                    if (keypadInput == newPin) begin
-                        currentPin = newPin; 
-                        success = 1;
-                        nextState = DONE;
-                    end else 
-                        nextState = ENTER_OLD_PIN; 
-                end
-            end
-        endcase
-    end
-endtask
+  task changePinProcess;
+      input [3:0] keypadInput;
+      input enterKey;
+      begin
+          case (state)
+              ENTER_OLD_PIN: begin
+                  if (enterKey) begin
+                      if (keypadInput == currentPin)
+                          nextState = ENTER_NEW_PIN;
+                      else 
+                          nextState = ENTER_OLD_PIN; 
+                  end
+              end
+              ENTER_NEW_PIN: begin
+                  if (enterKey) begin
+                      newPin = keypadInput;
+                      nextState = CONFIRM_NEW_PIN;
+                  end
+              end
+              CONFIRM_NEW_PIN: begin
+                  if (enterKey) begin
+                      if (keypadInput == newPin) begin
+                          currentPin = newPin; 
+                          success = 1;
+                          nextState = DONE;
+                      end else 
+                          nextState = ENTER_OLD_PIN; 
+                  end
+              end
+          endcase
+      end
+  endtask
 
 
-task selectLanguage;
-    input [1:0] languageSelect;
-    begin
-        case (languageSelect)
-            2'b00: currentLanguage <= ENGLISH;
-            2'b01: currentLanguage <= ARABIC;
-        endcase
-    end
-endtask
+  task selectLanguage;
+      input [1:0] languageSelect;
+      begin
+          case (languageSelect)
+              2'b00: currentLanguage <= ENGLISH;
+              2'b01: currentLanguage <= ARABIC;
+          endcase
+      end
+  endtask
 
 endmodule

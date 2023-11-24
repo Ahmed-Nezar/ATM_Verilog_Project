@@ -8,6 +8,7 @@
 `define BALANCE 3'b011
 `define WITHDRAW 3'b100
 `define DEPOSIT 3'b101
+`define CHANGE_PIN 3'b110
 `define EXIT 3'b111
 
 

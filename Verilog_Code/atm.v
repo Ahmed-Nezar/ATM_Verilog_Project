@@ -34,9 +34,10 @@ reg acc_found_stat;
 reg acc_auth_stat;
 
 Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat);
+ATM_Functions functions ();
 
-always @(posedge clk or acc_found_stat or operation or `EXIT) begin
-    if (acc_found_stat == `TRUE) begin
+always @(posedge clk or acc_found_stat or operation) begin
+    if (acc_auth_stat == `TRUE) begin
       current_state = `MENU;
     end
     else begin
@@ -48,8 +49,9 @@ always @(posedge clk or acc_found_stat or operation or `EXIT) begin
         `BALANCE: current_state = `BALANCE;
         `WITHDRAW: current_state = `WITHDRAW;
         `DEPOSIT: current_state = `DEPOSIT;
+        `CHANGE_PIN: current_state = `CHANGE_PIN;
         `EXIT: current_state = `WAITING;
-        default: current_state = `MENU;
+        default: current_state = `WAITING;
       endcase
     end
 
@@ -62,11 +64,13 @@ always @(posedge clk or acc_found_stat or operation or `EXIT) begin
         $display("1. Balance");
         $display("2. Withdraw");
         $display("3. Deposit");
-        $display("4. Exit");
+        $display("4. Change PIN");
+        $display("5. Exit");
       end
-      `BALANCE: Balance(balance_database[acc_index]);
-      `WITHDRAW: Withdraw(balance_database[acc_index], amount);
-      `DEPOSIT: Deposit(balance_database[acc_index], amount);
+      `BALANCE: showBalanceInfo(balance_database[acc_index], `TRUE);
+      `WITHDRAW: withdrawAndUpdate(amount, balance_database[acc_index], balance_database[acc_index]);
+      `DEPOSIT: depositAndUpdate(amount, balance_database[acc_index], balance_database[acc_index]);
+      `CHANGE_PIN: changePinProcess(pin, acc_index);
       default: $display("Invalid state");
     endcase
 end
