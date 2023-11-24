@@ -2,19 +2,25 @@
 `include "authenticator.v"
 
 
-module ATM (clk,operation,acc_num,pin,amount,balance,state);
+module ATM (clk,operation,acc_num,pin,amount,language,balance,state);
 input clk;
 input [2:0] operation;
 input [3:0] acc_num;
 input [15:0] pin;
 input [15:0] amount;
+input [1:0] language;
 output [15:0] balance;
 output [2:0] state;
 
 
 reg [15:0] balance_database [0:9];
   initial begin
-    $display("Welcome to the ATM");
+    if (language == `ENGLISH) begin
+      $display("Welcome to the ATM");
+    end
+    else begin
+      $display("أهلاً بك في الصراف الآلي");
+    end
      balance_database[0] = 16'd500;
      balance_database[1] = 16'd500;
      balance_database[2] = 16'd500;
@@ -50,22 +56,36 @@ always @(posedge clk or acc_found_stat or operation) begin
         `WITHDRAW: current_state = `WITHDRAW;
         `DEPOSIT: current_state = `DEPOSIT;
         `CHANGE_PIN: current_state = `CHANGE_PIN;
-        `EXIT: current_state = `WAITING;
         default: current_state = `WAITING;
       endcase
     end
 
     case (current_state)
       `WAITING: begin
-        $display("Waiting for the card to be inserted");
+        if(language == `ENGLISH) begin
+          $display("Waiting for the card to be inserted");
+        end
+        else begin
+          $display("انتظر حتى يتم إدخال البطاقة");
+        end
       end
       `MENU: begin
-        $display("Please select an operation");
-        $display("1. Balance");
-        $display("2. Withdraw");
-        $display("3. Deposit");
-        $display("4. Change PIN");
-        $display("5. Exit");
+        if(language == `ENGLISH) begin
+          $display("Please select an operation");
+          $display("1. Balance");
+          $display("2. Withdraw");
+          $display("3. Deposit");
+          $display("4. Change PIN");
+          $display("5. Exit");
+        end
+        else begin
+          $display("الرجاء اختيار العملية");
+          $display("1. الرصيد");
+          $display("2. سحب");
+          $display("3. إيداع");
+          $display("4. تغيير الرقم السري");
+          $display("5. الخروج");
+        end
       end
       `BALANCE: showBalanceInfo(balance_database[acc_index], `TRUE);
       `WITHDRAW: withdrawAndUpdate(amount, balance_database[acc_index], balance_database[acc_index]);
