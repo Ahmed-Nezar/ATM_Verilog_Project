@@ -2,7 +2,7 @@
 `include "authenticator.v"
 
 
-module ATM (clk,operation,acc_num,pin,amount,language,balance,state);
+module ATM (clk,operation,acc_num,pin,amount,language,balance,current_state);
 input clk;
 input [2:0] operation;
 input [3:0] acc_num;
@@ -10,10 +10,11 @@ input [15:0] pin;
 input [15:0] amount;
 input [1:0] language;
 output [15:0] balance;
-output [2:0] state;
+output reg [2:0] current_state;
 
 
 reg [15:0] balance_database [0:9];
+
   initial begin
     if (language == `ENGLISH) begin
       $display("Welcome to the ATM");
@@ -31,10 +32,10 @@ reg [15:0] balance_database [0:9];
      balance_database[7] = 16'd500;
      balance_database[8] = 16'd500;
      balance_database[9] = 16'd500;
-
+    current_state = `WAITING;
+    
   end
 
-reg [2:0] current_state = `WAITING;
 reg [3:0] acc_index;
 reg acc_found_stat;
 reg acc_auth_stat;
