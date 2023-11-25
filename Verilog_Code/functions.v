@@ -18,19 +18,13 @@ module ATM_Functions;
 
   // Task to show balance info
   task showBalanceInfo;
-    input reg [31:0] balance;
-    input reg includeReceipt; 
+    input reg [31:0] balance; 
 
     begin
       // Display the balance information
-      $display("Account Balance: $%0d.%02d", balance / 100, balance % 100);
-      
-      // Check if a receipt is requested
-      if (includeReceipt)
-       begin
-        $display("Receipt: Thank you for using our ATM. Have a nice day!");
-      end
+      $display("Account Balance: ", balance);
     end
+    
   endtask
 
   task withdrawAndUpdate;
