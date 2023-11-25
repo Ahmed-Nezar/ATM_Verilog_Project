@@ -1,6 +1,5 @@
 `include "definitions.v"
-module Authenticator (acc_num, pin, acc_index_out, acc_found_stat, acc_auth_stat);
-
+module Authenticator (acc_num, pin, acc_index_out, acc_found_stat, acc_auth_stat, keypadInput, enterKey,currentPin, newPin, success);
 input [3:0] acc_num;
 input [15:0] pin;
 output reg [3:0] acc_index_out;
@@ -8,6 +7,14 @@ output reg acc_found_stat;
 output reg acc_auth_stat;
 reg [10:0] acc_num_db [3:0];
 reg [10:0] pin_db [15:0];
+input [3:0] keypadInput;
+input enterKey; 
+output reg [3:0] currentPin, newPin;
+output reg success; 
+
+// Define state parameters and variables
+parameter ENTER_OLD_PIN = 2'b00, ENTER_NEW_PIN = 2'b01, CONFIRM_NEW_PIN = 2'b10, DONE = 2'b11;
+reg [1:0] state, nextState;
 
 // intializing the account number and pin in decimal format as in reference model
 initial begin
@@ -60,9 +67,39 @@ always @(*) begin
             end
         end
     end
-
-
 end
 
+  task changePinProcess;
+      input [3:0] keypadInput;
+      input enterKey;
+      begin
+          case (state)
+              ENTER_OLD_PIN: begin
+                  if (enterKey) begin
+                      if (keypadInput == currentPin)
+                          nextState = ENTER_NEW_PIN;
+                      else 
+                          nextState = ENTER_OLD_PIN; 
+                  end
+              end
+              ENTER_NEW_PIN: begin
+                  if (enterKey) begin
+                      newPin = keypadInput;
+                      nextState = CONFIRM_NEW_PIN;
+                  end
+              end
+              CONFIRM_NEW_PIN: begin
+                  if (enterKey) begin
+                      if (keypadInput == newPin) begin
+                          currentPin = newPin; 
+                          success = 1;
+                          nextState = DONE;
+                      end else 
+                          nextState = ENTER_OLD_PIN; 
+                  end
+              end
+          endcase
+      end
+  endtask
 
 endmodule

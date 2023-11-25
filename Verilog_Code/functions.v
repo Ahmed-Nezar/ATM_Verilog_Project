@@ -1,5 +1,5 @@
 module ATM_Functions;
-
+  parameter ENGLISH = 3'b001, ARABIC = 3'b010;
   // Define registers for storing balance and deposit amount
   reg [31:0] current_balance;
 
@@ -55,48 +55,15 @@ module ATM_Functions;
     end
   endtask
 
-  task changePinProcess;
-      input [3:0] keypadInput;
-      input enterKey;
-      begin
-          case (state)
-              ENTER_OLD_PIN: begin
-                  if (enterKey) begin
-                      if (keypadInput == currentPin)
-                          nextState = ENTER_NEW_PIN;
-                      else 
-                          nextState = ENTER_OLD_PIN; 
-                  end
-              end
-              ENTER_NEW_PIN: begin
-                  if (enterKey) begin
-                      newPin = keypadInput;
-                      nextState = CONFIRM_NEW_PIN;
-                  end
-              end
-              CONFIRM_NEW_PIN: begin
-                  if (enterKey) begin
-                      if (keypadInput == newPin) begin
-                          currentPin = newPin; 
-                          success = 1;
-                          nextState = DONE;
-                      end else 
-                          nextState = ENTER_OLD_PIN; 
-                  end
-              end
-          endcase
-      end
-  endtask
-
-
-  task selectLanguage;
-      input [1:0] languageSelect;
-      begin
-          case (languageSelect)
-              2'b00: currentLanguage <= ENGLISH;
-              2'b01: currentLanguage <= ARABIC;
-          endcase
-      end
-  endtask
+task selectLanguage;
+    input [1:0] languageSelect;
+    output reg [2:0] currentLanguage;
+    begin
+        case (languageSelect)
+            2'b00: currentLanguage <= ENGLISH;
+            2'b01: currentLanguage <= ARABIC;
+        endcase
+    end
+endtask
 
 endmodule
