@@ -89,7 +89,7 @@ always @(posedge clk or acc_found_stat or operation or acc_auth_stat) begin
       `BALANCE: showBalanceInfo(balance_database[acc_index], `TRUE);
       `WITHDRAW: withdrawAndUpdate(amount, balance_database[acc_index], balance_database[acc_index]);
       `DEPOSIT: depositAndUpdate(amount, balance_database[acc_index], balance_database[acc_index]);
-      `CHANGE_PIN: changePinProcess(pin, acc_index);
+      `CHANGE_PIN: changePinProcess(newPin, acc_index);
       default: $display("Invalid state");
     endcase
 end
