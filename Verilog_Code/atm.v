@@ -2,11 +2,12 @@
 `include "authenticator.v"
 
 
-module ATM (clk,operation,acc_num,pin,amount,language,balance,current_state);
+module ATM (clk,operation,acc_num,pin,newPin,amount,language,balance,current_state);
 input clk;
 input [2:0] operation;
 input [3:0] acc_num;
 input [15:0] pin;
+input [15:0] newPin;
 input [15:0] amount;
 input language;
 output [15:0] balance;
@@ -43,8 +44,8 @@ reg acc_auth_stat;
 Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat);
 ATM_Functions functions ();
 
-always @(posedge clk or acc_found_stat or operation or acc_auth_stat) begin
-    if (acc_auth_stat == `TRUE) begin
+always @(operation or acc_auth_stat) begin
+    if (acc_auth_stat == `ACCOUNT_AUTHENTICATED) begin
       current_state = `MENU;
     end
     else begin
