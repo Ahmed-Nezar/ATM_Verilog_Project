@@ -8,7 +8,7 @@ input [2:0] operation;
 input [3:0] acc_num;
 input [15:0] pin;
 input [15:0] amount;
-input [1:0] language;
+input language;
 output [15:0] balance;
 output reg [2:0] current_state;
 
@@ -43,7 +43,7 @@ reg acc_auth_stat;
 Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat);
 ATM_Functions functions ();
 
-always @(posedge clk or acc_found_stat or operation) begin
+always @(posedge clk or acc_found_stat or operation or acc_auth_stat) begin
     if (acc_auth_stat == `TRUE) begin
       current_state = `MENU;
     end
@@ -52,6 +52,22 @@ always @(posedge clk or acc_found_stat or operation) begin
     end
 
     if (current_state == `MENU) begin
+      if(language == `ENGLISH) begin
+          $display("Please select an operation");
+          $display("1. Balance");
+          $display("2. Withdraw");
+          $display("3. Deposit");
+          $display("4. Change PIN");
+          $display("5. Exit");
+        end
+        else begin
+          $display("الرجاء اختيار العملية");
+          $display("1. الرصيد");
+          $display("2. سحب");
+          $display("3. إيداع");
+          $display("4. تغيير الرقم السري");
+          $display("5. الخروج");
+        end
       case (operation)
         `BALANCE: current_state = `BALANCE;
         `WITHDRAW: current_state = `WITHDRAW;
@@ -68,24 +84,6 @@ always @(posedge clk or acc_found_stat or operation) begin
         end
         else begin
           $display("انتظر حتى يتم إدخال البطاقة");
-        end
-      end
-      `MENU: begin
-        if(language == `ENGLISH) begin
-          $display("Please select an operation");
-          $display("1. Balance");
-          $display("2. Withdraw");
-          $display("3. Deposit");
-          $display("4. Change PIN");
-          $display("5. Exit");
-        end
-        else begin
-          $display("الرجاء اختيار العملية");
-          $display("1. الرصيد");
-          $display("2. سحب");
-          $display("3. إيداع");
-          $display("4. تغيير الرقم السري");
-          $display("5. الخروج");
         end
       end
       `BALANCE: showBalanceInfo(balance_database[acc_index], `TRUE);
