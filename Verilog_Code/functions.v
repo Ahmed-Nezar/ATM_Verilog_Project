@@ -1,16 +1,15 @@
 module ATM_Functions;
-  // Define registers for storing balance and deposit amount
-  reg [31:0] current_balance;
+
 
    // Task to perform the deposit operation
-  task deposit_money;
-    input [31:0] deposit_amt;  // Input to the task: deposit amount
-    output [31:0] new_balance; // Output from the task: updated balance
-    
+  task Deposit_Money;
+    input [31:0] amount;
+    input [31:0] currentBalance;
+    output [31:0] newBalance;
+
     begin
-      // Simulate deposit operation by adding deposit_amount to current_balance
-      new_balance = current_balance + deposit_amt;
-      $display("Deposit successful! New balance: %d", new_balance);
+      newBalance = currentBalance + amount;
+      $display("Deposit successful! New balance: %d", newBalance);
     end
   endtask
 

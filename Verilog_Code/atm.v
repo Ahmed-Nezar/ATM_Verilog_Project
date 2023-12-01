@@ -9,7 +9,7 @@ input [2:0] operation;
 input [3:0] acc_num;
 input [15:0] pin;
 input [15:0] newPin;
-input [15:0] amount;
+input [31:0] amount;
 input language;
 output reg [2:0] next_state;
 
@@ -36,9 +36,7 @@ reg [31:0] balance_database [0:9];
      balance_database[6] = 32'd500;
      balance_database[7] = 32'd500;
      balance_database[8] = 32'd500;
-     balance_database[9] = 32'd500;
-    current_state = `WAITING;
-    
+     balance_database[9] = 32'd500;    
   end
 
 
@@ -112,7 +110,7 @@ always @(*) begin
             next_state = `MENU;
         end
         `DEPOSIT: begin
-            deposit_money(amount, balance_database[acc_index], balance_database[acc_index]);
+            Deposit_Money(amount, balance_database[acc_index], balance_database[acc_index]);
             next_state = `MENU;
         end
         `CHANGE_PIN: begin
