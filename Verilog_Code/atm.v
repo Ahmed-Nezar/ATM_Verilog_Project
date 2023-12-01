@@ -19,7 +19,7 @@ reg [3:0] acc_index;
 reg acc_found_stat;
 reg acc_auth_stat;
 
-reg [15:0] balance_database [0:9];
+reg [31:0] balance_database [0:9];
 
   initial begin
     if (language == `ENGLISH) begin
@@ -28,16 +28,16 @@ reg [15:0] balance_database [0:9];
     else begin
       $display("أهلاً بك في الصراف الآلي");
     end
-     balance_database[0] = 16'd500;
-     balance_database[1] = 16'd500;
-     balance_database[2] = 16'd500;
-     balance_database[3] = 16'd500;
-     balance_database[4] = 16'd500;
-     balance_database[5] = 16'd500;
-     balance_database[6] = 16'd500;
-     balance_database[7] = 16'd500;
-     balance_database[8] = 16'd500;
-     balance_database[9] = 16'd500;
+     balance_database[0] = 32'd500;
+     balance_database[1] = 32'd500;
+     balance_database[2] = 32'd500;
+     balance_database[3] = 32'd500;
+     balance_database[4] = 32'd500;
+     balance_database[5] = 32'd500;
+     balance_database[6] = 32'd500;
+     balance_database[7] = 32'd500;
+     balance_database[8] = 32'd500;
+     balance_database[9] = 32'd500;
     current_state = `WAITING;
     
   end
