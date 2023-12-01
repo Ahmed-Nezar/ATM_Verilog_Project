@@ -1,5 +1,4 @@
 module ATM_Functions;
-  parameter ENGLISH = 3'b001, ARABIC = 3'b010;
   // Define registers for storing balance and deposit amount
   reg [31:0] current_balance;
 
@@ -48,16 +47,5 @@ module ATM_Functions;
       end
     end
   endtask
-
-task selectLanguage;
-    input [1:0] languageSelect;
-    output reg [2:0] currentLanguage;
-    begin
-        case (languageSelect)
-            2'b00: currentLanguage <= ENGLISH;
-            2'b01: currentLanguage <= ARABIC;
-        endcase
-    end
-endtask
 
 endmodule
