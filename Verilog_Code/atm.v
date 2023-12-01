@@ -120,7 +120,7 @@ always @(*) begin
             next_state = `MENU;
         end
         `CHANGE_PIN: begin
-            changePin(newPin, pin, pin);
+            changePin(newPin, acc_index);
             next_state = `MENU;
         end
         default: begin
