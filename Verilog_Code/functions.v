@@ -1,7 +1,7 @@
 module ATM_Functions;
 
 
-   // Task to perform the deposit operation
+  // Task to perform the deposit operation
   task Deposit_Money;
     input [31:0] amount;
     input [31:0] currentBalance;
@@ -25,6 +25,7 @@ module ATM_Functions;
     
   endtask
 
+  // Task to perform the withdrawal operation
   task withdrawAndUpdate;
     input [15:0] amount;
     input [31:0] currentBalance;

@@ -17,6 +17,7 @@ reg [2:0] current_state;
 reg [3:0] acc_index;
 reg acc_found_stat;
 reg acc_auth_stat;
+reg Withdrawal_success;
 
 reg [31:0] balance_database [0:9];
 
@@ -106,8 +107,13 @@ always @(*) begin
             next_state = `MENU;
         end
         `WITHDRAW: begin
-            withdrawAndUpdate(amount, balance_database[acc_index], balance_database[acc_index]);
-            next_state = `MENU;
+            withdrawAndUpdate(amount, balance_database[acc_index], balance_database[acc_index], Withdrawal_success);
+            if (Withdrawal_success == `TRUE) begin
+                next_state = `MENU;
+            end
+            else begin
+                next_state = `WITHDRAW;
+            end
         end
         `DEPOSIT: begin
             Deposit_Money(amount, balance_database[acc_index], balance_database[acc_index]);
