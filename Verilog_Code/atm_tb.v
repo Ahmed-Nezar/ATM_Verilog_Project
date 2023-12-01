@@ -24,7 +24,9 @@ module atm_TB;
     );
     
     initial begin
-        #10 clk = ~clk;  
+        forever begin
+            #5 clk = ~clk;
+        end 
     end
 
     initial begin

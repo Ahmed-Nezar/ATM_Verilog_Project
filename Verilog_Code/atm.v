@@ -2,7 +2,7 @@
 `include "authenticator.v"
 
 
-module ATM (clk,rst,operation,acc_num,pin,newPin,amount,language,balance,current_state);
+module ATM (clk,rst,operation,acc_num,pin,newPin,amount,language,next_state);
 input clk;
 input rst;
 input [2:0] operation;
