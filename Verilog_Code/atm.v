@@ -2,7 +2,7 @@
 `include "authenticator.v"
 
 
-module ATM (clk,rst,operation,acc_num,pin,newPin,amount,language,balance);
+module ATM (clk,rst,operation,acc_num,pin,newPin,amount,language,balance,current_state);
 input clk;
 input rst;
 input [2:0] operation;
@@ -12,8 +12,9 @@ input [15:0] newPin;
 input [15:0] amount;
 input language;
 output [15:0] balance;
+output reg [2:0] current_state;
 
-reg [2:0] current_state, next_state;
+reg [2:0] next_state;
 reg [3:0] acc_index;
 reg acc_found_stat;
 reg acc_auth_stat;
@@ -55,54 +56,73 @@ always @(posedge clk or negedge rst) begin
   end
 end
 
-always @(operation or acc_auth_stat) begin
-    if (acc_auth_stat == `ACCOUNT_AUTHENTICATED) begin
-      current_state = `MENU;
-    end
-    else begin
-      current_state = `WAITING;
-    end
-
-    if (current_state == `MENU) begin
-      if(language == `ENGLISH) begin
-          $display("Please select an operation");
-          $display("1. Balance");
-          $display("2. Withdraw");
-          $display("3. Deposit");
-          $display("4. Change PIN");
-          $display("5. Exit");
-        end
-        else begin
-          $display("الرجاء اختيار العملية");
-          $display("1. الرصيد");
-          $display("2. سحب");
-          $display("3. إيداع");
-          $display("4. تغيير الرقم السري");
-          $display("5. الخروج");
-        end
-      case (operation)
-        `BALANCE: current_state = `BALANCE;
-        `WITHDRAW: current_state = `WITHDRAW;
-        `DEPOSIT: current_state = `DEPOSIT;
-        `CHANGE_PIN: current_state = `CHANGE_PIN;
-        default: current_state = `WAITING;
-      endcase
-    end
-
+always @(*) begin
     case (current_state)
-      `WAITING: begin
-        if(language == `ENGLISH) begin
-          $display("Waiting for the card to be inserted");
+        `WAITING: begin
+            if (acc_auth_stat == `ACCOUNT_AUTHENTICATED) begin
+                next_state = `MENU;
+            end
+            else begin
+                next_state = `WAITING;
+            end
         end
-        else begin
-          $display("انتظر حتى يتم إدخال البطاقة");
+        `MENU: begin
+            if (language == `ENGLISH) begin
+                $display("Please select an operation:");
+                $display("1. Balance");
+                $display("2. Withdraw");
+                $display("3. Deposit");
+                $display("4. Change PIN");
+                $display("5. Exit");
+            end
+            else begin
+                $display("الرجاء اختيار العملية:");
+                $display("1. الرصيد");
+                $display("2. سحب");
+                $display("3. إيداع");
+                $display("4. تغيير الرقم السري");
+                $display("5. الخروج");
+            end
+            case (operation)
+                `BALANCE: begin
+                    next_state = `BALANCE;
+                end
+                `WITHDRAW: begin
+                    next_state = `WITHDRAW;
+                end
+                `DEPOSIT: begin
+                    next_state = `DEPOSIT;
+                end
+                `CHANGE_PIN: begin
+                    next_state = `CHANGE_PIN;
+                end
+                `EXIT: begin
+                    next_state = `WAITING;
+                end
+                default: begin
+                    next_state = `MENU;
+                end
+            endcase
         end
-      end
-      `BALANCE: showBalanceInfo(balance_database[acc_index], `TRUE);
-      `WITHDRAW: withdrawAndUpdate(amount, balance_database[acc_index], balance_database[acc_index]);
-      `DEPOSIT: depositAndUpdate(amount, balance_database[acc_index], balance_database[acc_index]);
-      `CHANGE_PIN: changePinProcess(newPin, acc_index);
-      default: $display("Invalid state");
+        `BALANCE: begin
+            showBalanceInfo(balance_database[acc_index]);
+            next_state = `MENU;
+        end
+        `WITHDRAW: begin
+            withdrawAndUpdate(amount, balance_database[acc_index], balance_database[acc_index]);
+            next_state = `MENU;
+        end
+        `DEPOSIT: begin
+            deposit_money(amount, balance_database[acc_index], balance_database[acc_index]);
+            next_state = `MENU;
+        end
+        `CHANGE_PIN: begin
+            changePin(newPin, pin, pin);
+            next_state = `MENU;
+        end
+        default: begin
+            next_state = `WAITING;
+        end
     endcase
 end
   
