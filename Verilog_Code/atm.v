@@ -11,10 +11,9 @@ input [15:0] pin;
 input [15:0] newPin;
 input [15:0] amount;
 input language;
-output [15:0] balance;
-output reg [2:0] current_state;
+output reg [2:0] next_state;
 
-reg [2:0] next_state;
+reg [2:0] current_state;
 reg [3:0] acc_index;
 reg acc_found_stat;
 reg acc_auth_stat;
