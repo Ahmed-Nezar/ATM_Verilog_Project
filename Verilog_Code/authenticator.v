@@ -65,13 +65,16 @@ end
   task changePinProcess;
     input [15:0] newPin;
     input [3:0] acc_index;
+    output success;
     begin
         if (newPin == pin) begin
             $display("New PIN cannot be the same as the old PIN");
+            success = 0;
         end
         else begin
             $display("PIN changed successfully");
             pin_db[acc_index] = newPin;
+            success = 1;
         end
     end
   endtask

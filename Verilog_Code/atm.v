@@ -2,7 +2,7 @@
 `include "authenticator.v"
 
 
-module ATM (clk,rst,operation,acc_num,pin,newPin,amount,language,next_state);
+module ATM (clk,rst,operation,acc_num,pin,newPin,amount,language,balance,success);
 input clk;
 input rst;
 input [2:0] operation;
@@ -11,8 +11,10 @@ input [15:0] pin;
 input [15:0] newPin;
 input [31:0] amount;
 input language;
-output reg [2:0] next_state;
+output [31:0] balance;
+output success;
 
+reg [2:0] next_state;
 reg [2:0] current_state;
 reg [3:0] acc_index;
 reg acc_found_stat;
@@ -57,16 +59,25 @@ end
 always @(*) begin
     case (current_state)
         `WAITING: begin
-            if (acc_auth_stat == `ACCOUNT_AUTHENTICATED) begin
-                next_state = `MENU;
+        if (acc_found_stat == `TRUE) begin
+            next_state <= `AUTHENTICATION;
+        end
+        else begin
+            next_state <= `WAITING;
+        end
+        end
+        `AUTHENTICATION: begin
+            if (acc_auth_stat == `ACCOUNT_NOT_AUTHENTICATED) begin
+                next_state <= `WAITING;
             end
             else begin
-                next_state = `WAITING;
+                next_state <= `MENU;
             end
         end
         `MENU: begin
-            if (language == `ENGLISH) begin
-                $display("Please select an operation:");
+        case (operation)
+            if (language != `TRUE) begin
+                $display("Please select an operation: ");
                 $display("1. Balance");
                 $display("2. Withdraw");
                 $display("3. Deposit");
@@ -74,57 +85,48 @@ always @(*) begin
                 $display("5. Exit");
             end
             else begin
-                $display("الرجاء اختيار العملية:");
+                $display("الرجاء اختيار العملية: ");
                 $display("1. الرصيد");
                 $display("2. سحب");
                 $display("3. إيداع");
                 $display("4. تغيير الرقم السري");
                 $display("5. الخروج");
             end
-            case (operation)
-                `BALANCE: begin
-                    next_state = `BALANCE;
-                end
-                `WITHDRAW: begin
-                    next_state = `WITHDRAW;
-                end
-                `DEPOSIT: begin
-                    next_state = `DEPOSIT;
-                end
-                `CHANGE_PIN: begin
-                    next_state = `CHANGE_PIN;
-                end
-                `EXIT: begin
-                    next_state = `WAITING;
-                end
-                default: begin
-                    next_state = `MENU;
-                end
-            endcase
+            `BALANCE: begin
+            next_state <= `BALANCE;
+            end
+            `WITHDRAW: begin
+            next_state <= `WITHDRAW;
+            end
+            `DEPOSIT: begin
+            next_state <= `DEPOSIT;
+            end
+            `CHANGE_PIN: begin
+            next_state <= `CHANGE_PIN;
+            end
+            default: begin
+            next_state <= `MENU;
+            end
+        endcase
         end
         `BALANCE: begin
-            showBalanceInfo(balance_database[acc_index]);
-            next_state = `MENU;
+            show_balance(balance_database[acc_index]);
+            next_state <= `WAITING;
         end
         `WITHDRAW: begin
-            withdrawAndUpdate(amount, balance_database[acc_index], balance_database[acc_index], Withdrawal_success);
-            if (Withdrawal_success == `TRUE) begin
-                next_state = `MENU;
-            end
-            else begin
-                next_state = `WITHDRAW;
-            end
+            withdrawAndUpdate(amount, balance_database[acc_index], balance, Withdrawal_success);
+            next_state <= `WAITING;
         end
         `DEPOSIT: begin
-            Deposit_Money(amount, balance_database[acc_index], balance_database[acc_index]);
-            next_state = `MENU;
+            Deposit_Money(amount,balance_database[acc_index],balance_database[acc_index])
+            next_state <= `WAITING;
         end
         `CHANGE_PIN: begin
-            changePin(newPin, acc_index);
-            next_state = `MENU;
+            changePinProcess(newPin,acc_index);
+            next_state <= `WAITING;
         end
         default: begin
-            next_state = `WAITING;
+            next_state <= `WAITING;
         end
     endcase
 end
