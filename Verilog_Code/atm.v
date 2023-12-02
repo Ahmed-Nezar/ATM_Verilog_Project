@@ -75,8 +75,7 @@ always @(*) begin
             end
         end
         `MENU: begin
-        case (operation)
-            if (language != `TRUE) begin
+            if (language == `ENGLISH) begin
                 $display("Please select an operation: ");
                 $display("1. Balance");
                 $display("2. Withdraw");
@@ -92,6 +91,7 @@ always @(*) begin
                 $display("4. تغيير الرقم السري");
                 $display("5. الخروج");
             end
+        case (operation)
             `BALANCE: begin
             next_state <= `BALANCE;
             end
@@ -118,7 +118,7 @@ always @(*) begin
             next_state <= `WAITING;
         end
         `DEPOSIT: begin
-            Deposit_Money(amount,balance_database[acc_index],balance_database[acc_index])
+            Deposit_Money(amount,balance_database[acc_index],balance_database[acc_index]);
             next_state <= `WAITING;
         end
         `CHANGE_PIN: begin
