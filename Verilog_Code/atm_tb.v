@@ -10,7 +10,7 @@ module atm_TB;
     reg [15:0] amount;
     reg [15:0] Newpin;
     wire [15:0] balance;
-    wire [2:0] current_state;
+    wire success;
 
     ATM atm_instance (  .clk(clk),
                         .operation(operation),
@@ -20,7 +20,7 @@ module atm_TB;
                         .amount(amount),
                         .language(language),
                         .balance(balance),
-                        .current_state(current_state)
+                        .success(success)
     );
     
     initial begin
