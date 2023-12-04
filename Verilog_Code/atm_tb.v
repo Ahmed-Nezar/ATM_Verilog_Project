@@ -47,7 +47,7 @@ module atm_tb;
     end
 
     initial begin
-        $monitor("clk=%b, rst=%b, operation=%b, acc_num=%b, pin=%b, amount=%b, language=%b, balance=%b, success=%b, state=%b", clk, rst, operation, acc_num, pin, amount, language, balance, success, state);
+        $monitor("clk=%b, rst=%b, operation=%d, acc_num=%d, pin=%d, amount=%d, language=%b, balance=%d, success=%b, state=%b", clk, rst, operation, acc_num, pin, amount, language, balance, success, state);
     end
 
 endmodule
