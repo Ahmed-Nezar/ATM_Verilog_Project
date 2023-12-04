@@ -21,7 +21,7 @@ reg acc_found_stat;
 reg acc_auth_stat;
 reg Withdrawal_success;
 
-reg [31:0] balance_database [0:9];
+reg [31:0] balance_database [9:0];
 
   initial begin
     if (language == `ENGLISH) begin
