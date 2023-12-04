@@ -11,15 +11,14 @@ input [15:0] pin;
 input [15:0] newPin;
 input [31:0] amount;
 input language;
-output [31:0] balance;
-output success;
+output reg [31:0] balance;
+output reg success;
 
 reg [2:0] next_state;
 reg [2:0] current_state;
 reg [3:0] acc_index;
 reg acc_found_stat;
 reg acc_auth_stat;
-reg Withdrawal_success;
 
 reg [31:0] balance_database [9:0];
 
@@ -110,25 +109,27 @@ always @(*) begin
         endcase
         end
         `BALANCE: begin
-            show_balance(balance_database[acc_index]);
+            show_balance(balance_database[acc_index],success);
             next_state <= `WAITING;
         end
         `WITHDRAW: begin
-            withdrawAndUpdate(amount, balance_database[acc_index], balance, Withdrawal_success);
+            withdrawAndUpdate(amount, balance_database[acc_index], balance, success);
             next_state <= `WAITING;
         end
         `DEPOSIT: begin
-            Deposit_Money(amount,balance_database[acc_index],balance_database[acc_index]);
+            Deposit_Money(amount,balance_database[acc_index],balance_database[acc_index],success);
             next_state <= `WAITING;
         end
         `CHANGE_PIN: begin
-            changePinProcess(newPin,acc_index);
+            changePinProcess(newPin,acc_index,success);
             next_state <= `WAITING;
         end
         default: begin
             next_state <= `WAITING;
         end
     endcase
+
+    balance <= balance_database[acc_index];
 end
   
   
