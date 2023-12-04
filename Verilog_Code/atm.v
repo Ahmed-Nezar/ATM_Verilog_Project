@@ -17,19 +17,13 @@ output reg [2:0] state;
 
 reg [2:0] next_state;
 reg [2:0] current_state;
-reg [3:0] acc_index;
-reg acc_found_stat;
-reg acc_auth_stat;
+wire [3:0] acc_index;
+wire acc_found_stat;
+wire acc_auth_stat;
 
 reg [31:0] balance_database [9:0];
 
   initial begin
-    if (language == `ENGLISH) begin
-      $display("Welcome to the ATM");
-    end
-    else begin
-      $display("أهلاً بك في الصراف الآلي");
-    end
      balance_database[0] = 1000;
      balance_database[1] = 2000;
      balance_database[2] = 3000;
@@ -39,7 +33,9 @@ reg [31:0] balance_database [9:0];
      balance_database[6] = 7000;
      balance_database[7] = 8000;
      balance_database[8] = 9000;
-     balance_database[9] = 10000;    
+     balance_database[9] = 10000;
+     current_state <= `WAITING;
+     next_state <= `WAITING;   
   end
 
 
@@ -110,28 +106,30 @@ always @(*) begin
         endcase
         end
         `BALANCE: begin
-            show_balance(balance_database[acc_index],success);
+            functions.showBalanceInfo(balance_database[acc_index],success);
             next_state <= `WAITING;
         end
         `WITHDRAW: begin
-            withdrawAndUpdate(amount, balance_database[acc_index], balance, success);
+            functions.withdrawAndUpdate(amount, balance_database[acc_index], balance, success);
             next_state <= `WAITING;
         end
         `DEPOSIT: begin
-            Deposit_Money(amount,balance_database[acc_index],balance_database[acc_index],success);
+            functions.Deposit_Money(amount,balance_database[acc_index],balance_database[acc_index],success);
             next_state <= `WAITING;
         end
         `CHANGE_PIN: begin
-            changePinProcess(newPin,acc_index,success);
+            authenticator.changePinProcess(newPin,acc_index,success);
             next_state <= `WAITING;
         end
         default: begin
             next_state <= `WAITING;
         end
     endcase
+end
 
+always @(posedge clk) begin
     balance <= balance_database[acc_index];
-    state <= next_state;
+    state <= current_state;
 end
   
   
