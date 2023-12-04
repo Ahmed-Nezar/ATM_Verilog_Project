@@ -1,6 +1,4 @@
-`include "atm.v"
-
-module atm_TB;
+module atm_tb;
 
     reg clk;
     reg language;
