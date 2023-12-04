@@ -2,7 +2,7 @@
 `include "authenticator.v"
 
 
-module ATM (clk,rst,operation,acc_num,pin,newPin,amount,language,balance,success);
+module ATM (clk,rst,operation,acc_num,pin,newPin,amount,language,balance,success,state);
 input clk;
 input rst;
 input [2:0] operation;
@@ -13,6 +13,7 @@ input [31:0] amount;
 input language;
 output reg [31:0] balance;
 output reg success;
+output reg [2:0] state;
 
 reg [2:0] next_state;
 reg [2:0] current_state;
@@ -130,6 +131,7 @@ always @(*) begin
     endcase
 
     balance <= balance_database[acc_index];
+    state <= next_state;
 end
   
   
