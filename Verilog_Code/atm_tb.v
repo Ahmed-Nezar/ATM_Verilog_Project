@@ -33,15 +33,53 @@ module atm_tb;
     end
 
     initial begin
-        rst = 1;
-        operation = 3;
-        acc_num = 1;
-        pin = 1234;
-        amount = 90;
-        language = 0;
-        Newpin = 0;
+        rst = 0; operation = 0; acc_num = 0; pin = 0; amount = 0; language = 0; Newpin = 0;
         @(negedge clk);
 //      psl rst_assert: assert always((rst == 0) -> next[2] (state == 0))  @(posedge clk);
+
+        rst = 1; operation = 0; acc_num = 0; pin = 0; amount = 0; language = 0; Newpin = 0;
+        @(negedge clk);
+//     psl no_operation: assert always((rst == 1) -> next[2] (state == 0))  @(posedge clk);
+
+        rst = 1; operation = 3; acc_num = 1; pin = 1234; amount = 0; language = 0; Newpin = 0;
+        @(negedge clk);
+//      psl show_balance_authenticated_1: assert always((operation == 3) -> next[2] (state == 3))  @(posedge clk);
+
+        rst = 1; operation = 3; acc_num = 2; pin = 2345; amount = 0; language = 0; Newpin = 0;
+        @(negedge clk);
+//      psl show_balance_authenticated_2: assert always((operation == 3) -> next[2] (state == 3))  @(posedge clk);
+
+        rst = 1; operation = 3; acc_num = 3; pin = 3456; amount = 0; language = 0; Newpin = 0;
+        @(negedge clk);
+//      psl show_balance_authenticated_3: assert always((operation == 3) -> next[2] (state == 3))  @(posedge clk);
+
+        rst = 1; operation = 3; acc_num = 4; pin = 4567; amount = 0; language = 0; Newpin = 0;
+        @(negedge clk);
+//      psl show_balance_authenticated_4: assert always((operation == 3) -> next[2] (state == 3))  @(posedge clk);
+
+        rst = 1; operation = 3; acc_num = 5; pin = 5678; amount = 0; language = 0; Newpin = 0;
+        @(negedge clk);
+//      psl show_balance_authenticated_5: assert always((operation == 3) -> next[2] (state == 3))  @(posedge clk);
+
+        rst = 1; operation = 3; acc_num = 6; pin = 6789; amount = 0; language = 0; Newpin = 0;
+        @(negedge clk);
+//      psl show_balance_authenticated_6: assert always((operation == 3) -> next[2] (state == 3))  @(posedge clk);
+
+        rst = 1; operation = 3; acc_num = 7; pin = 7890; amount = 0; language = 0; Newpin = 0;
+        @(negedge clk);
+//      psl show_balance_authenticated_7: assert always((operation == 3) -> next[2] (state == 3))  @(posedge clk);
+
+        rst = 1; operation = 3; acc_num = 8; pin = 8901; amount = 0; language = 0; Newpin = 0;
+        @(negedge clk);
+//      psl show_balance_authenticated_8: assert always((operation == 3) -> next[2] (state == 3))  @(posedge clk);
+
+        rst = 1; operation = 3; acc_num = 9; pin = 9012; amount = 0; language = 0; Newpin = 0;
+        @(negedge clk);
+//      psl show_balance_authenticated_9: assert always((operation == 3) -> next[2] (state == 3))  @(posedge clk);
+
+        rst = 1; operation = 3; acc_num = 10; pin = 7123; amount = 0; language = 0; Newpin = 0;
+        @(negedge clk);
+//      psl show_balance_authenticated_10: assert always((operation == 3) -> next[2] (state == 3))  @(posedge clk);
 
         $stop;
     end
