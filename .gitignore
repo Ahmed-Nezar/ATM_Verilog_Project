@@ -1,4 +1,6 @@
-.vscode/
-.work/
+vscode/
+work/
 *.mti
 *.mpf
+*.mpf_new
+*.wlf
