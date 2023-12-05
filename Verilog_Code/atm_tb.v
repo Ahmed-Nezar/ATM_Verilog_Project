@@ -36,17 +36,106 @@ module atm_tb;
         rst = 0; operation = 0; acc_num = 0; pin = 0; amount = 0; language = 0; Newpin = 0;
         @(negedge clk);
 
-
-        rst = 1; operation = 3; acc_num = 1; pin = 16'd1234; amount = 0; language = 0; Newpin = 0;
+        // show balance for all accounts
+        rst = 1; operation = 3; acc_num = 1; pin = 1234; amount = 0; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
 
-        rst = 1; operation = 5; acc_num = 1; pin = 16'd1234; amount = 1000; language = 0; Newpin = 0;
+        rst = 1; operation = 3; acc_num = 2; pin = 2345; amount = 0; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
 
-        rst = 1; operation = 3; acc_num = 1; pin = 16'd1234; amount = 0; language = 0; Newpin = 0;
+        rst = 1; operation = 3; acc_num = 3; pin = 3456; amount = 0; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
 
-        rst = 1; operation = 3; acc_num = 2; pin = 16'd2345; amount = 0; language = 0; Newpin = 0;
+        rst = 1; operation = 3; acc_num = 4; pin = 4567; amount = 0; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 3; acc_num = 5; pin = 5678; amount = 0; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 3; acc_num = 6; pin = 6789; amount = 0; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 3; acc_num = 7; pin = 7890; amount = 0; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 3; acc_num = 8; pin = 8901; amount = 0; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 3; acc_num = 9; pin = 9012; amount = 0; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 3; acc_num = 10; pin = 7123; amount = 0; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+        /***************************************************************************************************/
+        
+        // deposit 1000 for all accounts
+        rst = 1; operation = 5; acc_num = 1; pin = 1234; amount = 1000; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 5; acc_num = 2; pin = 2345; amount = 1000; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 5; acc_num = 3; pin = 3456; amount = 1000; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 5; acc_num = 4; pin = 4567; amount = 1000; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 5; acc_num = 5; pin = 5678; amount = 1000; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 5; acc_num = 6; pin = 6789; amount = 1000; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 5; acc_num = 7; pin = 7890; amount = 1000; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 5; acc_num = 8; pin = 8901; amount = 1000; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 5; acc_num = 9; pin = 9012; amount = 1000; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 5; acc_num = 10; pin = 7123; amount = 1000; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+        /***************************************************************************************************/
+
+        // withdraw from all accounts
+        rst = 1; operation = 4; acc_num = 1; pin = 1234; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 2; pin = 2345; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 3; pin = 3456; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 4; pin = 4567; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 5; pin = 5678; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 6; pin = 6789; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 7; pin = 7890; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 8; pin = 8901; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 9; pin = 9012; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 10; pin = 7123; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+        /***************************************************************************************************/
+
+        rst = 1; operation = 3; acc_num = 1; pin = 1234; amount = 0; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 3; acc_num = 2; pin = 2345; amount = 0; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
 
 
