@@ -49,12 +49,6 @@ always @(*) begin
 
     // Check the PIN for authentication
     begin : check_pin
-     
-     // debugging purpose
-    
-        for (i =0 ; i < 10 ; i = i + 1 ) begin
-            $display("Pin: ", pin_db[i]);
-        end
         if (acc_found_stat == `ACCOUNT_FOUND) begin
             
             if (pin_db[acc_index] == pin) begin  // If the PIN matches the one in the database, set the authentication status to authenticated
