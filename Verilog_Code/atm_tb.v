@@ -41,6 +41,10 @@ module atm_tb;
         @(negedge clk);
 //      psl show_balance_authenticated_1: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
 
+        operation = 5; amount = 1000;
+        @(negedge clk);
+//      psl deposit_1000: assert always((operation == 5) -> next (balance == 2000) abort rst)  @(posedge clk);
+
         rst = 1; operation = 3; acc_num = 2; pin = 2345; amount = 0; language = 0; Newpin = 0;
         @(negedge clk);
 //      psl show_balance_authenticated_2: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
