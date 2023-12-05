@@ -143,17 +143,8 @@ module atm_tb;
     end
 
 //      psl rst_assert: assert always((rst == 0) -> next (state == 7))  @(posedge clk);
-//      psl show_balance_authenticated_1: assert always((operation == 3) -> next[4] (state == 3) abort rst)  @(posedge clk);
-//      psl deposit_1000: assert always((operation == 5) -> next (balance == 2000) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_2: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_3: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_4: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_5: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_6: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_7: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_8: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_9: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_10: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
+//      psl show_balance_authenticated: assert always((operation == 3) -> next[4] (balance != 32'bx) abort rst)  @(posedge clk);
+//      psl deposit: assert always((operation == 5) -> next[4] (balance == (prev(balance) + amount)) abort rst)  @(posedge clk);
 
 
     initial begin

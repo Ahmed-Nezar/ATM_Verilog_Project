@@ -20,6 +20,7 @@ reg [2:0] current_state = `IDLE;
 wire [3:0] acc_index;
 wire acc_found_stat;
 wire acc_auth_stat;
+reg authenticatedFlag = 1;
 
 reg [31:0] balance_database [9:0];
 
@@ -67,6 +68,7 @@ always @(current_state or operation or acc_num or language or amount or newPin o
             end
             else begin
                 next_state = `MENU;
+                authenticatedFlag = 0;
             end
         end
         `MENU: begin
@@ -90,19 +92,31 @@ always @(current_state or operation or acc_num or language or amount or newPin o
         endcase
         end
         `BALANCE: begin
-            functions.showBalanceInfo(balance_database[acc_index],success);
+            if (authenticatedFlag == 0) begin
+                functions.showBalanceInfo(balance_database[acc_index],success);
+                authenticatedFlag = 1;
+            end            
             next_state = `WAITING;
         end
         `WITHDRAW: begin
-            functions.withdrawAndUpdate(amount, balance_database[acc_index], balance, success);
+            if (authenticatedFlag == 0) begin
+                functions.withdrawAndUpdate(amount,balance_database[acc_index],balance_database[acc_index],success);
+                authenticatedFlag = 1;
+            end
             next_state = `WAITING;
         end
         `DEPOSIT: begin
-            functions.Deposit_Money(amount,balance_database[acc_index],balance_database[acc_index],success);
+            if (authenticatedFlag == 0) begin
+                functions.Deposit_Money(amount,balance_database[acc_index],balance_database[acc_index],success);
+                authenticatedFlag = 1;
+            end
             next_state = `WAITING;
         end
         `CHANGE_PIN: begin
-            authenticator.changePinProcess(newPin,acc_index,success);
+            if (authenticatedFlag == 0) begin
+                authenticator.changePinProcess(newPin,acc_index,success);
+                authenticatedFlag = 1;
+            end
             next_state = `WAITING;
         end
         `IDLE: begin
