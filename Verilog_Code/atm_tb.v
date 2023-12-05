@@ -37,49 +37,16 @@ module atm_tb;
         @(negedge clk);
 
 
-        rst = 1; operation = 3; acc_num = 1; pin = 1234; amount = 0; language = 0; Newpin = 0;
+        rst = 1; operation = 3; acc_num = 1; pin = 16'd1234; amount = 0; language = 0; Newpin = 0;
+        @(negedge clk);
+        @(negedge clk);
         @(negedge clk);
         @(negedge clk);
 
-
-        operation = 5; amount = 1000;
+        rst = 1; operation = 3; acc_num = 2; pin = 16'd2345; amount = 0; language = 0; Newpin = 0;
         @(negedge clk);
         @(negedge clk);
-
-
-        rst = 1; operation = 3; acc_num = 2; pin = 2345; amount = 0; language = 0; Newpin = 0;
         @(negedge clk);
-
-
-        rst = 1; operation = 3; acc_num = 3; pin = 3456; amount = 0; language = 0; Newpin = 0;
-        @(negedge clk);
-
-
-        rst = 1; operation = 3; acc_num = 4; pin = 4567; amount = 0; language = 0; Newpin = 0;
-        @(negedge clk);
-
-
-        rst = 1; operation = 3; acc_num = 5; pin = 5678; amount = 0; language = 0; Newpin = 0;
-        @(negedge clk);
-
-
-        rst = 1; operation = 3; acc_num = 6; pin = 6789; amount = 0; language = 0; Newpin = 0;
-        @(negedge clk);
-
-
-        rst = 1; operation = 3; acc_num = 7; pin = 7890; amount = 0; language = 0; Newpin = 0;
-        @(negedge clk);
-
-
-        rst = 1; operation = 3; acc_num = 8; pin = 8901; amount = 0; language = 0; Newpin = 0;
-        @(negedge clk);
-
-
-        rst = 1; operation = 3; acc_num = 9; pin = 9012; amount = 0; language = 0; Newpin = 0;
-        @(negedge clk);
-
-
-        rst = 1; operation = 3; acc_num = 10; pin = 7123; amount = 0; language = 0; Newpin = 0;
         @(negedge clk);
 
 
@@ -87,7 +54,7 @@ module atm_tb;
     end
 
 //      psl rst_assert: assert always((rst == 0) -> next (state == 7))  @(posedge clk);
-//      psl show_balance_authenticated_1: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
+//      psl show_balance_authenticated_1: assert always((operation == 3) -> next[4] (state == 3) abort rst)  @(posedge clk);
 //      psl deposit_1000: assert always((operation == 5) -> next (balance == 2000) abort rst)  @(posedge clk);
 //      psl show_balance_authenticated_2: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
 //      psl show_balance_authenticated_3: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);

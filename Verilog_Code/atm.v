@@ -16,7 +16,7 @@ output reg success;
 output reg [2:0] state;
 
 reg [2:0] next_state = `WAITING;
-reg [2:0] current_state = `WAITING;
+reg [2:0] current_state = `IDLE;
 wire [3:0] acc_index;
 wire acc_found_stat;
 wire acc_auth_stat;
@@ -55,21 +55,21 @@ always @(current_state or operation or acc_num or language or amount or newPin o
     case (current_state)
         `WAITING: begin
         if (acc_found_stat == `TRUE) begin
-            next_state <= `AUTHENTICATION;
+            next_state = `AUTHENTICATION;
             $display("Account found");
         end
         else begin
-            next_state <= `WAITING;
+            next_state = `WAITING;
             $display("Account not found");
         end
         end
         `AUTHENTICATION: begin
             if (acc_auth_stat == `ACCOUNT_NOT_AUTHENTICATED) begin
-                next_state <= `WAITING;
+                next_state = `WAITING;
                 $display("Account not authenticated");
             end
             else begin
-                next_state <= `MENU;
+                next_state = `MENU;
                 $display("Account authenticated");
             end
         end
@@ -93,60 +93,60 @@ always @(current_state or operation or acc_num or language or amount or newPin o
             end
         case (operation)
             `BALANCE: begin
-            next_state <= `BALANCE;
+            next_state = `BALANCE;
             $display("Entered Balance case");
             end
             `WITHDRAW: begin
-            next_state <= `WITHDRAW;
+            next_state = `WITHDRAW;
             $display("Entered Withdraw case");
             end
             `DEPOSIT: begin
-            next_state <= `DEPOSIT;
+            next_state = `DEPOSIT;
             $display("Entered Deposit case");
             end
             `CHANGE_PIN: begin
-            next_state <= `CHANGE_PIN;
+            next_state = `CHANGE_PIN;
             $display("Entered Change PIN case");
             end
             default: begin
-            next_state <= `MENU;
+            next_state = `MENU;
             $display("Invalid operation");
             end
         endcase
         end
         `BALANCE: begin
             functions.showBalanceInfo(balance_database[acc_index],success);
-            next_state <= `WAITING;
+            next_state = `WAITING;
             $display("entered balance logic");
         end
         `WITHDRAW: begin
             functions.withdrawAndUpdate(amount, balance_database[acc_index], balance, success);
-            next_state <= `WAITING;
+            next_state = `WAITING;
             $display("entered withdraw logic");
         end
         `DEPOSIT: begin
             functions.Deposit_Money(amount,balance_database[acc_index],balance_database[acc_index],success);
-            next_state <= `WAITING;
+            next_state = `WAITING;
             $display("entered deposit logic");
         end
         `CHANGE_PIN: begin
             authenticator.changePinProcess(newPin,acc_index,success);
-            next_state <= `WAITING;
+            next_state = `WAITING;
             $display("entered change pin logic");
         end
         `IDLE: begin
             $display("Entered Idle case");
         end
         default: begin
-            next_state <= `WAITING;
+            next_state = `WAITING;
             $display("Invalid state");
         end
     endcase
 end
 
 always @(current_state or operation or acc_num or language or amount or newPin or pin ) begin
-    balance <= balance_database[acc_index];
-    state <= current_state;
+    balance = balance_database[acc_index];
+    state = current_state;
 end
   
   
