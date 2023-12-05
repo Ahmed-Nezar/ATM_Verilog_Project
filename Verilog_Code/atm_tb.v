@@ -6,9 +6,9 @@ module atm_tb;
     reg [2:0] operation;
     reg [3:0] acc_num;
     reg [15:0] pin;
-    reg [15:0] amount;
+    reg [31:0] amount;
     reg [15:0] Newpin;
-    wire [15:0] balance;
+    wire [31:0] balance;
     wire success;
     wire [2:0] state;
 
@@ -39,9 +39,11 @@ module atm_tb;
 
         rst = 1; operation = 3; acc_num = 1; pin = 1234; amount = 0; language = 0; Newpin = 0;
         @(negedge clk);
+        @(negedge clk);
 
 
         operation = 5; amount = 1000;
+        @(negedge clk);
         @(negedge clk);
 
 
@@ -84,7 +86,7 @@ module atm_tb;
         $stop;
     end
 
-//      psl rst_assert: assert always((rst == 0) -> next (state == 0))  @(posedge clk);
+//      psl rst_assert: assert always((rst == 0) -> next (state == 7))  @(posedge clk);
 //      psl show_balance_authenticated_1: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
 //      psl deposit_1000: assert always((operation == 5) -> next (balance == 2000) abort rst)  @(posedge clk);
 //      psl show_balance_authenticated_2: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);

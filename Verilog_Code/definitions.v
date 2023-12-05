@@ -10,7 +10,8 @@
 `define WITHDRAW 3'b100
 `define DEPOSIT 3'b101
 `define CHANGE_PIN 3'b110
-`define EXIT 3'b111
+`define IDLE 3'b111
+
 
 
 // DEFINITIONS FOR THE AUTHENTICATION
