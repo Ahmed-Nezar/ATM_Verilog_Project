@@ -38,28 +38,16 @@ module atm_tb;
 
 
         rst = 1; operation = 3; acc_num = 1; pin = 16'd1234; amount = 0; language = 0; Newpin = 0;
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
+        repeat(4) @(negedge clk);
 
         rst = 1; operation = 5; acc_num = 1; pin = 16'd1234; amount = 1000; language = 0; Newpin = 0;
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
+        repeat(4) @(negedge clk);
 
         rst = 1; operation = 3; acc_num = 1; pin = 16'd1234; amount = 0; language = 0; Newpin = 0;
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
+        repeat(4) @(negedge clk);
 
         rst = 1; operation = 3; acc_num = 2; pin = 16'd2345; amount = 0; language = 0; Newpin = 0;
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
-        @(negedge clk);
+        repeat(4) @(negedge clk);
 
 
         $stop;
