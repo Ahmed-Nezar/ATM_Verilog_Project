@@ -5,8 +5,8 @@ input [15:0] pin;
 output reg [3:0] acc_index_out;
 output reg acc_found_stat;
 output reg acc_auth_stat;
-reg [10:0] acc_num_db [3:0];
-reg [15:0] pin_db [3:0]; 
+reg [10:0] acc_num_db [9:0];
+reg [15:0] pin_db [9:0]; 
 
 
 // intializing the account number and pin in decimal format as in reference model
@@ -49,6 +49,11 @@ always @(*) begin
 
     // Check the PIN for authentication
     begin : check_pin
+     // debugging purpose
+    
+        for (i =0 ; i < 10 ; i = i + 1 ) begin
+            $display("Pin: ", pin_db[i]);
+        end
         if (acc_found_stat == `ACCOUNT_FOUND) begin
             
             if (pin_db[acc_index] == pin) begin  // If the PIN matches the one in the database, set the authentication status to authenticated
