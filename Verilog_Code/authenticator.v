@@ -6,7 +6,7 @@ output reg [3:0] acc_index_out;
 output reg acc_found_stat;
 output reg acc_auth_stat;
 reg [10:0] acc_num_db [3:0];
-reg [10:0] pin_db [15:0]; 
+reg [15:0] pin_db [3:0]; 
 
 
 // intializing the account number and pin in decimal format as in reference model
