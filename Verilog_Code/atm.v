@@ -127,7 +127,7 @@ always @(*) begin
     endcase
 end
 
-always @(posedge clk) begin
+always @(current_state or operation or acc_num or language or amount or newPin or pin ) begin
     balance <= balance_database[acc_index];
     state <= current_state;
 end
