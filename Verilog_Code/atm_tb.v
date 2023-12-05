@@ -35,125 +35,268 @@ module atm_tb;
     initial begin
         rst = 0; operation = 0; acc_num = 0; pin = 0; amount = 0; language = 0; Newpin = 0;
         @(negedge clk);
+        if (state != 7) begin
+            $display("Test Failed");
+        end
+
 
         // show balance for all accounts
         rst = 1; operation = 3; acc_num = 1; pin = 1234; amount = 0; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 1000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 3; acc_num = 2; pin = 2345; amount = 0; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 2000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 3; acc_num = 3; pin = 3456; amount = 0; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 3000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 3; acc_num = 4; pin = 4567; amount = 0; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 4000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 3; acc_num = 5; pin = 5678; amount = 0; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 5000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 3; acc_num = 6; pin = 6789; amount = 0; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 6000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 3; acc_num = 7; pin = 7890; amount = 0; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 7000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 3; acc_num = 8; pin = 8901; amount = 0; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 8000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 3; acc_num = 9; pin = 9012; amount = 0; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 9000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 3; acc_num = 10; pin = 7123; amount = 0; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 10000) begin
+            $display("Test Failed");
+        end
         /***************************************************************************************************/
         
         // deposit 1000 for all accounts
         rst = 1; operation = 5; acc_num = 1; pin = 1234; amount = 1000; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 2000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 5; acc_num = 2; pin = 2345; amount = 1000; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 3000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 5; acc_num = 3; pin = 3456; amount = 1000; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 4000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 5; acc_num = 4; pin = 4567; amount = 1000; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 5000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 5; acc_num = 5; pin = 5678; amount = 1000; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 6000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 5; acc_num = 6; pin = 6789; amount = 1000; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 7000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 5; acc_num = 7; pin = 7890; amount = 1000; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 8000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 5; acc_num = 8; pin = 8901; amount = 1000; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 9000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 5; acc_num = 9; pin = 9012; amount = 1000; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 10000) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 5; acc_num = 10; pin = 7123; amount = 1000; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 11000) begin
+            $display("Test Failed");
+        end
         /***************************************************************************************************/
 
         // withdraw from all accounts
         rst = 1; operation = 4; acc_num = 1; pin = 1234; amount = 500; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 1500) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 4; acc_num = 2; pin = 2345; amount = 500; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 2500) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 4; acc_num = 3; pin = 3456; amount = 500; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 3500) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 4; acc_num = 4; pin = 4567; amount = 500; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 4500) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 4; acc_num = 5; pin = 5678; amount = 500; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 5500) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 4; acc_num = 6; pin = 6789; amount = 500; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 6500) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 4; acc_num = 7; pin = 7890; amount = 500; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 7500) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 4; acc_num = 8; pin = 8901; amount = 500; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 8500) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 4; acc_num = 9; pin = 9012; amount = 500; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 9500) begin
+            $display("Test Failed");
+        end
 
         rst = 1; operation = 4; acc_num = 10; pin = 7123; amount = 500; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+        if (balance != 10500) begin
+            $display("Test Failed");
+        end
         /***************************************************************************************************/
 
-        rst = 1; operation = 3; acc_num = 1; pin = 1234; amount = 0; language = 0; Newpin = 0;
+        // wrong pin
+        rst = 1; operation = 4; acc_num = 1; pin = 1235; amount = 500; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
 
-        rst = 1; operation = 3; acc_num = 2; pin = 2345; amount = 0; language = 0; Newpin = 0;
+        rst = 1; operation = 4; acc_num = 2; pin = 2346; amount = 500; language = 0; Newpin = 0;
         repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 3; pin = 3457; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 4; pin = 4568; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 5; pin = 5679; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 6; pin = 6790; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 7; pin = 7901; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 8; pin = 9012; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 9; pin = 7123; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 4; acc_num = 10; pin = 1234; amount = 500; language = 0; Newpin = 0;
+        repeat(4) @(negedge clk);
+         /***************************************************************************************************/
+         
+         // Changing pins for all accounts
+        rst = 1; operation = 6; acc_num = 1; pin = 1234; amount = 0; language = 0; Newpin = 5678;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 6; acc_num = 2; pin = 2345; amount = 0; language = 0; Newpin = 6789;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 6; acc_num = 3; pin = 3456; amount = 0; language = 0; Newpin = 7890;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 6; acc_num = 4; pin = 4567; amount = 0; language = 0; Newpin = 8901;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 6; acc_num = 5; pin = 5678; amount = 0; language = 0; Newpin = 9012;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 6; acc_num = 6; pin = 6789; amount = 0; language = 0; Newpin = 7123;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 6; acc_num = 7; pin = 7890; amount = 0; language = 0; Newpin = 1234;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 6; acc_num = 8; pin = 8901; amount = 0; language = 0; Newpin = 2345;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 6; acc_num = 9; pin = 9012; amount = 0; language = 0; Newpin = 3456;
+        repeat(4) @(negedge clk);
+
+        rst = 1; operation = 6; acc_num = 10; pin = 7123; amount = 0; language = 0; Newpin = 4567;
+        repeat(4) @(negedge clk);
+
 
 
         $stop;
     end
 
 //      psl rst_assert: assert always((rst == 0) -> next (state == 7))  @(posedge clk);
-//      psl show_balance_authenticated_1: assert always((operation == 3) -> next[4] (state == 3) abort rst)  @(posedge clk);
-//      psl deposit_1000: assert always((operation == 5) -> next (balance == 2000) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_2: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_3: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_4: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_5: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_6: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_7: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_8: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_9: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
-//      psl show_balance_authenticated_10: assert always((operation == 3) -> next (state == 3) abort rst)  @(posedge clk);
+//      psl show_balance_authenticated: assert always((operation == 3) -> next[4] (success == 1) abort rst)  @(posedge clk);
+//      psl deposit: assert always((operation == 5) -> next[4] (balance == (prev(balance) + amount)) abort rst)  @(posedge clk);
 
 
     initial begin
