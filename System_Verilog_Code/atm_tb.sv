@@ -295,9 +295,6 @@ module atm_tb;
     end
 
 //      psl rst_assert: assert always((rst == 0) -> next (state == 7))  @(posedge clk);
-//      psl show_balance_authenticated: assert always((operation == 3) -> next[4] (success == 1) abort rst)  @(posedge clk);
-//      psl deposit: assert always((operation == 5) -> next[4] (balance == (prev(balance) + amount)) abort rst)  @(posedge clk);
-
 
     initial begin
         $monitor("operation=%d, acc_num=%d, pin=%d, amount=%d, language=%b, balance=%d, success=%b, state=%b", operation, acc_num, pin, amount, language, balance, success, state);
