@@ -1,7 +1,8 @@
 `include "definitions.sv"
-module Authenticator (acc_num, pin, acc_index_out, acc_found_stat, acc_auth_stat);
+module Authenticator (acc_num, pin, acc_index_out, acc_found_stat, acc_auth_stat ,newPin);
 input [3:0] acc_num;
 input [15:0] pin;
+input [15:0] newPin;
 output reg [3:0] acc_index_out;
 output reg acc_found_stat;
 output reg acc_auth_stat;
@@ -43,7 +44,7 @@ always @(*) begin
     begin : check_pin
         if (acc_found_stat == `ACCOUNT_FOUND) begin
             
-            if (pin_db[acc_index] == pin) begin  // If the PIN matches the one in the database, set the authentication status to authenticated
+            if ((pin_db[acc_index] == pin )|| (pin_db[acc_index] == newPin)) begin  // If the PIN matches the one in the database, set the authentication status to authenticated
                 acc_auth_stat = `ACCOUNT_AUTHENTICATED;
                 $display("Account Pin authenticated",pin_db[acc_index]);
             end

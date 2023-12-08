@@ -30,7 +30,7 @@ reg [31:0] balance_database [9:0];
 
 
 
-Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat);
+Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat, newPin);
 ATM_Functions functions ();
 
 always @(posedge clk or negedge rst) begin
