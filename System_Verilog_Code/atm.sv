@@ -25,16 +25,7 @@ reg authenticatedFlag = 1;
 reg [31:0] balance_database [9:0];
 
   initial begin
-     balance_database[0] = 1000;
-     balance_database[1] = 2000;
-     balance_database[2] = 3000;
-     balance_database[3] = 4000;
-     balance_database[4] = 5000;
-     balance_database[5] = 6000;
-     balance_database[6] = 7000;
-     balance_database[7] = 8000;
-     balance_database[8] = 9000;
-     balance_database[9] = 10000;   
+     $readmemb("./Database/balance_DB.txt" , balance_database);  
   end
 
 
