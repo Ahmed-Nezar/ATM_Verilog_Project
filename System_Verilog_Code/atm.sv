@@ -122,10 +122,7 @@ always @(current_state or operation or acc_num or language or amount or newPin o
 end
 
 //      psl show_balance: assert always((state == 2 && operation == 3) -> next(balance == balance_database[prev(acc_index)] ))  @(posedge clk);
-//      psl deposit: assert always((state == 2 && operation ==4) -> next (balance == (prev(balance) + prev(amount))))  @(posedge clk);
-//      psl withdraw: assert always((state == 2 && operation ==5) -> next (balance == (prev(balance) - prev(amount))))  @(posedge clk);
-//      psl show_balance: cover always((state == 2 && operation == 3) -> next(balance == balance_database[prev(acc_index)] ))  @(posedge clk);
-//      psl deposit: cover always((state == 2 && operation ==4) -> next (balance == (prev(balance) + prev(amount))))  @(posedge clk);
-//      psl withdraw: assert always((state == 2 && operation ==5) -> next (balance == (prev(balance) - prev(amount))))  @(posedge clk);
+//      psl deposit: assert always((state == 2 && operation ==5) -> next (balance == (prev(balance) + prev(amount))))  @(posedge clk);
+//      psl withdraw: assert always((state == 2 && operation ==4) -> next (balance == (prev(balance) - prev(amount))))  @(posedge clk);
   
 endmodule
