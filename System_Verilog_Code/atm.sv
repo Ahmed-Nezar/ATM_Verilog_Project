@@ -42,7 +42,7 @@ always @(posedge clk or negedge rst) begin
   end
 end
 
-always @(current_state or operation or acc_num or language or amount or newPin or pin or acc_found_stat or acc_auth_stat) begin
+always @(current_state or operation or acc_num or language or amount or newPin or pin ) begin
     
     case (current_state)
         `WAITING: begin
@@ -56,6 +56,7 @@ always @(current_state or operation or acc_num or language or amount or newPin o
         `AUTHENTICATION: begin
             if (acc_auth_stat == `ACCOUNT_NOT_AUTHENTICATED) begin
                 next_state = `WAITING;
+                success = 0;
             end
             else begin
                 next_state = `MENU;
