@@ -12,7 +12,8 @@ module atm_tb;
     wire success;
     wire [2:0] state;
     reg [15:0] pin_random [9:0];
-    int i;
+    integer i;
+    integer fd;
 
     ATM atm_instance (  .clk(clk),
                         .rst(rst),
@@ -36,7 +37,11 @@ module atm_tb;
 
     initial begin
         
-        $readmemb("./Database/pins.txt" , pin_random);
+        fd = $fopen("./Database/pins.txt", "r");
+        for (i = 0; i < 10 ; i = i +1 ) begin
+            $fscanf(fd, "%d\n", pin_random[i]);
+        end
+        $fclose(fd);
         /***************************************************************************************************/
         rst = 0; operation = 0; acc_num = 0; pin = 0; amount = 0; language = 0; Newpin = 0;
         @(negedge clk);
@@ -295,7 +300,11 @@ module atm_tb;
         repeat(4) @(negedge clk);
         /***************************************************************************************************/
         
-        $readmemb("./Database/pins.txt" , pin_random);
+        fd = $fopen("./Database/pins.txt", "r");
+        for (i = 0; i < 10 ; i = i +1 ) begin
+            $fscanf(fd, "%d\n", pin_random[i]);
+        end
+        $fclose(fd);
         // random testing
         for (i = 0 ; i < 10 ; i ++) begin
             rst = 1;
