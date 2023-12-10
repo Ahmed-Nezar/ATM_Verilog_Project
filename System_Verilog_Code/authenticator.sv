@@ -12,7 +12,11 @@ integer fd;
 
 // intializing the account number and pin in decimal format as in reference model
 initial begin
-    $readmemb("./Database/accounts.txt" , acc_num_db);
+    fd = $fopen("./Database/accounts.txt", "r");
+    for (integer i = 0; i < 10 ; i = i +1 ) begin
+        $fscanf(fd, "%d\n", acc_num_db[i]);
+    end
+    $fclose(fd);
     $readmemb("./Database/pins.txt" , pin_db);
 end
 
