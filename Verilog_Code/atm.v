@@ -21,6 +21,8 @@ wire [3:0] acc_index;
 wire acc_found_stat;
 wire acc_auth_stat;
 reg authenticatedFlag = 1;
+integer fd;
+integer i;
 
 reg [31:0] balance_database [9:0];
 
@@ -30,7 +32,7 @@ reg [31:0] balance_database [9:0];
 
 
 
-Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat);
+Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat, newPin);
 ATM_Functions functions ();
 
 always @(posedge clk or negedge rst) begin
@@ -42,7 +44,7 @@ always @(posedge clk or negedge rst) begin
   end
 end
 
-always @(current_state or operation or acc_num or language or amount or newPin or pin or acc_found_stat or acc_auth_stat) begin
+always @(current_state or operation or acc_num or language or amount or newPin or pin ) begin
     
     case (current_state)
         `WAITING: begin
@@ -56,6 +58,7 @@ always @(current_state or operation or acc_num or language or amount or newPin o
         `AUTHENTICATION: begin
             if (acc_auth_stat == `ACCOUNT_NOT_AUTHENTICATED) begin
                 next_state = `WAITING;
+                success = 0;
             end
             else begin
                 next_state = `MENU;
@@ -118,9 +121,16 @@ always @(current_state or operation or acc_num or language or amount or newPin o
         end
     endcase
     balance = balance_database[acc_index];
+    fd = $fopen("./Database/balance_DB.txt", "w");
+    for (i = 0; i < 10 ; i = i +1 ) begin
+        $fwrite(fd, "%b\n", balance_database[i]);
+    end
+    $fclose(fd);
     state = current_state;
 end
 
-  
+//      psl show_balance: assert always((state == 2 && operation == 3) -> next(balance == balance_database[prev(acc_index)] ))  @(posedge clk);
+//      psl deposit: assert always((state == 2 && operation ==5) -> next (balance == (prev(balance) + prev(amount))))  @(posedge clk);
+//      psl withdraw: assert always((state == 2 && operation ==4) -> next (balance == (prev(balance) - prev(amount))))  @(posedge clk);
   
 endmodule
