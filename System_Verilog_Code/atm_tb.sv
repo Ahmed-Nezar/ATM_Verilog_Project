@@ -11,6 +11,7 @@ module atm_tb;
     wire [31:0] balance;
     wire success;
     wire [2:0] state;
+    reg [15:0] pin_random [9:0];
     int i;
 
     ATM atm_instance (  .clk(clk),
@@ -34,17 +35,8 @@ module atm_tb;
     end
 
     initial begin
-
-        // random testing 
-        for (i = 0 ; i < 10 ; i ++) begin
-            rst = 1;
-            operation = $urandom_range(0,6);acc_num = $urandom_range(1,10);
-            pin = $urandom_range(1000,9999);
-            amount = $urandom_range(0,10000);
-            language = $urandom_range(0,1);
-            Newpin = $urandom_range(1000,9999);
-            repeat(4)@(negedge clk);
-        end
+        
+        $readmemb("./Database/pins.txt" , pin_random);
         /***************************************************************************************************/
         rst = 0; operation = 0; acc_num = 0; pin = 0; amount = 0; language = 0; Newpin = 0;
         @(negedge clk);
@@ -301,7 +293,20 @@ module atm_tb;
 
         rst = 1; operation = 6; acc_num = 10; pin = 7123; amount = 0; language = 0; Newpin = 4567;
         repeat(4) @(negedge clk);
-
+        /***************************************************************************************************/
+        
+        $readmemb("./Database/pins.txt" , pin_random);
+        // random testing
+        for (i = 0 ; i < 10 ; i ++) begin
+            rst = 1;
+            operation = $urandom_range(3,6);
+            acc_num = i+1;
+            pin = pin_random[acc_num-1];
+            amount = $urandom_range(0,10000);
+            language = $urandom_range(0,1);
+            Newpin = $urandom_range(1000,9999);
+            repeat(4)@(negedge clk);
+        end
 
 
         $stop;
