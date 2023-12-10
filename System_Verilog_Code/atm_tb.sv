@@ -11,6 +11,7 @@ module atm_tb;
     wire [31:0] balance;
     wire success;
     wire [2:0] state;
+    int i;
 
     ATM atm_instance (  .clk(clk),
                         .rst(rst),
@@ -33,6 +34,18 @@ module atm_tb;
     end
 
     initial begin
+
+        // random testing 
+        for (i = 0 ; i < 10 ; i ++) begin
+            rst = 1;
+            operation = $urandom_range(0,6);acc_num = $urandom_range(1,10);
+            pin = $urandom_range(1000,9999);
+            amount = $urandom_range(0,10000);
+            language = $urandom_range(0,1);
+            Newpin = $urandom_range(1000,9999);
+            repeat(4)@(negedge clk);
+        end
+        /***************************************************************************************************/
         rst = 0; operation = 0; acc_num = 0; pin = 0; amount = 0; language = 0; Newpin = 0;
         @(negedge clk);
         if (state != 7) begin
