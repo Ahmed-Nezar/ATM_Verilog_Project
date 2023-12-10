@@ -8,7 +8,7 @@ output reg acc_found_stat;
 output reg acc_auth_stat;
 reg [10:0] acc_num_db [9:0];
 reg [15:0] pin_db [9:0]; 
-
+integer fd;
 
 // intializing the account number and pin in decimal format as in reference model
 initial begin
@@ -69,6 +69,11 @@ end
         else begin
             $display("PIN changed successfully");
             pin_db[acc_index] = newPin;
+            fd = $fopen("./Database/pins.txt", "w"); 
+            for (i = 0; i < 10 ; i = i +1 ) begin
+                $fwrite(fd, "%b\n", pin_db[i]);
+            end
+            $fclose(fd);
             success = 1;
         end
     end
