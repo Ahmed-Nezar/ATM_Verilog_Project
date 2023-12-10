@@ -11,7 +11,14 @@ module atm_tb;
     wire [31:0] balance;
     wire success;
     wire [2:0] state;
+
+
+
     reg [15:0] pin_random [9:0];
+
+    reg [15:0] pin_db [9:0];
+    reg [31:0] balance_database [9:0];
+    reg [10:0] acc_num_db [9:0];
     integer i;
     integer fd;
 
@@ -39,9 +46,23 @@ module atm_tb;
         
         fd = $fopen("./Database/pins.txt", "r");
         for (i = 0; i < 10 ; i = i +1 ) begin
-            $fscanf(fd, "%d\n", pin_random[i]);
+            $fscanf(fd, "%d\n", pin_db[i]);
         end
         $fclose(fd);
+
+        fd = $fopen("./Database/balance_DB.txt", "r");
+        for (i = 0; i < 10 ; i = i +1 ) begin
+            $fscanf(fd, "%d\n", balance_database[i]);
+        end
+        $fclose(fd);
+
+        fd = $fopen("./Database/accounts.txt", "r");
+        for (i = 0; i < 10 ; i = i +1 ) begin
+            $fscanf(fd, "%d\n", acc_num_db[i]);
+        end
+        $fclose(fd);
+
+
         /***************************************************************************************************/
         rst = 0; operation = 0; acc_num = 0; pin = 0; amount = 0; language = 0; Newpin = 0;
         @(negedge clk);
@@ -51,222 +72,44 @@ module atm_tb;
 
 
         // show balance for all accounts
-        rst = 1; operation = 3; acc_num = 1; pin = 1234; amount = 0; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 1000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 3; acc_num = 2; pin = 2345; amount = 0; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 2000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 3; acc_num = 3; pin = 3456; amount = 0; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 3000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 3; acc_num = 4; pin = 4567; amount = 0; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 4000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 3; acc_num = 5; pin = 5678; amount = 0; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 5000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 3; acc_num = 6; pin = 6789; amount = 0; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 6000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 3; acc_num = 7; pin = 7890; amount = 0; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 7000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 3; acc_num = 8; pin = 8901; amount = 0; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 8000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 3; acc_num = 9; pin = 9012; amount = 0; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 9000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 3; acc_num = 10; pin = 7123; amount = 0; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 10000) begin
-            $display("Test Failed");
+        for (i = 0; i < 10 ; i = i +1 ) begin
+            rst = 1; operation = 3; acc_num = acc_num_db[i]; pin = pin_db[i]; amount = 0; language = 0; Newpin = 0;
+            repeat(4) @(negedge clk);
+            if (balance != balance_database[i]) begin
+                $display("Test Failed");
+            end
         end
         /***************************************************************************************************/
         
         // deposit 1000 for all accounts
-        rst = 1; operation = 5; acc_num = 1; pin = 1234; amount = 1000; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 2000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 5; acc_num = 2; pin = 2345; amount = 1000; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 3000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 5; acc_num = 3; pin = 3456; amount = 1000; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 4000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 5; acc_num = 4; pin = 4567; amount = 1000; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 5000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 5; acc_num = 5; pin = 5678; amount = 1000; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 6000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 5; acc_num = 6; pin = 6789; amount = 1000; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 7000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 5; acc_num = 7; pin = 7890; amount = 1000; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 8000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 5; acc_num = 8; pin = 8901; amount = 1000; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 9000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 5; acc_num = 9; pin = 9012; amount = 1000; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 10000) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 5; acc_num = 10; pin = 7123; amount = 1000; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 11000) begin
-            $display("Test Failed");
+        for (i = 0; i < 10 ; i = i +1 ) begin
+            rst = 1; operation = 5; acc_num = acc_num_db[i]; pin = pin_db[i]; amount = 1000; language = 0; Newpin = 0;
+            repeat(4) @(negedge clk);
+            if (balance != balance_database[i] + 1000) begin
+                $display("Test Failed");
+            end
         end
         /***************************************************************************************************/
 
         // withdraw from all accounts
-        rst = 1; operation = 4; acc_num = 1; pin = 1234; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 1500) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 4; acc_num = 2; pin = 2345; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 2500) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 4; acc_num = 3; pin = 3456; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 3500) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 4; acc_num = 4; pin = 4567; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 4500) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 4; acc_num = 5; pin = 5678; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 5500) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 4; acc_num = 6; pin = 6789; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 6500) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 4; acc_num = 7; pin = 7890; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 7500) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 4; acc_num = 8; pin = 8901; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 8500) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 4; acc_num = 9; pin = 9012; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 9500) begin
-            $display("Test Failed");
-        end
-
-        rst = 1; operation = 4; acc_num = 10; pin = 7123; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-        if (balance != 10500) begin
-            $display("Test Failed");
+        for (i = 0; i < 10 ; i = i +1 ) begin
+            rst = 1; operation = 4; acc_num = acc_num_db[i]; pin = pin_db[i]; amount = 500; language = 0; Newpin = 0;
+            repeat(4) @(negedge clk);
+            if (balance != balance_database[i] + 1000 - 500) begin
+                $display("Test Failed");
+            end
         end
         /***************************************************************************************************/
 
         // wrong pin
-        rst = 1; operation = 4; acc_num = 1; pin = 1235; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-
-        rst = 1; operation = 4; acc_num = 2; pin = 2346; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-
-        rst = 1; operation = 4; acc_num = 3; pin = 3457; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-
-        rst = 1; operation = 4; acc_num = 4; pin = 4568; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-
-        rst = 1; operation = 4; acc_num = 5; pin = 5679; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-
-        rst = 1; operation = 4; acc_num = 6; pin = 6790; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-
-        rst = 1; operation = 4; acc_num = 7; pin = 7901; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-
-        rst = 1; operation = 4; acc_num = 8; pin = 9012; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-
-        rst = 1; operation = 4; acc_num = 9; pin = 7123; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-
-        rst = 1; operation = 4; acc_num = 10; pin = 1234; amount = 500; language = 0; Newpin = 0;
-        repeat(4) @(negedge clk);
-         /***************************************************************************************************/
+        for (i = 0; i < 10 ; i = i +1 ) begin
+            rst = 1; operation = 3; acc_num = acc_num_db[i]; pin = pin_db[9-i]; amount = 0; language = 0; Newpin = 0;
+            repeat(4) @(negedge clk);
+            if (success != 0) begin
+                $display("Test Failed");
+            end
+        end
+        /***************************************************************************************************/
          
          // Changing pins for all accounts
         rst = 1; operation = 6; acc_num = 1; pin = 1234; amount = 0; language = 0; Newpin = 5678;
