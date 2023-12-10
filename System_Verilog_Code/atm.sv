@@ -21,6 +21,8 @@ wire [3:0] acc_index;
 wire acc_found_stat;
 wire acc_auth_stat;
 reg authenticatedFlag = 1;
+integer fd;
+integer i;
 
 reg [31:0] balance_database [9:0];
 
@@ -119,6 +121,11 @@ always @(current_state or operation or acc_num or language or amount or newPin o
         end
     endcase
     balance = balance_database[acc_index];
+    fd = $fopen("./Database/balance_DB.txt", "w");
+    for (i = 0; i < 10 ; i = i +1 ) begin
+        $fwrite(fd, "%b\n", balance_database[i]);
+    end
+    $fclose(fd);
     state = current_state;
 end
 
