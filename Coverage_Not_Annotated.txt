@@ -1,0 +1,386 @@
+ Coverage Report by instance with details
+# 
+# =================================================================================
+# === Instance: /\atm_tb#atm_instance /authenticator
+# === Design Unit: work.Authenticator
+# =================================================================================
+# Branch Coverage:
+#     Enabled Coverage              Bins      Hits    Misses  Coverage
+#     ----------------              ----      ----    ------  --------
+#     Branches                         8         8         0   100.00%
+# 
+# ================================Branch Details================================
+# 
+# Branch Coverage for instance /\atm_tb#atm_instance /authenticator
+# 
+#     Line         Item                      Count     Source 
+#     ----         ----                      -----     ------ 
+#   File ./System_Verilog_Code/authenticator.sv
+# ------------------------------------IF Branch------------------------------------
+#     37                                       580     Count coming in to IF
+#     37              1                         95     
+#     43              1                        485     
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     53                                       102     Count coming in to IF
+#     53              1                         95     
+#                                                7     All False Count
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     55                                        95     Count coming in to IF
+#     55              1                         83     
+#     60              1                         12     
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     73                                        22     Count coming in to IF
+#     73              1                         10     
+#     77              1                         12     
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# 
+# Condition Coverage:
+#     Enabled Coverage              Bins   Covered    Misses  Coverage
+#     ----------------              ----      ----    ------  --------
+#     Conditions                       4         4         0   100.00%
+# 
+# ================================Condition Details================================
+# 
+# Condition Coverage for instance /\atm_tb#atm_instance /authenticator --
+# 
+#   File ./System_Verilog_Code/authenticator.sv
+# ----------------Focused Condition View-------------------
+# Line       37 Item    1  (acc_num_db[i] == acc_num)
+# Condition totals: 1 of 1 input term covered = 100.00%
+# 
+#                   Input Term   Covered  Reason for no coverage   Hint
+#                  -----------  --------  -----------------------  --------------
+#   (acc_num_db[i] == acc_num)         Y
+# 
+#      Rows:       Hits  FEC Target                    Non-masking condition(s)      
+#  ---------  ---------  --------------------          -------------------------     
+#   Row   1:          1  (acc_num_db[i] == acc_num)_0  -                             
+#   Row   2:          1  (acc_num_db[i] == acc_num)_1  -                             
+# 
+# ----------------Focused Condition View-------------------
+# Line       55 Item    1  ((pin_db[acc_index] == pin) || (pin_db[acc_index] == newPin))
+# Condition totals: 2 of 2 input terms covered = 100.00%
+# 
+#                      Input Term   Covered  Reason for no coverage   Hint
+#                     -----------  --------  -----------------------  --------------
+#      (pin_db[acc_index] == pin)         Y
+#   (pin_db[acc_index] == newPin)         Y
+# 
+#      Rows:       Hits  FEC Target                       Non-masking condition(s)      
+#  ---------  ---------  --------------------             -------------------------     
+#   Row   1:          1  (pin_db[acc_index] == pin)_0     ~(pin_db[acc_index] == newPin)
+#   Row   2:          1  (pin_db[acc_index] == pin)_1     -                             
+#   Row   3:          1  (pin_db[acc_index] == newPin)_0  ~(pin_db[acc_index] == pin)   
+#   Row   4:          1  (pin_db[acc_index] == newPin)_1  ~(pin_db[acc_index] == pin)   
+# 
+# ----------------Focused Condition View-------------------
+# Line       73 Item    1  (newPin == pin)
+# Condition totals: 1 of 1 input term covered = 100.00%
+# 
+#        Input Term   Covered  Reason for no coverage   Hint
+#       -----------  --------  -----------------------  --------------
+#   (newPin == pin)         Y
+# 
+#      Rows:       Hits  FEC Target            Non-masking condition(s)      
+#  ---------  ---------  --------------------  -------------------------     
+#   Row   1:          1  (newPin == pin)_0     -                             
+#   Row   2:          1  (newPin == pin)_1     -                             
+# 
+# 
+# Statement Coverage:
+#     Enabled Coverage              Bins      Hits    Misses  Coverage
+#     ----------------              ----      ----    ------  --------
+#     Statements                      34        34         0   100.00%
+# 
+# ================================Statement Details================================
+# 
+# Statement Coverage for instance /\atm_tb#atm_instance /authenticator --
+# 
+#     Line         Item                      Count     Source 
+#     ----         ----                      -----     ------ 
+#   File ./System_Verilog_Code/authenticator.sv
+#     15              1                          1     
+#     16              1                          1     
+#     16              2                         10     
+#     17              1                         10     
+#     19              1                          1     
+#     20              1                          1     
+#     21              1                          1     
+#     21              2                         10     
+#     22              1                         10     
+#     24              1                          1     
+#     31              1                        102     
+#     32              1                        102     
+#     33              1                        102     
+#     35              1                        102     
+#     35              2                        485     
+#     38              1                         95     
+#     39              1                         95     
+#     40              1                         95     
+#     41              1                         95     
+#     44              1                        485     
+#     56              1                         83     
+#     57              1                         83     
+#     61              1                         12     
+#     62              1                         12     
+#     74              1                         10     
+#     75              1                         10     
+#     78              1                         12     
+#     79              1                         12     
+#     80              1                         12     
+#     81              1                         12     
+#     81              2                        120     
+#     82              1                        120     
+#     84              1                         12     
+#     85              1                         12     
+# Toggle Coverage:
+#     Enabled Coverage              Bins      Hits    Misses  Coverage
+#     ----------------              ----      ----    ------  --------
+#     Toggles                        220        92       128    41.81%
+# 
+# ================================Toggle Details================================
+# 
+# Toggle Coverage for instance /\atm_tb#atm_instance /authenticator --
+# 
+#                                               Node      1H->0L      0L->1H  "Coverage"
+#                                               ---------------------------------------
+#                                      acc_auth_stat           1           1      100.00 
+#                                     acc_found_stat           1           1      100.00 
+#                                     acc_index[0-3]           1           1      100.00 
+#                                 acc_index_out[0-3]           1           1      100.00 
+#                                       acc_num[0-3]           1           1      100.00 
+#                                           fd[0-31]           0           0        0.00 
+#                                             i[0-3]           1           1      100.00 
+#                                            i[4-31]           0           0        0.00 
+#                                       newPin[0-13]           1           1      100.00 
+#                                      newPin[14-15]           0           0        0.00 
+#                                          pin[0-13]           1           1      100.00 
+#                                         pin[14-15]           0           0        0.00 
+# 
+# Total Node Count     =        110 
+# Toggled Node Count   =         46 
+# Untoggled Node Count =         64 
+# 
+# Toggle Coverage      =      41.81% (92 of 220 bins)
+# 
+# =================================================================================
+# === Instance: /\atm_tb#atm_instance 
+# === Design Unit: work.ATM
+# =================================================================================
+# 
+# Assertion Coverage:
+#     Assertions                       4         4         0   100.00%
+# --------------------------------------------------------------------
+# Name                 File(Line)                   Failure      Pass 
+#                                                   Count        Count
+# --------------------------------------------------------------------
+# /\atm_tb#atm_instance /withdraw_NotSufficientFunds
+#                      ./System_Verilog_Code/atm.sv(139)
+#                                                         0          1
+# /\atm_tb#atm_instance /withdraw
+#                      ./System_Verilog_Code/atm.sv(138)
+#                                                         0          1
+# /\atm_tb#atm_instance /deposit
+#                      ./System_Verilog_Code/atm.sv(137)
+#                                                         0          1
+# /\atm_tb#atm_instance /show_balance
+#                      ./System_Verilog_Code/atm.sv(136)
+#                                                         0          1
+# Branch Coverage:
+#     Enabled Coverage              Bins      Hits    Misses  Coverage
+#     ----------------              ----      ----    ------  --------
+#     Branches                        28        25         3    89.28%
+# 
+# ================================Branch Details================================
+# 
+# Branch Coverage for instance /\atm_tb#atm_instance 
+# 
+#     Line         Item                      Count     Source 
+#     ----         ----                      -----     ------ 
+#   File ./System_Verilog_Code/atm.sv
+# ------------------------------------IF Branch------------------------------------
+#     43                                       336     Count coming in to IF
+#     43              1                          2     
+#     46              1                        334     
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------CASE Branch------------------------------------
+#     53                                       424     Count coming in to CASE
+#     54              1                        143     
+#     62              1                         94     
+#     73              1                         72     
+#     93              1                         26     
+#     100             1                         42     
+#     107             1                         23     
+#     114             1                         22     
+#     121             1                          2     
+#     123             1                    ***0***     
+# Branch totals: 8 hits of 9 branches = 88.88%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     55                                       143     Count coming in to IF
+#     55              1                        136     
+#     58              1                          7     
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     63                                        94     Count coming in to IF
+#     63              1                         22     
+#     67              1                         72     
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------CASE Branch------------------------------------
+#     75                                        72     Count coming in to CASE
+#     76              1                         15     
+#     79              1                         22     
+#     82              1                         13     
+#     85              1                         22     
+#     88              1                    ***0***     
+# Branch totals: 4 hits of 5 branches = 80.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     94                                        26     Count coming in to IF
+#     94              1                         15     
+#                                               11     All False Count
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     101                                       42     Count coming in to IF
+#     101             1                         22     
+#                                               20     All False Count
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     108                                       23     Count coming in to IF
+#     108             1                         13     
+#                                               10     All False Count
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     115                                       22     Count coming in to IF
+#     115             1                         22     
+#                                          ***0***     All False Count
+# Branch totals: 1 hit of 2 branches = 50.00%
+# 
+# 
+# Statement Coverage:
+#     Enabled Coverage              Bins      Hits    Misses  Coverage
+#     ----------------              ----      ----    ------  --------
+#     Statements                      41        39         2    95.12%
+# 
+# ================================Statement Details================================
+# 
+# Statement Coverage for instance /\atm_tb#atm_instance  --
+# 
+#     Line         Item                      Count     Source 
+#     ----         ----                      -----     ------ 
+#   File ./System_Verilog_Code/atm.sv
+#     30              1                          1     
+#     31              1                          1     
+#     31              2                         10     
+#     32              1                         10     
+#     34              1                          1     
+#     42              1                        336     
+#     44              1                          2     
+#     47              1                        334     
+#     51              1                        425     
+#     56              1                        136     
+#     59              1                          7     
+#     64              1                         22     
+#     65              1                         22     
+#     68              1                         72     
+#     69              1                         72     
+#     70              1                         72     
+#     77              1                         15     
+#     80              1                         22     
+#     83              1                         13     
+#     86              1                         22     
+#     89              1                    ***0***     
+#     95              1                         15     
+#     96              1                         15     
+#     98              1                         26     
+#     102             1                         22     
+#     103             1                         22     
+#     105             1                         42     
+#     109             1                         13     
+#     110             1                         13     
+#     112             1                         23     
+#     116             1                         22     
+#     117             1                         22     
+#     119             1                         22     
+#     124             1                    ***0***     
+#     127             1                        424     
+#     128             1                        424     
+#     129             1                        424     
+#     129             2                       4240     
+#     130             1                       4240     
+#     132             1                        424     
+#     133             1                        424     
+# Toggle Coverage:
+#     Enabled Coverage              Bins      Hits    Misses  Coverage
+#     ----------------              ----      ----    ------  --------
+#     Toggles                        374       165       209    44.11%
+# 
+# ================================Toggle Details================================
+# 
+# Toggle Coverage for instance /\atm_tb#atm_instance  --
+# 
+#                                               Node      1H->0L      0L->1H  "Coverage"
+#                                               ---------------------------------------
+#                                      acc_auth_stat           1           1      100.00 
+#                                     acc_found_stat           1           1      100.00 
+#                                     acc_index[0-3]           1           1      100.00 
+#                                       acc_num[0-3]           1           1      100.00 
+#                                       amount[0-13]           1           1      100.00 
+#                                      amount[14-31]           0           0        0.00 
+#                                  authenticatedFlag           1           1      100.00 
+#                                     balance[31-14]           0           0        0.00 
+#                                      balance[13-0]           1           1      100.00 
+#                                                clk           1           1      100.00 
+#                                 current_state[2-0]           1           1      100.00 
+#                                           fd[31-0]           0           0        0.00 
+#                                            i[31-0]           0           0        0.00 
+#                                           language           1           1      100.00 
+#                                       newPin[0-13]           1           1      100.00 
+#                                      newPin[14-15]           0           0        0.00 
+#                                    next_state[2-0]           1           1      100.00 
+#                                     operation[0-2]           1           1      100.00 
+#                                          pin[0-13]           1           1      100.00 
+#                                         pin[14-15]           0           0        0.00 
+#                                                rst           0           1       50.00 
+#                                         state[2-0]           1           1      100.00 
+#                                            success           1           1      100.00 
+# 
+# Total Node Count     =        187 
+# Toggled Node Count   =         82 
+# Untoggled Node Count =        105 
+# 
+# Toggle Coverage      =      44.11% (165 of 374 bins)
+# 
+# 
+# ASSERTION RESULTS:
+# --------------------------------------------------------------------
+# Name                 File(Line)                   Failure      Pass 
+#                                                   Count        Count
+# --------------------------------------------------------------------
+# /\atm_tb#atm_instance /withdraw_NotSufficientFunds
+#                      ./System_Verilog_Code/atm.sv(139)
+#                                                         0          1
+# /\atm_tb#atm_instance /withdraw
+#                      ./System_Verilog_Code/atm.sv(138)
+#                                                         0          1
+# /\atm_tb#atm_instance /deposit
+#                      ./System_Verilog_Code/atm.sv(137)
+#                                                         0          1
+# /\atm_tb#atm_instance /show_balance
+#                      ./System_Verilog_Code/atm.sv(136)
+#                                                         0          1
+# 
+# Total Coverage By Instance (filtered view): 85.19%

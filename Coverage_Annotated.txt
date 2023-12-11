@@ -1,0 +1,776 @@
+Coverage Report by instance with details
+# 
+# =================================================================================
+# === Instance: /\atm_tb#atm_instance /authenticator
+# === Design Unit: work.Authenticator
+# =================================================================================
+# Branch Coverage:
+#     Enabled Coverage              Bins      Hits    Misses  Coverage
+#     ----------------              ----      ----    ------  --------
+#     Branches                         8         8         0   100.00%
+# 
+# ================================Branch Details================================
+# 
+# Branch Coverage for instance /\atm_tb#atm_instance /authenticator
+# 
+#     Line         Item                      Count     Source 
+#     ----         ----                      -----     ------ 
+#   File ./System_Verilog_Code/authenticator.sv
+# ------------------------------------IF Branch------------------------------------
+#     37                                       580     Count coming in to IF
+#     37              1                         95                     if (acc_num_db[i] == acc_num) begin
+# 
+#     43              1                        485                     else begin
+# 
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     53                                       102     Count coming in to IF
+#     53              1                         95             if (acc_found_stat == `ACCOUNT_FOUND) begin
+# 
+#                                                7     All False Count
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     55                                        95     Count coming in to IF
+#     55              1                         83                 if ((pin_db[acc_index] == pin )|| (pin_db[acc_index] == newPin)) begin  // If the PIN matches the one in the database, set the authentication status to authenticated
+# 
+#     60              1                         12                 else begin                          // If the PIN does not match, set the authentication status to not authenticated
+# 
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     73                                        22     Count coming in to IF
+#     73              1                         10             if (newPin == pin) begin
+# 
+#     77              1                         12             else begin
+# 
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# 
+# Condition Coverage:
+#     Enabled Coverage              Bins   Covered    Misses  Coverage
+#     ----------------              ----      ----    ------  --------
+#     Conditions                       4         4         0   100.00%
+# 
+# ================================Condition Details================================
+# 
+# Condition Coverage for instance /\atm_tb#atm_instance /authenticator --
+# 
+#   File ./System_Verilog_Code/authenticator.sv
+# ----------------Focused Condition View-------------------
+# Line       37 Item    1  (acc_num_db[i] == acc_num)
+# Condition totals: 1 of 1 input term covered = 100.00%
+# 
+#                   Input Term   Covered  Reason for no coverage   Hint
+#                  -----------  --------  -----------------------  --------------
+#   (acc_num_db[i] == acc_num)         Y
+# 
+#      Rows:       Hits  FEC Target                    Non-masking condition(s)      
+#  ---------  ---------  --------------------          -------------------------     
+#   Row   1:          1  (acc_num_db[i] == acc_num)_0  -                             
+#   Row   2:          1  (acc_num_db[i] == acc_num)_1  -                             
+# 
+# ----------------Focused Condition View-------------------
+# Line       55 Item    1  ((pin_db[acc_index] == pin) || (pin_db[acc_index] == newPin))
+# Condition totals: 2 of 2 input terms covered = 100.00%
+# 
+#                      Input Term   Covered  Reason for no coverage   Hint
+#                     -----------  --------  -----------------------  --------------
+#      (pin_db[acc_index] == pin)         Y
+#   (pin_db[acc_index] == newPin)         Y
+# 
+#      Rows:       Hits  FEC Target                       Non-masking condition(s)      
+#  ---------  ---------  --------------------             -------------------------     
+#   Row   1:          1  (pin_db[acc_index] == pin)_0     ~(pin_db[acc_index] == newPin)
+#   Row   2:          1  (pin_db[acc_index] == pin)_1     -                             
+#   Row   3:          1  (pin_db[acc_index] == newPin)_0  ~(pin_db[acc_index] == pin)   
+#   Row   4:          1  (pin_db[acc_index] == newPin)_1  ~(pin_db[acc_index] == pin)   
+# 
+# ----------------Focused Condition View-------------------
+# Line       73 Item    1  (newPin == pin)
+# Condition totals: 1 of 1 input term covered = 100.00%
+# 
+#        Input Term   Covered  Reason for no coverage   Hint
+#       -----------  --------  -----------------------  --------------
+#   (newPin == pin)         Y
+# 
+#      Rows:       Hits  FEC Target            Non-masking condition(s)      
+#  ---------  ---------  --------------------  -------------------------     
+#   Row   1:          1  (newPin == pin)_0     -                             
+#   Row   2:          1  (newPin == pin)_1     -                             
+# 
+# 
+# Statement Coverage:
+#     Enabled Coverage              Bins      Hits    Misses  Coverage
+#     ----------------              ----      ----    ------  --------
+#     Statements                      34        34         0   100.00%
+# 
+# ================================Statement Details================================
+# 
+# Statement Coverage for instance /\atm_tb#atm_instance /authenticator --
+# 
+#     Line         Item                      Count     Source 
+#     ----         ----                      -----     ------ 
+#   File ./System_Verilog_Code/authenticator.sv
+#     2                                                module Authenticator (acc_num, pin, acc_index_out, acc_found_stat, acc_auth_stat ,newPin);
+# 
+#     3                                                input [3:0] acc_num;
+# 
+#     4                                                input [15:0] pin;
+# 
+#     5                                                input [15:0] newPin;
+# 
+#     6                                                output reg [3:0] acc_index_out;
+# 
+#     7                                                output reg acc_found_stat;
+# 
+#     8                                                output reg acc_auth_stat;
+# 
+#     9                                                reg [10:0] acc_num_db [9:0];
+# 
+#     10                                               reg [15:0] pin_db [9:0]; 
+# 
+#     11                                               integer fd;
+# 
+#     12                                               
+# 
+#     13                                               // intializing the account number and pin in decimal format as in reference model
+# 
+#     14                                               initial begin
+# 
+#     15              1                          1         fd = $fopen("./Database/accounts.txt", "r");
+# 
+#     16              1                          1         for (integer i = 0; i < 10 ; i = i +1 ) begin
+# 
+#     16              2                         10     
+#     17              1                         10             $fscanf(fd, "%d\n", acc_num_db[i]);
+# 
+#     18                                                   end
+# 
+#     19              1                          1         $fclose(fd);
+# 
+#     20              1                          1         fd = $fopen("./Database/pins.txt", "r");
+# 
+#     21              1                          1         for (integer i = 0; i < 10 ; i = i +1 ) begin
+# 
+#     21              2                         10     
+#     22              1                         10             $fscanf(fd, "%d\n", pin_db[i]);
+# 
+#     23                                                   end
+# 
+#     24              1                          1         $fclose(fd);
+# 
+#     25                                               end
+# 
+#     26                                               
+# 
+#     27                                               // find the account number in the database & adjusting mask
+# 
+#     28                                               integer i;
+# 
+#     29                                               reg [3:0] acc_index;
+# 
+#     30                                               
+# 
+#     31              1                        102     always @(*) begin
+# 
+#     32              1                        102         acc_auth_stat = `ACCOUNT_NOT_AUTHENTICATED;
+# 
+#     33              1                        102         begin : find_account
+# 
+#     34                                                       
+# 
+#     35              1                        102             for (i = 0; i < 10 ; i = i +1 ) 
+# 
+#     35              2                        485     
+#     36                                                           begin
+# 
+#     37                                                               if (acc_num_db[i] == acc_num) begin
+# 
+#     38              1                         95                         acc_index = i;
+# 
+#     39              1                         95                         acc_index_out = acc_index;
+# 
+#     40              1                         95                         acc_found_stat = `ACCOUNT_FOUND;
+# 
+#     41              1                         95                         disable find_account; // break the loop when finding the account
+# 
+#     42                                                               end
+# 
+#     43                                                               else begin
+# 
+#     44              1                        485                         acc_found_stat = `ACCOUNT_NOT_FOUND;
+# 
+#     45                                                               end
+# 
+#     46                                                           end
+# 
+#     47                                                   
+# 
+#     48                                                   end 
+# 
+#     49                                                   
+# 
+#     50                                               
+# 
+#     51                                                   // Check the PIN for authentication
+# 
+#     52                                                   begin : check_pin
+# 
+#     53                                                       if (acc_found_stat == `ACCOUNT_FOUND) begin
+# 
+#     54                                                           
+# 
+#     55                                                           if ((pin_db[acc_index] == pin )|| (pin_db[acc_index] == newPin)) begin  // If the PIN matches the one in the database, set the authentication status to authenticated
+# 
+#     56              1                         83                     acc_auth_stat = `ACCOUNT_AUTHENTICATED;
+# 
+#     57              1                         83                     $display("Account Pin authenticated",pin_db[acc_index]);
+# 
+#     58                                                           end
+# 
+#     59                                                          
+# 
+#     60                                                           else begin                          // If the PIN does not match, set the authentication status to not authenticated
+# 
+#     61              1                         12                     acc_auth_stat = `ACCOUNT_NOT_AUTHENTICATED;
+# 
+#     62              1                         12                     $display("Account Pin not authenticated",pin_db[acc_index]);
+# 
+#     63                                                           end
+# 
+#     64                                                       end
+# 
+#     65                                                   end
+# 
+#     66                                               end
+# 
+#     67                                               
+# 
+#     68                                                 task changePinProcess;
+# 
+#     69                                                   input [15:0] newPin;
+# 
+#     70                                                   input [3:0] acc_index;
+# 
+#     71                                                   output success;
+# 
+#     72                                                   begin
+# 
+#     73                                                       if (newPin == pin) begin
+# 
+#     74              1                         10                 $display("New PIN cannot be the same as the old PIN");
+# 
+#     75              1                         10                 success = 0;
+# 
+#     76                                                       end
+# 
+#     77                                                       else begin
+# 
+#     78              1                         12                 $display("PIN changed successfully");
+# 
+#     79              1                         12                 pin_db[acc_index] = newPin;
+# 
+#     80              1                         12                 fd = $fopen("./Database/pins.txt", "w"); 
+# 
+#     81              1                         12                 for (i = 0; i < 10 ; i = i +1 ) begin
+# 
+#     81              2                        120     
+#     82              1                        120                     $fwrite(fd, "%d\n", pin_db[i]);
+# 
+#     83                                                           end
+# 
+#     84              1                         12                 $fclose(fd);
+# 
+#     85              1                         12                 success = 1;
+# 
+# 
+# Toggle Coverage:
+#     Enabled Coverage              Bins      Hits    Misses  Coverage
+#     ----------------              ----      ----    ------  --------
+#     Toggles                        220        92       128    41.81%
+# 
+# ================================Toggle Details================================
+# 
+# Toggle Coverage for instance /\atm_tb#atm_instance /authenticator --
+# 
+#                                               Node      1H->0L      0L->1H  "Coverage"
+#                                               ---------------------------------------
+#                                      acc_auth_stat           1           1      100.00 
+#                                     acc_found_stat           1           1      100.00 
+#                                     acc_index[0-3]           1           1      100.00 
+#                                 acc_index_out[0-3]           1           1      100.00 
+#                                       acc_num[0-3]           1           1      100.00 
+#                                           fd[0-31]           0           0        0.00 
+#                                             i[0-3]           1           1      100.00 
+#                                            i[4-31]           0           0        0.00 
+#                                       newPin[0-13]           1           1      100.00 
+#                                      newPin[14-15]           0           0        0.00 
+#                                          pin[0-13]           1           1      100.00 
+#                                         pin[14-15]           0           0        0.00 
+# 
+# Total Node Count     =        110 
+# Toggled Node Count   =         46 
+# Untoggled Node Count =         64 
+# 
+# Toggle Coverage      =      41.81% (92 of 220 bins)
+# 
+# =================================================================================
+# === Instance: /\atm_tb#atm_instance 
+# === Design Unit: work.ATM
+# =================================================================================
+# 
+# Assertion Coverage:
+#     Assertions                       4         4         0   100.00%
+# --------------------------------------------------------------------
+# Name                 File(Line)                   Failure      Pass 
+#                                                   Count        Count
+# --------------------------------------------------------------------
+# /\atm_tb#atm_instance /withdraw_NotSufficientFunds
+#                      ./System_Verilog_Code/atm.sv(139)
+#                                                         0          1
+# /\atm_tb#atm_instance /withdraw
+#                      ./System_Verilog_Code/atm.sv(138)
+#                                                         0          1
+# /\atm_tb#atm_instance /deposit
+#                      ./System_Verilog_Code/atm.sv(137)
+#                                                         0          1
+# /\atm_tb#atm_instance /show_balance
+#                      ./System_Verilog_Code/atm.sv(136)
+#                                                         0          1
+# Branch Coverage:
+#     Enabled Coverage              Bins      Hits    Misses  Coverage
+#     ----------------              ----      ----    ------  --------
+#     Branches                        28        25         3    89.28%
+# 
+# ================================Branch Details================================
+# 
+# Branch Coverage for instance /\atm_tb#atm_instance 
+# 
+#     Line         Item                      Count     Source 
+#     ----         ----                      -----     ------ 
+#   File ./System_Verilog_Code/atm.sv
+# ------------------------------------IF Branch------------------------------------
+#     43                                       336     Count coming in to IF
+#     43              1                          2       if (!rst) begin
+# 
+#     46              1                        334       else begin
+# 
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------CASE Branch------------------------------------
+#     53                                       424     Count coming in to CASE
+#     54              1                        143             `WAITING: begin
+# 
+#     62              1                         94             `AUTHENTICATION: begin
+# 
+#     73              1                         72             `MENU: begin
+# 
+#     93              1                         26             `BALANCE: begin
+# 
+#     100             1                         42             `WITHDRAW: begin
+# 
+#     107             1                         23             `DEPOSIT: begin
+# 
+#     114             1                         22             `CHANGE_PIN: begin
+# 
+#     121             1                          2             `IDLE: begin
+# 
+#     123             1                    ***0***             default: begin
+# 
+# Branch totals: 8 hits of 9 branches = 88.88%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     55                                       143     Count coming in to IF
+#     55              1                        136             if (acc_found_stat == `TRUE) begin
+# 
+#     58              1                          7             else begin
+# 
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     63                                        94     Count coming in to IF
+#     63              1                         22                 if (acc_auth_stat == `ACCOUNT_NOT_AUTHENTICATED) begin
+# 
+#     67              1                         72                 else begin
+# 
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------CASE Branch------------------------------------
+#     75                                        72     Count coming in to CASE
+#     76              1                         15                 `BALANCE: begin
+# 
+#     79              1                         22                 `WITHDRAW: begin
+# 
+#     82              1                         13                 `DEPOSIT: begin
+# 
+#     85              1                         22                 `CHANGE_PIN: begin
+# 
+#     88              1                    ***0***                 default: begin
+# 
+# Branch totals: 4 hits of 5 branches = 80.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     94                                        26     Count coming in to IF
+#     94              1                         15                 if (authenticatedFlag == 0) begin
+# 
+#                                               11     All False Count
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     101                                       42     Count coming in to IF
+#     101             1                         22                 if (authenticatedFlag == 0) begin
+# 
+#                                               20     All False Count
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     108                                       23     Count coming in to IF
+#     108             1                         13                 if (authenticatedFlag == 0) begin
+# 
+#                                               10     All False Count
+# Branch totals: 2 hits of 2 branches = 100.00%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     115                                       22     Count coming in to IF
+#     115             1                         22                 if (authenticatedFlag == 0) begin
+# 
+#                                          ***0***     All False Count
+# Branch totals: 1 hit of 2 branches = 50.00%
+# 
+# 
+# Statement Coverage:
+#     Enabled Coverage              Bins      Hits    Misses  Coverage
+#     ----------------              ----      ----    ------  --------
+#     Statements                      41        39         2    95.12%
+# 
+# ================================Statement Details================================
+# 
+# Statement Coverage for instance /\atm_tb#atm_instance  --
+# 
+#     Line         Item                      Count     Source 
+#     ----         ----                      -----     ------ 
+#   File ./System_Verilog_Code/atm.sv
+#     5                                                module ATM (clk,rst,operation,acc_num,pin,newPin,amount,language,balance,success,state);
+# 
+#     6                                                input clk;
+# 
+#     7                                                input rst;
+# 
+#     8                                                input [2:0] operation;
+# 
+#     9                                                input [3:0] acc_num;
+# 
+#     10                                               input [15:0] pin;
+# 
+#     11                                               input [15:0] newPin;
+# 
+#     12                                               input [31:0] amount;
+# 
+#     13                                               input language;
+# 
+#     14                                               output reg [31:0] balance;
+# 
+#     15                                               output reg success;
+# 
+#     16                                               output reg [2:0] state;
+# 
+#     17                                               
+# 
+#     18                                               reg [2:0] next_state = `WAITING;
+# 
+#     19                                               reg [2:0] current_state = `IDLE;
+# 
+#     20                                               wire [3:0] acc_index;
+# 
+#     21                                               wire acc_found_stat;
+# 
+#     22                                               wire acc_auth_stat;
+# 
+#     23                                               reg authenticatedFlag = 1;
+# 
+#     24                                               integer fd;
+# 
+#     25                                               integer i;
+# 
+#     26                                               
+# 
+#     27                                               reg [31:0] balance_database [9:0];
+# 
+#     28                                               
+# 
+#     29                                                 initial begin
+# 
+#     30              1                          1         fd = $fopen("./Database/balance_DB.txt", "r");
+# 
+#     31              1                          1         for (i = 0; i < 10 ; i = i +1 ) begin
+# 
+#     31              2                         10     
+#     32              1                         10             $fscanf(fd, "%d\n", balance_database[i]);
+# 
+#     33                                                   end
+# 
+#     34              1                          1         $fclose(fd);  
+# 
+#     35                                                 end
+# 
+#     36                                               
+# 
+#     37                                               
+# 
+#     38                                               
+# 
+#     39                                               Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat, newPin);
+# 
+#     40                                               ATM_Functions functions ();
+# 
+#     41                                               
+# 
+#     42              1                        336     always @(posedge clk or negedge rst) begin
+# 
+#     43                                                 if (!rst) begin
+# 
+#     44              1                          2         current_state <= `IDLE;
+# 
+#     45                                                 end
+# 
+#     46                                                 else begin
+# 
+#     47              1                        334         current_state <= next_state;
+# 
+#     48                                                 end
+# 
+#     49                                               end
+# 
+#     50                                               
+# 
+#     51              1                        425     always @(current_state or operation or acc_num or language or amount or newPin or pin ) begin
+# 
+#     52                                                   
+# 
+#     53                                                   case (current_state)
+# 
+#     54                                                       `WAITING: begin
+# 
+#     55                                                       if (acc_found_stat == `TRUE) begin
+# 
+#     56              1                        136                 next_state = `AUTHENTICATION;
+# 
+#     57                                                       end
+# 
+#     58                                                       else begin
+# 
+#     59              1                          7                 next_state = `WAITING;
+# 
+#     60                                                       end
+# 
+#     61                                                       end
+# 
+#     62                                                       `AUTHENTICATION: begin
+# 
+#     63                                                           if (acc_auth_stat == `ACCOUNT_NOT_AUTHENTICATED) begin
+# 
+#     64              1                         22                     next_state = `WAITING;
+# 
+#     65              1                         22                     success = 0;
+# 
+#     66                                                           end
+# 
+#     67                                                           else begin
+# 
+#     68              1                         72                     next_state = `MENU;
+# 
+#     69              1                         72                     authenticatedFlag = 0;
+# 
+#     70              1                         72                     success = 0;
+# 
+#     71                                                           end
+# 
+#     72                                                       end
+# 
+#     73                                                       `MENU: begin
+# 
+#     74                                                         
+# 
+#     75                                                       case (operation)
+# 
+#     76                                                           `BALANCE: begin
+# 
+#     77              1                         15                 next_state = `BALANCE;
+# 
+#     78                                                           end
+# 
+#     79                                                           `WITHDRAW: begin
+# 
+#     80              1                         22                 next_state = `WITHDRAW;
+# 
+#     81                                                           end
+# 
+#     82                                                           `DEPOSIT: begin
+# 
+#     83              1                         13                 next_state = `DEPOSIT;
+# 
+#     84                                                           end
+# 
+#     85                                                           `CHANGE_PIN: begin
+# 
+#     86              1                         22                 next_state = `CHANGE_PIN;
+# 
+#     87                                                           end
+# 
+#     88                                                           default: begin
+# 
+#     89              1                    ***0***                 next_state = `MENU;
+# 
+#     90                                                           end
+# 
+#     91                                                       endcase
+# 
+#     92                                                       end
+# 
+#     93                                                       `BALANCE: begin
+# 
+#     94                                                           if (authenticatedFlag == 0) begin
+# 
+#     95              1                         15                     functions.showBalanceInfo(balance_database[acc_index],success);
+# 
+#     96              1                         15                     authenticatedFlag = 1;
+# 
+#     97                                                           end            
+# 
+#     98              1                         26                 next_state = `WAITING;
+# 
+#     99                                                       end
+# 
+#     100                                                      `WITHDRAW: begin
+# 
+#     101                                                          if (authenticatedFlag == 0) begin
+# 
+#     102             1                         22                     functions.withdrawAndUpdate(amount,balance_database[acc_index],balance_database[acc_index],success);
+# 
+#     103             1                         22                     authenticatedFlag = 1;
+# 
+#     104                                                          end
+# 
+#     105             1                         42                 next_state = `WAITING;
+# 
+#     106                                                      end
+# 
+#     107                                                      `DEPOSIT: begin
+# 
+#     108                                                          if (authenticatedFlag == 0) begin
+# 
+#     109             1                         13                     functions.Deposit_Money(amount,balance_database[acc_index],balance_database[acc_index],success);
+# 
+#     110             1                         13                     authenticatedFlag = 1;
+# 
+#     111                                                          end
+# 
+#     112             1                         23                 next_state = `WAITING;
+# 
+#     113                                                      end
+# 
+#     114                                                      `CHANGE_PIN: begin
+# 
+#     115                                                          if (authenticatedFlag == 0) begin
+# 
+#     116             1                         22                     authenticator.changePinProcess(newPin,acc_index,success);
+# 
+#     117             1                         22                     authenticatedFlag = 1;
+# 
+#     118                                                          end
+# 
+#     119             1                         22                 next_state = `WAITING;
+# 
+#     120                                                      end
+# 
+#     121                                                      `IDLE: begin
+# 
+#     122                                                      end
+# 
+#     123                                                      default: begin
+# 
+#     124             1                    ***0***                 next_state = `WAITING;
+# 
+#     125                                                      end
+# 
+#     126                                                  endcase
+# 
+#     127             1                        424         balance = balance_database[acc_index];
+# 
+#     128             1                        424         fd = $fopen("./Database/balance_DB.txt", "w");
+# 
+#     129             1                        424         for (i = 0; i < 10 ; i = i +1 ) begin
+# 
+#     129             2                       4240     
+#     130             1                       4240             $fwrite(fd, "%d\n", balance_database[i]);
+# 
+#     131                                                  end
+# 
+#     132             1                        424         $fclose(fd);
+# 
+#     133             1                        424         state = current_state;
+# 
+# 
+# Toggle Coverage:
+#     Enabled Coverage              Bins      Hits    Misses  Coverage
+#     ----------------              ----      ----    ------  --------
+#     Toggles                        374       165       209    44.11%
+# 
+# ================================Toggle Details================================
+# 
+# Toggle Coverage for instance /\atm_tb#atm_instance  --
+# 
+#                                               Node      1H->0L      0L->1H  "Coverage"
+#                                               ---------------------------------------
+#                                      acc_auth_stat           1           1      100.00 
+#                                     acc_found_stat           1           1      100.00 
+#                                     acc_index[0-3]           1           1      100.00 
+#                                       acc_num[0-3]           1           1      100.00 
+#                                       amount[0-13]           1           1      100.00 
+#                                      amount[14-31]           0           0        0.00 
+#                                  authenticatedFlag           1           1      100.00 
+#                                     balance[31-14]           0           0        0.00 
+#                                      balance[13-0]           1           1      100.00 
+#                                                clk           1           1      100.00 
+#                                 current_state[2-0]           1           1      100.00 
+#                                           fd[31-0]           0           0        0.00 
+#                                            i[31-0]           0           0        0.00 
+#                                           language           1           1      100.00 
+#                                       newPin[0-13]           1           1      100.00 
+#                                      newPin[14-15]           0           0        0.00 
+#                                    next_state[2-0]           1           1      100.00 
+#                                     operation[0-2]           1           1      100.00 
+#                                          pin[0-13]           1           1      100.00 
+#                                         pin[14-15]           0           0        0.00 
+#                                                rst           0           1       50.00 
+#                                         state[2-0]           1           1      100.00 
+#                                            success           1           1      100.00 
+# 
+# Total Node Count     =        187 
+# Toggled Node Count   =         82 
+# Untoggled Node Count =        105 
+# 
+# Toggle Coverage      =      44.11% (165 of 374 bins)
+# 
+# 
+# ASSERTION RESULTS:
+# --------------------------------------------------------------------
+# Name                 File(Line)                   Failure      Pass 
+#                                                   Count        Count
+# --------------------------------------------------------------------
+# /\atm_tb#atm_instance /withdraw_NotSufficientFunds
+#                      ./System_Verilog_Code/atm.sv(139)
+#                                                         0          1
+# /\atm_tb#atm_instance /withdraw
+#                      ./System_Verilog_Code/atm.sv(138)
+#                                                         0          1
+# /\atm_tb#atm_instance /deposit
+#                      ./System_Verilog_Code/atm.sv(137)
+#                                                         0          1
+# /\atm_tb#atm_instance /show_balance
+#                      ./System_Verilog_Code/atm.sv(136)
+#                                                         0          1
+# 
+# Total Coverage By Instance (filtered view): 85.19%
