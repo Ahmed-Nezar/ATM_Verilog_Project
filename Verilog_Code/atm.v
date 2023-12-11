@@ -135,6 +135,7 @@ end
 
 //      psl show_balance: assert always((state == 2 && operation == 3) -> next(balance == balance_database[prev(acc_index)] ))  @(posedge clk);
 //      psl deposit: assert always((state == 2 && operation ==5) -> next (balance == (prev(balance) + prev(amount))))  @(posedge clk);
-//      psl withdraw: assert always((state == 2 && operation ==4 && amount < balance) -> next (balance == (prev(balance) - prev(amount))))  @(posedge clk);
-  
+//      psl withdraw: assert always((state == 2 && operation ==4 && (amount <= balance)) -> next (balance == (prev(balance) - prev(amount))))  @(posedge clk);
+//      psl withdraw_NotSufficientFunds: assert always((state == 2 && operation ==6 && (amount>balance) ) -> next (balance == prev(balance)))  @(posedge clk);  
+
 endmodule
