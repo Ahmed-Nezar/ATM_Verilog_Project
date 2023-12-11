@@ -27,7 +27,11 @@ integer i;
 reg [31:0] balance_database [9:0];
 
   initial begin
-     $readmemb("./Database/balance_DB.txt" , balance_database);  
+    fd = $fopen("./Database/balance_DB.txt", "r");
+    for (i = 0; i < 10 ; i = i +1 ) begin
+        $fscanf(fd, "%d\n", balance_database[i]);
+    end
+    $fclose(fd);  
   end
 
 
@@ -123,7 +127,7 @@ always @(current_state or operation or acc_num or language or amount or newPin o
     balance = balance_database[acc_index];
     fd = $fopen("./Database/balance_DB.txt", "w");
     for (i = 0; i < 10 ; i = i +1 ) begin
-        $fwrite(fd, "%b\n", balance_database[i]);
+        $fwrite(fd, "%d\n", balance_database[i]);
     end
     $fclose(fd);
     state = current_state;
@@ -131,6 +135,6 @@ end
 
 //      psl show_balance: assert always((state == 2 && operation == 3) -> next(balance == balance_database[prev(acc_index)] ))  @(posedge clk);
 //      psl deposit: assert always((state == 2 && operation ==5) -> next (balance == (prev(balance) + prev(amount))))  @(posedge clk);
-//      psl withdraw: assert always((state == 2 && operation ==4) -> next (balance == (prev(balance) - prev(amount))))  @(posedge clk);
+//      psl withdraw: assert always((state == 2 && operation ==4 && amount < balance) -> next (balance == (prev(balance) - prev(amount))))  @(posedge clk);
   
 endmodule

@@ -12,8 +12,16 @@ integer fd;
 
 // intializing the account number and pin in decimal format as in reference model
 initial begin
-    $readmemb("./Database/accounts.txt" , acc_num_db);
-    $readmemb("./Database/pins.txt" , pin_db);
+    fd = $fopen("./Database/accounts.txt", "r");
+    for (integer i = 0; i < 10 ; i = i +1 ) begin
+        $fscanf(fd, "%d\n", acc_num_db[i]);
+    end
+    $fclose(fd);
+    fd = $fopen("./Database/pins.txt", "r");
+    for (integer i = 0; i < 10 ; i = i +1 ) begin
+        $fscanf(fd, "%d\n", pin_db[i]);
+    end
+    $fclose(fd);
 end
 
 // find the account number in the database & adjusting mask
@@ -71,7 +79,7 @@ end
             pin_db[acc_index] = newPin;
             fd = $fopen("./Database/pins.txt", "w"); 
             for (i = 0; i < 10 ; i = i +1 ) begin
-                $fwrite(fd, "%b\n", pin_db[i]);
+                $fwrite(fd, "%d\n", pin_db[i]);
             end
             $fclose(fd);
             success = 1;
