@@ -107,7 +107,17 @@ module atm_tb;
             end
         end
         /***************************************************************************************************/
-              
+
+        // Accounts that doesn't exist
+        for (i = 0; i < 10 ; i = i +1 ) begin
+            rst = 1; operation = 3; acc_num = 10+i; pin = pin_db[9-i]; amount = 0; language = 0; Newpin = 0;
+            repeat(4) @(negedge clk);
+            if (success != 0) begin
+                $display("Test Failed");
+            end
+        end
+        /***************************************************************************************************/              
+        
         // wrong pin
         for (i = 0; i < 10 ; i = i +1 ) begin
             rst = 1; operation = 3; acc_num = acc_num_db[i]; pin = pin_db[9-i]; amount = 0; language = 0; Newpin = 0;
