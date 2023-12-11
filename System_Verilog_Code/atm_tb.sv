@@ -110,6 +110,13 @@ module atm_tb;
             end
         end
         /***************************************************************************************************/
+           // Change pin but having the same pin
+        for ( i = 0; i < 10 ; i = i + 1 ) begin
+            rst = 1; operation = 6; acc_num = acc_num_db[i]; pin = pin_db[i]; amount = 0; language = 0; Newpin = pin_db[i]; 
+            repeat(4) @(negedge clk);
+        end
+        
+        /***************************************************************************************************/
          
          // Changing pins for all accounts
         rst = 1; operation = 6; acc_num = 1; pin = 1234; amount = 0; language = 0; Newpin = 5678;
@@ -142,7 +149,7 @@ module atm_tb;
         rst = 1; operation = 6; acc_num = 10; pin = 7123; amount = 0; language = 0; Newpin = 4567;
         repeat(4) @(negedge clk);
         /***************************************************************************************************/
-        
+
         fd = $fopen("./Database/pins.txt", "r");
         for (i = 0; i < 10 ; i = i +1 ) begin
             $fscanf(fd, "%d\n", pin_random[i]);
