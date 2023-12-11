@@ -163,7 +163,7 @@ module atm_tb;
         end
         $fclose(fd);
         // random testing
-        for (i = 0 ; i < 10 ; i ++) begin
+        for (i = 0 ; i < 10 ; i = i + 1) begin
             rst = 1;
             operation = $urandom_range(3,6);
             acc_num = i+1;
