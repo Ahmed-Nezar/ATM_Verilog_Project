@@ -81,6 +81,13 @@ module atm_tb;
         end
         /***************************************************************************************************/
         
+        // Withdraw more than balance
+            for (i = 0; i < 10 ; i = i +1 ) begin
+                rst = 1; operation = 4; acc_num = acc_num_db[i]; pin = pin_db[i]; amount = balance_database[i] + 100; language = 0; Newpin = 0;
+                repeat(4) @(negedge clk);
+            end
+
+        /***************************************************************************************************/
         // deposit 1000 for all accounts
         for (i = 0; i < 10 ; i = i +1 ) begin
             rst = 1; operation = 5; acc_num = acc_num_db[i]; pin = pin_db[i]; amount = 1000; language = 0; Newpin = 0;
@@ -100,7 +107,7 @@ module atm_tb;
             end
         end
         /***************************************************************************************************/
-
+              
         // wrong pin
         for (i = 0; i < 10 ; i = i +1 ) begin
             rst = 1; operation = 3; acc_num = acc_num_db[i]; pin = pin_db[9-i]; amount = 0; language = 0; Newpin = 0;
@@ -115,7 +122,7 @@ module atm_tb;
             rst = 1; operation = 6; acc_num = acc_num_db[i]; pin = pin_db[i]; amount = 0; language = 0; Newpin = pin_db[i]; 
             repeat(4) @(negedge clk);
         end
-        
+
         /***************************************************************************************************/
          
          // Changing pins for all accounts
