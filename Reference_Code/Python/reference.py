@@ -8,16 +8,20 @@ def generate_data():
             - Pin
             - Balance
     '''
-    data = {
-    "Account Number": [1,2,3,4,5,6,7,8,9,10],
-    "Pin": [1234,2345,3456,
-            4567,5678,6789
-            ,7890,8901,9012
-            ,7123],
-    "Balance": [1000,2000,3000,4000,5000,6000,7000,8000,9000,10000],
-            }   
+    data = pd.read_csv("Reference_Code\Python\data.csv") 
 
     return pd.DataFrame(data)
+
+inputs = {
+    
+     "Account":[],
+     "Amount":[],
+     "Operations":[],
+     "Pins":[],
+     "Newpin":[],
+     "Language":[],
+     
+}
 
 def card_handling(account_number, pin):
     
@@ -39,6 +43,7 @@ def choose_language():
     print("1. English")
     print("2. Arabic")
     language_choice = input("Enter your choice (1 or 2): ")
+    inputs["Language"].append(language_choice) 
     if language_choice == "1":
         return "English"
     elif language_choice == "2":
@@ -81,16 +86,21 @@ def operations():
             print(f"{key}. {value}")
 
         choice = input(f"Enter your choice ({language}): ")
-
+        
         if choice == "1":
+            inputs["Operations"].append(6)
             change_pin(account_number)
+             
         elif choice == "2":
+            inputs["Operations"].append(4) 
             withdraw(account_number)
             exit()
             break
         elif choice == "3":
+            inputs["Operations"].append(5) 
             deposit(account_number)
         elif choice == "4":
+            inputs["Operations"].append(3) 
             balance_enquiry(account_number)
         elif choice == "5":
             exit()
@@ -107,6 +117,7 @@ def withdraw(account_number):
     amount = float(input("Enter the amount to withdraw: "))
     index = data[data["Account Number"] == account_number].index[0]
     balance = data.at[index, "Balance"]
+    inputs["Amount"].append(amount)
 
     if amount <= 0:
             print("Invalid amount. Please enter a positive value.")
@@ -124,6 +135,7 @@ def deposit(account_number):
         prints the balance after deposit
     '''
     amount = float(input("Enter the amount to deposit: "))
+    inputs["Amount"].append(amount)
     index = data[data["Account Number"] == account_number].index[0]
     data.at[index, "Balance"] += amount
     print(f"Deposit successful. Your new balance is: {data.at[index, 'Balance']}")
@@ -149,6 +161,7 @@ def change_pin(account_number):
 
    while True:
     new_pin = input("Enter your new 4-digit PIN: ")
+    inputs["Newpin"].append(new_pin)
     
     if new_pin.isdigit() and len(new_pin) == 4:
         index = data[data["Account Number"] == account_number].index[0]
@@ -177,15 +190,23 @@ if __name__ == "__main__":
     data = generate_data()
     print("Welcome to ATM")
     # choose language
-
+    
     # Main Pragram Loop
     while True:
         print("Enter your card")
         account_number = int(input("Enter your account number: "))
         pin = int(input("Enter your pin: "))
+        inputs["Pins"].append(pin)
+        inputs["Account"].append(account_number)
         if card_handling(account_number, pin):
             print("Card accepted")
             operations()
+            target_size = len(inputs["Account"])
+            inputs["Amount"] += [0] * (target_size - len(inputs["Amount"]))
+            inputs["Newpin"] += [0] * (target_size - len(inputs["Newpin"]))
+            inputs["Operations"]+=[0] * (target_size - len(inputs["Operations"]))
+            data.to_csv("Reference_Code\Python\outputs.csv")
+            pd.DataFrame(inputs).to_csv("Reference_Code\Python\inputs.csv")
         else:
             print("Card not accepted")
             print("Please try again")
