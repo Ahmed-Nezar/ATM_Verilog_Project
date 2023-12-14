@@ -57,6 +57,7 @@ always @(current_state or operation or acc_num or language or amount or newPin o
         end
         else begin
             next_state = `WAITING;
+            success = 0;
         end
         end
         `AUTHENTICATION: begin

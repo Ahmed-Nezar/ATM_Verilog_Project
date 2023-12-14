@@ -10,16 +10,15 @@ reg [10:0] acc_num_db [9:0];
 reg [15:0] pin_db [9:0]; 
 integer fd;
 integer i;
-
 // intializing the account number and pin in decimal format as in reference model
 initial begin
     fd = $fopen("./Database/accounts.txt", "r");
-    for ( i = 0; i < 10 ; i = i +1 ) begin
+    for (i = 0; i < 10 ; i = i +1 ) begin
         $fscanf(fd, "%d\n", acc_num_db[i]);
     end
     $fclose(fd);
     fd = $fopen("./Database/pins.txt", "r");
-    for ( i = 0; i < 10 ; i = i +1 ) begin
+    for (i = 0; i < 10 ; i = i +1 ) begin
         $fscanf(fd, "%d\n", pin_db[i]);
     end
     $fclose(fd);
