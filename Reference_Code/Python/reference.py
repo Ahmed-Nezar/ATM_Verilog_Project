@@ -94,6 +94,7 @@ def operations():
             balance_enquiry(account_number)
         elif choice == "5":
             exit()
+            break
         else:
             print("Invalid option. Please try again.")
     
