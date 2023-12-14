@@ -167,6 +167,12 @@ module atm_tb;
         repeat(4) @(negedge clk);
         /***************************************************************************************************/
 
+         // Testing counter
+        rst = 1; operation = 7; acc_num = 1; pin = pin_db[0]; amount = 0; language = 0; Newpin = 0;
+        repeat(7) @(negedge clk);
+        
+        /***************************************************************************************************/
+         
         fd = $fopen("./Database/pins.txt", "r");
         for (i = 0; i < 10 ; i = i +1 ) begin
             $fscanf(fd, "%d\n", pin_random[i]);

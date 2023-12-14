@@ -23,6 +23,7 @@ wire acc_auth_stat;
 reg authenticatedFlag = 1;
 integer fd;
 integer i;
+integer counter;
 
 reg [31:0] balance_database [9:0];
 
@@ -38,6 +39,13 @@ reg [31:0] balance_database [9:0];
 
 Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat, newPin);
 ATM_Functions functions ();
+always @(negedge clk) begin
+    counter = counter + 1;
+    if (counter >= 5) begin
+        next_state =  `WAITING;
+        counter = 0;
+    end
+end
 
 always @(posedge clk or negedge rst) begin
   if (!rst) begin
@@ -49,7 +57,8 @@ always @(posedge clk or negedge rst) begin
 end
 
 always @(current_state or operation or acc_num or language or amount or newPin or pin ) begin
-    
+    $display("counter = %d",counter );
+    counter = 0;    
     case (current_state)
         `WAITING: begin
         if (acc_found_stat == `TRUE) begin
