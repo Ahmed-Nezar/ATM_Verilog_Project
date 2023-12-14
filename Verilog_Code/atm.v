@@ -40,8 +40,9 @@ reg [31:0] balance_database [9:0];
 Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat, newPin);
 ATM_Functions functions ();
 always @(negedge clk) begin
+    $display("counter = %d",counter );
     counter = counter + 1;
-    if (counter >= 5) begin
+    if (counter >= 4) begin
         next_state =  `WAITING;
         counter = 0;
     end
@@ -57,7 +58,7 @@ always @(posedge clk or negedge rst) begin
 end
 
 always @(current_state or operation or acc_num or language or amount or newPin or pin ) begin
-    $display("counter = %d",counter );
+    
     counter = 0;    
     case (current_state)
         `WAITING: begin
@@ -96,7 +97,7 @@ always @(current_state or operation or acc_num or language or amount or newPin o
             next_state = `CHANGE_PIN;
             end
             default: begin
-            next_state = `MENU;
+            current_state = current_state;
             end
         endcase
         end
