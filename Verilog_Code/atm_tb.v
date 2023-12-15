@@ -17,7 +17,7 @@ module atm_tb;
     reg [13:0] pin_random [9:0];
 
     reg [13:0] pin_db [9:0];
-    reg [13:0] balance_database [9:0];
+    reg [31:0] balance_database [9:0];
     reg [10:0] acc_num_db [9:0];
     reg[3:0] i;
     reg[31:0] fd;
