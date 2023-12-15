@@ -20,7 +20,7 @@ reg [2:0] current_state = `IDLE;
 wire [3:0] acc_index;
 wire acc_found_stat;
 wire acc_auth_stat;
-reg authenticatedFlag = 1;
+reg authenticatedFlag = `FALSE;
 reg[31:0] fd;
 reg[3:0] i;
 reg[3:0] counter;
@@ -77,55 +77,52 @@ always @(current_state or operation or acc_num or language or amount or newPin o
             end
             else begin
                 next_state = `MENU;
-                authenticatedFlag = 0;
+                authenticatedFlag = `TRUE;
                 success = 0;
             end
         end
         `MENU: begin
-          
-        case (operation)
-            `BALANCE: begin
-            next_state = `BALANCE;
+            if (operation == `BALANCE) begin
+                next_state = `BALANCE;
             end
-            `WITHDRAW: begin
-            next_state = `WITHDRAW;
+            else if (operation == `WITHDRAW) begin
+                next_state = `WITHDRAW;
             end
-            `DEPOSIT: begin
-            next_state = `DEPOSIT;
+            else if (operation == `DEPOSIT) begin
+                next_state = `DEPOSIT;
             end
-            `CHANGE_PIN: begin
-            next_state = `CHANGE_PIN;
+            else if (operation == `CHANGE_PIN) begin
+                next_state = `CHANGE_PIN;
             end
-            default: begin
-            current_state = current_state;
+            else begin
+                next_state = `MENU;
             end
-        endcase
         end
         `BALANCE: begin
-            if (authenticatedFlag == 0) begin
+            if (authenticatedFlag == `TRUE) begin
                 functions.showBalanceInfo(balance_database[acc_index],success);
-                authenticatedFlag = 1;
+                authenticatedFlag = `FALSE;
             end            
             next_state = `WAITING;
         end
         `WITHDRAW: begin
-            if (authenticatedFlag == 0) begin
+            if (authenticatedFlag == `TRUE) begin
                 functions.withdrawAndUpdate(amount,balance_database[acc_index],balance_database[acc_index],success);
-                authenticatedFlag = 1;
+                authenticatedFlag = `FALSE;
             end
             next_state = `WAITING;
         end
         `DEPOSIT: begin
-            if (authenticatedFlag == 0) begin
+            if (authenticatedFlag == `TRUE) begin
                 functions.Deposit_Money(amount,balance_database[acc_index],balance_database[acc_index],success);
-                authenticatedFlag = 1;
+                authenticatedFlag = `FALSE;
             end
             next_state = `WAITING;
         end
         `CHANGE_PIN: begin
-            if (authenticatedFlag == 0) begin
+            if (authenticatedFlag == `TRUE) begin
                 authenticator.changePinProcess(newPin,acc_index,success);
-                authenticatedFlag = 1;
+                authenticatedFlag = `FALSE;
             end
             next_state = `WAITING;
         end
@@ -144,9 +141,9 @@ always @(current_state or operation or acc_num or language or amount or newPin o
     state = current_state;
 end
 
-//      psl show_balance: assert always((state == 2 && operation == 3) -> next(balance == balance_database[prev(acc_index)] ))  @(posedge clk);
-//      psl deposit: assert always((state == 2 && operation ==5) -> next (balance == (prev(balance) + prev(amount))))  @(posedge clk);
-//      psl withdraw: assert always((state == 2 && operation ==4 && (amount <= balance)) -> next (balance == (prev(balance) - prev(amount))))  @(posedge clk);
-//      psl withdraw_NotSufficientFunds: assert always((state == 2 && operation ==6 && (amount>balance) ) -> next (balance == prev(balance)))  @(posedge clk);  
+//      psl show_balance: assert always((state == 2 && operation == 3) -> next(balance == balance_database[prev(acc_index)] ) abort !rst)  @(posedge clk);
+//      psl deposit: assert always((state == 2 && operation ==5) -> next (balance == (prev(balance) + prev(amount))) abort !rst)  @(posedge clk);
+//      psl withdraw: assert always((state == 2 && operation ==4 && (amount <= balance)) -> next (balance == (prev(balance) - prev(amount))) abort !rst)  @(posedge clk);
+//      psl withdraw_NotSufficientFunds: assert always((state == 2 && operation ==6 && (amount>balance) ) -> next (balance == prev(balance)) abort !rst)  @(posedge clk);  
 
 endmodule
