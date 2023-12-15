@@ -6,3 +6,10 @@ It consists of Refrence_Code folder which contains the python code of the ATM sy
 - You can find the readme file in the Reference_Code folder which explains the code structure and how to use it.
 ## Verilog Code Structure
 - You can find the readme file in the Verilog_code folder which explains the code structure and how to use it.
+
+## How to Run Synthesis on Questasim
+```bash
+vlog +acc ./Verilog_Code/atm.v
+vsim -debugdb=+acc work.ATM
+```
+- Then click on view -> schematics -> You will schematics of each module
