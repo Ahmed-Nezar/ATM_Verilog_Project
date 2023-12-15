@@ -1,7 +1,7 @@
-Statement Coverage:
+# Statement Coverage:
 #     Enabled Coverage            Active      Hits    Misses % Covered
 #     ----------------            ------      ----    ------ ---------
-#     Stmts                           45        43         2      95.5
+#     Stmts                           51        49         2      96.0
 # 
 # ================================Statement Details================================
 # 
@@ -16,11 +16,11 @@ Statement Coverage:
 #     7                                                input rst;
 #     8                                                input [2:0] operation;
 #     9                                                input [3:0] acc_num;
-#     10                                               input [15:0] pin;
-#     11                                               input [15:0] newPin;
-#     12                                               input [31:0] amount;
+#     10                                               input [13:0] pin;
+#     11                                               input [13:0] newPin;
+#     12                                               input [13:0] amount;
 #     13                                               input language;
-#     14                                               output reg [31:0] balance;
+#     14                                               output reg [13:0] balance;
 #     15                                               output reg success;
 #     16                                               output reg [2:0] state;
 #     17                                               
@@ -30,198 +30,214 @@ Statement Coverage:
 #     21                                               wire acc_found_stat;
 #     22                                               wire acc_auth_stat;
 #     23              1                          1     reg authenticatedFlag = 1;
-#     24                                               integer fd;
-#     25                                               integer i;
-#     26                                               
-#     27                                               reg [31:0] balance_database [9:0];
-#     28                                               
-#     29                                                 initial begin
-#     30              1                          1         fd = $fopen("./Database/balance_DB.txt", "r");
-#     31              1                          1         for (i = 0; i < 10 ; i = i +1 ) begin
-#     31              2                         10     
-#     32              1                         10             $fscanf(fd, "%d\n", balance_database[i]);
-#     33                                                   end
-#     34              1                          1         $fclose(fd);  
-#     35                                                 end
-#     36                                               
+#     24                                               reg[31:0] fd;
+#     25                                               reg[3:0] i;
+#     26                                               reg[3:0] counter;
+#     27                                               
+#     28                                               reg [31:0] balance_database [9:0];
+#     29                                               
+#     30                                                 initial begin
+#     31              1                          1         fd = $fopen("./Database/balance_DB.txt", "r");
+#     32              1                          1         for (i = 0; i < 10 ; i = i +1 ) begin
+#     32              2                         10     
+#     33              1                         10             $fscanf(fd, "%d\n", balance_database[i]);
+#     34                                                   end
+#     35              1                          1         $fclose(fd);  
+#     36                                                 end
 #     37                                               
 #     38                                               
-#     39                                               Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat, newPin);
-#     40                                               ATM_Functions functions ();
-#     41                                               
-#     42              1                        320     always @(posedge clk or negedge rst) begin
-#     43                                                 if (!rst) begin
-#     44              1                          2         current_state <= `IDLE;
-#     45                                                 end
-#     46                                                 else begin
-#     47              1                        318         current_state <= next_state;
-#     48                                                 end
+#     39                                               
+#     40                                               Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat, newPin);
+#     41                                               ATM_Functions functions ();
+#     42              1                        348     always @(negedge clk) begin
+#     43              1                        348         $display("counter = %d",counter );
+#     44              1                        348         counter = counter + 1;
+#     45                                                   if (counter >= 4) begin
+#     46              1                          6             next_state =  `WAITING;
+#     47              1                          6             counter = 0;
+#     48                                                   end
 #     49                                               end
 #     50                                               
-#     51              1                        404     always @(current_state or operation or acc_num or language or amount or newPin or pin ) begin
-#     52                                                   
-#     53                                                   case (current_state)
-#     54                                                       `WAITING: begin
-#     55                                                       if (acc_found_stat == `TRUE) begin
-#     56              1                        127                 next_state = `AUTHENTICATION;
-#     57                                                       end
-#     58                                                       else begin
-#     59              1                          6                 next_state = `WAITING;
-#     60              1                          6                 success = 0;
-#     61                                                       end
-#     62                                                       end
-#     63                                                       `AUTHENTICATION: begin
-#     64                                                           if (acc_auth_stat == `ACCOUNT_NOT_AUTHENTICATED) begin
-#     65              1                         18                     next_state = `WAITING;
-#     66              1                         18                     success = 0;
-#     67                                                           end
-#     68                                                           else begin
-#     69              1                         70                     next_state = `MENU;
-#     70              1                         70                     authenticatedFlag = 0;
-#     71              1                         70                     success = 0;
-#     72                                                           end
-#     73                                                       end
-#     74                                                       `MENU: begin
-#     75                                                         
-#     76                                                       case (operation)
-#     77                                                           `BALANCE: begin
-#     78              1                         13                 next_state = `BALANCE;
-#     79                                                           end
-#     80                                                           `WITHDRAW: begin
-#     81              1                         22                 next_state = `WITHDRAW;
+#     51              1                        326     always @(posedge clk or negedge rst) begin
+#     52                                                 if (!rst) begin
+#     53              1                          2         current_state <= `IDLE;
+#     54                                                 end
+#     55                                                 else begin
+#     56              1                        324         current_state <= next_state;
+#     57                                                 end
+#     58                                               end
+#     59                                               
+#     60              1                        411     always @(current_state or operation or acc_num or language or amount or newPin or pin ) begin
+#     61                                                   
+#     62              1                        410         counter = 0;    
+#     63                                                   case (current_state)
+#     64                                                       `WAITING: begin
+#     65                                                       if (acc_found_stat == `TRUE) begin
+#     66              1                        131                 next_state = `AUTHENTICATION;
+#     67                                                       end
+#     68                                                       else begin
+#     69              1                          6                 next_state = `WAITING;
+#     70              1                          6                 success = 0;
+#     71                                                       end
+#     72                                                       end
+#     73                                                       `AUTHENTICATION: begin
+#     74                                                           if (acc_auth_stat == `ACCOUNT_NOT_AUTHENTICATED) begin
+#     75              1                         21                     next_state = `WAITING;
+#     76              1                         21                     success = 0;
+#     77                                                           end
+#     78                                                           else begin
+#     79              1                         70                     next_state = `MENU;
+#     80              1                         70                     authenticatedFlag = 0;
+#     81              1                         70                     success = 0;
 #     82                                                           end
-#     83                                                           `DEPOSIT: begin
-#     84              1                         13                 next_state = `DEPOSIT;
-#     85                                                           end
-#     86                                                           `CHANGE_PIN: begin
-#     87              1                         22                 next_state = `CHANGE_PIN;
-#     88                                                           end
-#     89                                                           default: begin
-#     90              1                    ***0***                 next_state = `MENU;
-#     91                                                           end
-#     92                                                       endcase
-#     93                                                       end
-#     94                                                       `BALANCE: begin
-#     95                                                           if (authenticatedFlag == 0) begin
-#     96              1                         13                     functions.showBalanceInfo(balance_database[acc_index],success);
-#     97              1                         13                     authenticatedFlag = 1;
-#     98                                                           end            
-#     99              1                         23                 next_state = `WAITING;
-#     100                                                      end
-#     101                                                      `WITHDRAW: begin
-#     102                                                          if (authenticatedFlag == 0) begin
-#     103             1                         22                     functions.withdrawAndUpdate(amount,balance_database[acc_index],balance_database[acc_index],success);
-#     104             1                         22                     authenticatedFlag = 1;
-#     105                                                          end
-#     106             1                         42                 next_state = `WAITING;
-#     107                                                      end
-#     108                                                      `DEPOSIT: begin
-#     109                                                          if (authenticatedFlag == 0) begin
-#     110             1                         13                     functions.Deposit_Money(amount,balance_database[acc_index],balance_database[acc_index],success);
-#     111             1                         13                     authenticatedFlag = 1;
-#     112                                                          end
-#     113             1                         23                 next_state = `WAITING;
-#     114                                                      end
-#     115                                                      `CHANGE_PIN: begin
-#     116                                                          if (authenticatedFlag == 0) begin
-#     117             1                         22                     authenticator.changePinProcess(newPin,acc_index,success);
-#     118             1                         22                     authenticatedFlag = 1;
-#     119                                                          end
-#     120             1                         22                 next_state = `WAITING;
-#     121                                                      end
-#     122                                                      `IDLE: begin
-#     123                                                      end
-#     124                                                      default: begin
-#     125             1                    ***0***                 next_state = `WAITING;
-#     126                                                      end
-#     127                                                  endcase
-#     128             1                        403         balance = balance_database[acc_index];
-#     129             1                        403         fd = $fopen("./Database/balance_DB.txt", "w");
-#     130             1                        403         for (i = 0; i < 10 ; i = i +1 ) begin
-#     130             2                       4030     
-#     131             1                       4030             $fwrite(fd, "%d\n", balance_database[i]);
-#     132                                                  end
-#     133             1                        403         $fclose(fd);
-#     134             1                        403         state = current_state;
-#     135                                              end
-#     136                                              
-#     137                                              //      psl show_balance: assert always((state == 2 && operation == 3) -> next(balance == balance_database[prev(acc_index)] ))  @(posedge clk);
-#     138                                              //      psl deposit: assert always((state == 2 && operation ==5) -> next (balance == (prev(balance) + prev(amount))))  @(posedge clk);
-#     139                                              //      psl withdraw: assert always((state == 2 && operation ==4 && (amount <= balance)) -> next (balance == (prev(balance) - prev(amount))))  @(posedge clk);
-#     140                                              //      psl withdraw_NotSufficientFunds: assert always((state == 2 && operation ==6 && (amount>balance) ) -> next (balance == prev(balance)))  @(posedge clk);  
-#     141                                              
-#     142                                              endmodule
+#     83                                                       end
+#     84                                                       `MENU: begin
+#     85                                                         
+#     86                                                       case (operation)
+#     87                                                           `BALANCE: begin
+#     88              1                         13                 next_state = `BALANCE;
+#     89                                                           end
+#     90                                                           `WITHDRAW: begin
+#     91              1                         22                 next_state = `WITHDRAW;
+#     92                                                           end
+#     93                                                           `DEPOSIT: begin
+#     94              1                         13                 next_state = `DEPOSIT;
+#     95                                                           end
+#     96                                                           `CHANGE_PIN: begin
+#     97              1                         22                 next_state = `CHANGE_PIN;
+#     98                                                           end
+#     99                                                           default: begin
+#     100             1                    ***0***                 current_state = current_state;
+#     101                                                          end
+#     102                                                      endcase
+#     103                                                      end
+#     104                                                      `BALANCE: begin
+#     105                                                          if (authenticatedFlag == 0) begin
+#     106             1                         13                     functions.showBalanceInfo(balance_database[acc_index],success);
+#     107             1                         13                     authenticatedFlag = 1;
+#     108                                                          end            
+#     109             1                         23                 next_state = `WAITING;
+#     110                                                      end
+#     111                                                      `WITHDRAW: begin
+#     112                                                          if (authenticatedFlag == 0) begin
+#     113             1                         22                     functions.withdrawAndUpdate(amount,balance_database[acc_index],balance_database[acc_index],success);
+#     114             1                         22                     authenticatedFlag = 1;
+#     115                                                          end
+#     116             1                         42                 next_state = `WAITING;
+#     117                                                      end
+#     118                                                      `DEPOSIT: begin
+#     119                                                          if (authenticatedFlag == 0) begin
+#     120             1                         13                     functions.Deposit_Money(amount,balance_database[acc_index],balance_database[acc_index],success);
+#     121             1                         13                     authenticatedFlag = 1;
+#     122                                                          end
+#     123             1                         23                 next_state = `WAITING;
+#     124                                                      end
+#     125                                                      `CHANGE_PIN: begin
+#     126                                                          if (authenticatedFlag == 0) begin
+#     127             1                         22                     authenticator.changePinProcess(newPin,acc_index,success);
+#     128             1                         22                     authenticatedFlag = 1;
+#     129                                                          end
+#     130             1                         22                 next_state = `WAITING;
+#     131                                                      end
+#     132                                                      `IDLE: begin
+#     133                                                      end
+#     134                                                      default: begin
+#     135             1                    ***0***                 next_state = `WAITING;
+#     136                                                      end
+#     137                                                  endcase
+#     138             1                        410         balance = balance_database[acc_index];
+#     139             1                        410         fd = $fopen("./Database/balance_DB.txt", "w");
+#     140             1                        410         for (i = 0; i < 10 ; i = i +1 ) begin
+#     140             2                       4100     
+#     141             1                       4100             $fwrite(fd, "%d\n", balance_database[i]);
+#     142                                                  end
+#     143             1                        410         $fclose(fd);
+#     144             1                        410         state = current_state;
+#     145                                              end
+#     146                                              
+#     147                                              //      psl show_balance: assert always((state == 2 && operation == 3) -> next(balance == balance_database[prev(acc_index)] ))  @(posedge clk);
+#     148                                              //      psl deposit: assert always((state == 2 && operation ==5) -> next (balance == (prev(balance) + prev(amount))))  @(posedge clk);
+#     149                                              //      psl withdraw: assert always((state == 2 && operation ==4 && (amount <= balance)) -> next (balance == (prev(balance) - prev(amount))))  @(posedge clk);
+#     150                                              //      psl withdraw_NotSufficientFunds: assert always((state == 2 && operation ==6 && (amount>balance) ) -> next (balance == prev(balance)))  @(posedge clk);  
+#     151                                              
+#     152                                              endmodule
 # 
 # Branch Coverage:
 #     Enabled Coverage            Active      Hits    Misses % Covered
 #     ----------------            ------      ----    ------ ---------
-#     Branches                        28        25         3      89.2
+#     Branches                        30        27         3      90.0
 # 
 # ================================Branch Details================================
 # 
 # Branch Coverage for file ./Verilog_Code/atm.v --
 # 
 # ------------------------------------IF Branch------------------------------------
-#     43                                       320     Count coming in to IF
-#     43              1                          2       if (!rst) begin
-#     46              1                        318       else begin
+#     45                                       348     Count coming in to IF
+#     45              1                          6         if (counter >= 4) begin
+#                                              342     All False Count
+# Branch totals: 2 hits of 2 branches = 100.0%
+# 
+# ------------------------------------IF Branch------------------------------------
+#     52                                       326     Count coming in to IF
+#     52              1                          2       if (!rst) begin
+#     55              1                        324       else begin
 # Branch totals: 2 hits of 2 branches = 100.0%
 # 
 # ------------------------------------CASE Branch------------------------------------
-#     53                                       403     Count coming in to CASE
-#     54              1                        133             `WAITING: begin
-#     63              1                         88             `AUTHENTICATION: begin
-#     74              1                         70             `MENU: begin
-#     94              1                         23             `BALANCE: begin
-#     101             1                         42             `WITHDRAW: begin
-#     108             1                         23             `DEPOSIT: begin
-#     115             1                         22             `CHANGE_PIN: begin
-#     122             1                          2             `IDLE: begin
-#     124             1                    ***0***             default: begin
+#     63                                       410     Count coming in to CASE
+#     64              1                        137             `WAITING: begin
+#     73              1                         91             `AUTHENTICATION: begin
+#     84              1                         70             `MENU: begin
+#     104             1                         23             `BALANCE: begin
+#     111             1                         42             `WITHDRAW: begin
+#     118             1                         23             `DEPOSIT: begin
+#     125             1                         22             `CHANGE_PIN: begin
+#     132             1                          2             `IDLE: begin
+#     134             1                    ***0***             default: begin
 # Branch totals: 8 hits of 9 branches = 88.8%
 # 
 # ------------------------------------IF Branch------------------------------------
-#     55                                       133     Count coming in to IF
-#     55              1                        127             if (acc_found_stat == `TRUE) begin
-#     58              1                          6             else begin
+#     65                                       137     Count coming in to IF
+#     65              1                        131             if (acc_found_stat == `TRUE) begin
+#     68              1                          6             else begin
 # Branch totals: 2 hits of 2 branches = 100.0%
 # 
 # ------------------------------------IF Branch------------------------------------
-#     64                                        88     Count coming in to IF
-#     64              1                         18                 if (acc_auth_stat == `ACCOUNT_NOT_AUTHENTICATED) begin
-#     68              1                         70                 else begin
+#     74                                        91     Count coming in to IF
+#     74              1                         21                 if (acc_auth_stat == `ACCOUNT_NOT_AUTHENTICATED) begin
+#     78              1                         70                 else begin
 # Branch totals: 2 hits of 2 branches = 100.0%
 # 
 # ------------------------------------CASE Branch------------------------------------
-#     76                                        70     Count coming in to CASE
-#     77              1                         13                 `BALANCE: begin
-#     80              1                         22                 `WITHDRAW: begin
-#     83              1                         13                 `DEPOSIT: begin
-#     86              1                         22                 `CHANGE_PIN: begin
-#     89              1                    ***0***                 default: begin
+#     86                                        70     Count coming in to CASE
+#     87              1                         13                 `BALANCE: begin
+#     90              1                         22                 `WITHDRAW: begin
+#     93              1                         13                 `DEPOSIT: begin
+#     96              1                         22                 `CHANGE_PIN: begin
+#     99              1                    ***0***                 default: begin
 # Branch totals: 4 hits of 5 branches = 80.0%
 # 
 # ------------------------------------IF Branch------------------------------------
-#     95                                        23     Count coming in to IF
-#     95              1                         13                 if (authenticatedFlag == 0) begin
+#     105                                       23     Count coming in to IF
+#     105             1                         13                 if (authenticatedFlag == 0) begin
 #                                               10     All False Count
 # Branch totals: 2 hits of 2 branches = 100.0%
 # 
 # ------------------------------------IF Branch------------------------------------
-#     102                                       42     Count coming in to IF
-#     102             1                         22                 if (authenticatedFlag == 0) begin
+#     112                                       42     Count coming in to IF
+#     112             1                         22                 if (authenticatedFlag == 0) begin
 #                                               20     All False Count
 # Branch totals: 2 hits of 2 branches = 100.0%
 # 
 # ------------------------------------IF Branch------------------------------------
-#     109                                       23     Count coming in to IF
-#     109             1                         13                 if (authenticatedFlag == 0) begin
+#     119                                       23     Count coming in to IF
+#     119             1                         13                 if (authenticatedFlag == 0) begin
 #                                               10     All False Count
 # Branch totals: 2 hits of 2 branches = 100.0%
 # 
 # ------------------------------------IF Branch------------------------------------
-#     116                                       22     Count coming in to IF
-#     116             1                         22                 if (authenticatedFlag == 0) begin
+#     126                                       22     Count coming in to IF
+#     126             1                         22                 if (authenticatedFlag == 0) begin
 #                                          ***0***     All False Count
 # Branch totals: 1 hit of 2 branches = 50.0%
 # 
@@ -243,7 +259,7 @@ Statement Coverage:
 # Toggle Coverage:
 #     Enabled Coverage            Active      Hits    Misses % Covered
 #     ----------------            ------      ----    ------ ---------
-#     Toggle Bins                    374       165       209      44.1
+#     Toggle Bins                    246       169        77      68.6
 # 
 # ================================Toggle Details================================
 # 
@@ -269,8 +285,6 @@ Statement Coverage:
 #          10                                 pin[3]           1           1      100.00 
 #          10                                 pin[2]           1           1      100.00 
 #          10                                 pin[1]           1           1      100.00 
-#          10                                pin[15]           0           0        0.00 
-#          10                                pin[14]           0           0        0.00 
 #          10                                pin[13]           1           1      100.00 
 #          10                                pin[12]           1           1      100.00 
 #          10                                pin[11]           1           1      100.00 
@@ -285,8 +299,6 @@ Statement Coverage:
 #          11                              newPin[3]           1           1      100.00 
 #          11                              newPin[2]           1           1      100.00 
 #          11                              newPin[1]           1           1      100.00 
-#          11                             newPin[15]           0           0        0.00 
-#          11                             newPin[14]           0           0        0.00 
 #          11                             newPin[13]           1           1      100.00 
 #          11                             newPin[12]           1           1      100.00 
 #          11                             newPin[11]           1           1      100.00 
@@ -299,26 +311,8 @@ Statement Coverage:
 #          12                              amount[5]           1           1      100.00 
 #          12                              amount[4]           1           1      100.00 
 #          12                              amount[3]           1           1      100.00 
-#          12                             amount[31]           0           0        0.00 
-#          12                             amount[30]           0           0        0.00 
 #          12                              amount[2]           1           1      100.00 
-#          12                             amount[29]           0           0        0.00 
-#          12                             amount[28]           0           0        0.00 
-#          12                             amount[27]           0           0        0.00 
-#          12                             amount[26]           0           0        0.00 
-#          12                             amount[25]           0           0        0.00 
-#          12                             amount[24]           0           0        0.00 
-#          12                             amount[23]           0           0        0.00 
-#          12                             amount[22]           0           0        0.00 
-#          12                             amount[21]           0           0        0.00 
-#          12                             amount[20]           0           0        0.00 
 #          12                              amount[1]           1           1      100.00 
-#          12                             amount[19]           0           0        0.00 
-#          12                             amount[18]           0           0        0.00 
-#          12                             amount[17]           0           0        0.00 
-#          12                             amount[16]           0           0        0.00 
-#          12                             amount[15]           0           0        0.00 
-#          12                             amount[14]           0           0        0.00 
 #          12                             amount[13]           1           1      100.00 
 #          12                             amount[12]           1           1      100.00 
 #          12                             amount[11]           1           1      100.00 
@@ -332,26 +326,8 @@ Statement Coverage:
 #          14                             balance[5]           1           1      100.00 
 #          14                             balance[4]           1           1      100.00 
 #          14                             balance[3]           1           1      100.00 
-#          14                            balance[31]           0           0        0.00 
-#          14                            balance[30]           0           0        0.00 
 #          14                             balance[2]           1           1      100.00 
-#          14                            balance[29]           0           0        0.00 
-#          14                            balance[28]           0           0        0.00 
-#          14                            balance[27]           0           0        0.00 
-#          14                            balance[26]           0           0        0.00 
-#          14                            balance[25]           0           0        0.00 
-#          14                            balance[24]           0           0        0.00 
-#          14                            balance[23]           0           0        0.00 
-#          14                            balance[22]           0           0        0.00 
-#          14                            balance[21]           0           0        0.00 
-#          14                            balance[20]           0           0        0.00 
 #          14                             balance[1]           1           1      100.00 
-#          14                            balance[19]           0           0        0.00 
-#          14                            balance[18]           0           0        0.00 
-#          14                            balance[17]           0           0        0.00 
-#          14                            balance[16]           0           0        0.00 
-#          14                            balance[15]           0           0        0.00 
-#          14                            balance[14]           0           0        0.00 
 #          14                            balance[13]           1           1      100.00 
 #          14                            balance[12]           1           1      100.00 
 #          14                            balance[11]           1           1      100.00 
@@ -406,44 +382,20 @@ Statement Coverage:
 #          24                                 fd[11]           0           0        0.00 
 #          24                                 fd[10]           0           0        0.00 
 #          24                                  fd[0]           0           0        0.00 
-#          25                                   i[9]           0           0        0.00 
-#          25                                   i[8]           0           0        0.00 
-#          25                                   i[7]           0           0        0.00 
-#          25                                   i[6]           0           0        0.00 
-#          25                                   i[5]           0           0        0.00 
-#          25                                   i[4]           0           0        0.00 
 #          25                                   i[3]           0           0        0.00 
-#          25                                  i[31]           0           0        0.00 
-#          25                                  i[30]           0           0        0.00 
 #          25                                   i[2]           0           0        0.00 
-#          25                                  i[29]           0           0        0.00 
-#          25                                  i[28]           0           0        0.00 
-#          25                                  i[27]           0           0        0.00 
-#          25                                  i[26]           0           0        0.00 
-#          25                                  i[25]           0           0        0.00 
-#          25                                  i[24]           0           0        0.00 
-#          25                                  i[23]           0           0        0.00 
-#          25                                  i[22]           0           0        0.00 
-#          25                                  i[21]           0           0        0.00 
-#          25                                  i[20]           0           0        0.00 
 #          25                                   i[1]           0           0        0.00 
-#          25                                  i[19]           0           0        0.00 
-#          25                                  i[18]           0           0        0.00 
-#          25                                  i[17]           0           0        0.00 
-#          25                                  i[16]           0           0        0.00 
-#          25                                  i[15]           0           0        0.00 
-#          25                                  i[14]           0           0        0.00 
-#          25                                  i[13]           0           0        0.00 
-#          25                                  i[12]           0           0        0.00 
-#          25                                  i[11]           0           0        0.00 
-#          25                                  i[10]           0           0        0.00 
 #          25                                   i[0]           0           0        0.00 
+#          26                             counter[3]           0           0        0.00 
+#          26                             counter[2]           0           0        0.00 
+#          26                             counter[1]           1           1      100.00 
+#          26                             counter[0]           1           1      100.00 
 # 
-# Total Node Count     =        187 
-# Toggled Node Count   =         82 
-# Untoggled Node Count =        105 
+# Total Node Count     =        123 
+# Toggled Node Count   =         84 
+# Untoggled Node Count =         39 
 # 
-# Toggle Coverage      =       44.1% (165 of 374 bins)
+# Toggle Coverage      =       68.6% (169 of 246 bins)
 # 
 # =================================================================================
 # === File: ./Verilog_Code/authenticator.v
@@ -460,15 +412,15 @@ Statement Coverage:
 #     1                                                `include "definitions.v"
 #     2                                                module Authenticator (acc_num, pin, acc_index_out, acc_found_stat, acc_auth_stat ,newPin);
 #     3                                                input [3:0] acc_num;
-#     4                                                input [15:0] pin;
-#     5                                                input [15:0] newPin;
+#     4                                                input [13:0] pin;
+#     5                                                input [13:0] newPin;
 #     6                                                output reg [3:0] acc_index_out;
 #     7                                                output reg acc_found_stat;
 #     8                                                output reg acc_auth_stat;
 #     9                                                reg [10:0] acc_num_db [9:0];
 #     10                                               reg [15:0] pin_db [9:0]; 
-#     11                                               integer fd;
-#     12                                               integer i;
+#     11                                               reg[31:0] fd;
+#     12                                               reg[3:0] i;
 #     13                                               // intializing the account number and pin in decimal format as in reference model
 #     14                                               initial begin
 #     15              1                          1         fd = $fopen("./Database/accounts.txt", "r");
@@ -488,18 +440,18 @@ Statement Coverage:
 #     27                                               // find the account number in the database & adjusting mask
 #     28                                               reg [3:0] acc_index;
 #     29                                               
-#     30              1                         98     always @(*) begin
-#     31              1                         98         acc_auth_stat = `ACCOUNT_NOT_AUTHENTICATED;
-#     32              1                         98         begin : find_account
+#     30              1                         99     always @(*) begin
+#     31              1                         99         acc_auth_stat = `ACCOUNT_NOT_AUTHENTICATED;
+#     32              1                         99         begin : find_account
 #     33                                                       
-#     34              1                         98             for (i = 0; i < 10 ; i = i +1 ) 
+#     34              1                         99             for (i = 0; i < 10 ; i = i +1 ) 
 #     34              2                        472     
 #     35                                                           begin
 #     36                                                               if (acc_num_db[i] == acc_num) begin
-#     37              1                         92                         acc_index = i;
-#     38              1                         92                         acc_index_out = acc_index;
-#     39              1                         92                         acc_found_stat = `ACCOUNT_FOUND;
-#     40              1                         92                         disable find_account; // break the loop when finding the account
+#     37              1                         93                         acc_index = i;
+#     38              1                         93                         acc_index_out = acc_index;
+#     39              1                         93                         acc_found_stat = `ACCOUNT_FOUND;
+#     40              1                         93                         disable find_account; // break the loop when finding the account
 #     41                                                               end
 #     42                                                               else begin
 #     43              1                        472                         acc_found_stat = `ACCOUNT_NOT_FOUND;
@@ -519,8 +471,8 @@ Statement Coverage:
 #     57                                                           end
 #     58                                                          
 #     59                                                           else begin                          // If the PIN does not match, set the authentication status to not authenticated
-#     60              1                         10                     acc_auth_stat = `ACCOUNT_NOT_AUTHENTICATED;
-#     61              1                         10                     $display("Account Pin not authenticated",pin_db[acc_index]);
+#     60              1                         11                     acc_auth_stat = `ACCOUNT_NOT_AUTHENTICATED;
+#     61              1                         11                     $display("Account Pin not authenticated",pin_db[acc_index]);
 #     62                                                           end
 #     63                                                       end
 #     64                                                   end
@@ -561,21 +513,21 @@ Statement Coverage:
 # Branch Coverage for file ./Verilog_Code/authenticator.v --
 # 
 # ------------------------------------IF Branch------------------------------------
-#     36                                       564     Count coming in to IF
-#     36              1                         92                     if (acc_num_db[i] == acc_num) begin
+#     36                                       565     Count coming in to IF
+#     36              1                         93                     if (acc_num_db[i] == acc_num) begin
 #     42              1                        472                     else begin
 # Branch totals: 2 hits of 2 branches = 100.0%
 # 
 # ------------------------------------IF Branch------------------------------------
-#     52                                        98     Count coming in to IF
-#     52              1                         92             if (acc_found_stat == `ACCOUNT_FOUND) begin
+#     52                                        99     Count coming in to IF
+#     52              1                         93             if (acc_found_stat == `ACCOUNT_FOUND) begin
 #                                                6     All False Count
 # Branch totals: 2 hits of 2 branches = 100.0%
 # 
 # ------------------------------------IF Branch------------------------------------
-#     54                                        92     Count coming in to IF
+#     54                                        93     Count coming in to IF
 #     54              1                         82                 if ((pin_db[acc_index] == pin )|| (pin_db[acc_index] == newPin)) begin  // If the PIN matches the one in the database, set the authentication status to authenticated
-#     59              1                         10                 else begin                          // If the PIN does not match, set the authentication status to not authenticated
+#     59              1                         11                 else begin                          // If the PIN does not match, set the authentication status to not authenticated
 # Branch totals: 2 hits of 2 branches = 100.0%
 # 
 # ------------------------------------IF Branch------------------------------------
@@ -624,7 +576,7 @@ Statement Coverage:
 # Toggle Coverage:
 #     Enabled Coverage            Active      Hits    Misses % Covered
 #     ----------------            ------      ----    ------ ---------
-#     Toggle Bins                    220        92       128      41.8
+#     Toggle Bins                    156        92        64      58.9
 # 
 # ================================Toggle Details================================
 # 
@@ -645,8 +597,6 @@ Statement Coverage:
 #           4                                 pin[3]           1           1      100.00 
 #           4                                 pin[2]           1           1      100.00 
 #           4                                 pin[1]           1           1      100.00 
-#           4                                pin[15]           0           0        0.00 
-#           4                                pin[14]           0           0        0.00 
 #           4                                pin[13]           1           1      100.00 
 #           4                                pin[12]           1           1      100.00 
 #           4                                pin[11]           1           1      100.00 
@@ -661,8 +611,6 @@ Statement Coverage:
 #           5                              newPin[3]           1           1      100.00 
 #           5                              newPin[2]           1           1      100.00 
 #           5                              newPin[1]           1           1      100.00 
-#           5                             newPin[15]           0           0        0.00 
-#           5                             newPin[14]           0           0        0.00 
 #           5                             newPin[13]           1           1      100.00 
 #           5                             newPin[12]           1           1      100.00 
 #           5                             newPin[11]           1           1      100.00 
@@ -706,48 +654,20 @@ Statement Coverage:
 #          11                                 fd[11]           0           0        0.00 
 #          11                                 fd[10]           0           0        0.00 
 #          11                                  fd[0]           0           0        0.00 
-#          12                                   i[9]           0           0        0.00 
-#          12                                   i[8]           0           0        0.00 
-#          12                                   i[7]           0           0        0.00 
-#          12                                   i[6]           0           0        0.00 
-#          12                                   i[5]           0           0        0.00 
-#          12                                   i[4]           0           0        0.00 
 #          12                                   i[3]           1           1      100.00 
-#          12                                  i[31]           0           0        0.00 
-#          12                                  i[30]           0           0        0.00 
 #          12                                   i[2]           1           1      100.00 
-#          12                                  i[29]           0           0        0.00 
-#          12                                  i[28]           0           0        0.00 
-#          12                                  i[27]           0           0        0.00 
-#          12                                  i[26]           0           0        0.00 
-#          12                                  i[25]           0           0        0.00 
-#          12                                  i[24]           0           0        0.00 
-#          12                                  i[23]           0           0        0.00 
-#          12                                  i[22]           0           0        0.00 
-#          12                                  i[21]           0           0        0.00 
-#          12                                  i[20]           0           0        0.00 
 #          12                                   i[1]           1           1      100.00 
-#          12                                  i[19]           0           0        0.00 
-#          12                                  i[18]           0           0        0.00 
-#          12                                  i[17]           0           0        0.00 
-#          12                                  i[16]           0           0        0.00 
-#          12                                  i[15]           0           0        0.00 
-#          12                                  i[14]           0           0        0.00 
-#          12                                  i[13]           0           0        0.00 
-#          12                                  i[12]           0           0        0.00 
-#          12                                  i[11]           0           0        0.00 
-#          12                                  i[10]           0           0        0.00 
 #          12                                   i[0]           1           1      100.00 
 #          28                           acc_index[3]           1           1      100.00 
 #          28                           acc_index[2]           1           1      100.00 
 #          28                           acc_index[1]           1           1      100.00 
 #          28                           acc_index[0]           1           1      100.00 
 # 
-# Total Node Count     =        110 
+# Total Node Count     =         78 
 # Toggled Node Count   =         46 
-# Untoggled Node Count =         64 
+# Untoggled Node Count =         32 
 # 
-# Toggle Coverage      =       41.8% (92 of 220 bins)
+# Toggle Coverage      =       58.9% (92 of 156 bins)
 # 
 # 
 # ASSERTION RESULTS:
@@ -756,12 +676,12 @@ Statement Coverage:
 #                                           Count   Count 
 # -------------------------------------------------------
 # /\atm_tb#atm_instance /withdraw_NotSufficientFunds
-#                      ./Verilog_Code/atm.v(140)       0     1
+#                      ./Verilog_Code/atm.v(150)       0     1
 # /\atm_tb#atm_instance /withdraw
-#                      ./Verilog_Code/atm.v(139)       0     1
+#                      ./Verilog_Code/atm.v(149)       0     1
 # /\atm_tb#atm_instance /deposit
-#                      ./Verilog_Code/atm.v(138)       0     1
+#                      ./Verilog_Code/atm.v(148)       0     1
 # /\atm_tb#atm_instance /show_balance
-#                      ./Verilog_Code/atm.v(137)       0     1
+#                      ./Verilog_Code/atm.v(147)       0     1
 # 
-# Total Coverage By File (code coverage only, filtered view): 83.1%
+# Total Coverage By File (code coverage only, filtered view): 88.6%
