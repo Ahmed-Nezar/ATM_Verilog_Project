@@ -9,9 +9,9 @@ input [2:0] operation;
 input [3:0] acc_num;
 input [13:0] pin;
 input [13:0] newPin;
-input [13:0] amount;
+input [15:0] amount;
 input language;
-output reg [13:0] balance;
+output reg [31:0] balance;
 output reg success;
 output reg [2:0] state;
 

@@ -6,9 +6,9 @@ module atm_tb;
     reg [2:0] operation;
     reg [3:0] acc_num;
     reg [13:0] pin;
-    reg [13:0] amount;
+    reg [15:0] amount;
     reg [13:0] Newpin;
-    wire [13:0] balance;
+    wire [31:0] balance;
     wire success;
     wire [2:0] state;
 
