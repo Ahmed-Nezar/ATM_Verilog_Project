@@ -5,22 +5,22 @@ module atm_tb;
     reg language;
     reg [2:0] operation;
     reg [3:0] acc_num;
-    reg [15:0] pin;
-    reg [31:0] amount;
-    reg [15:0] Newpin;
-    wire [31:0] balance;
+    reg [13:0] pin;
+    reg [13:0] amount;
+    reg [13:0] Newpin;
+    wire [13:0] balance;
     wire success;
     wire [2:0] state;
 
 
 
-    reg [15:0] pin_random [9:0];
+    reg [13:0] pin_random [9:0];
 
-    reg [15:0] pin_db [9:0];
-    reg [31:0] balance_database [9:0];
+    reg [13:0] pin_db [9:0];
+    reg [13:0] balance_database [9:0];
     reg [10:0] acc_num_db [9:0];
-    integer i;
-    integer fd;
+    reg[3:0] i;
+    reg[31:0] fd;
 
     ATM atm_instance (  .clk(clk),
                         .rst(rst),

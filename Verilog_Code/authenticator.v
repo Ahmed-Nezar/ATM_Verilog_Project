@@ -1,15 +1,15 @@
 `include "definitions.v"
 module Authenticator (acc_num, pin, acc_index_out, acc_found_stat, acc_auth_stat ,newPin);
 input [3:0] acc_num;
-input [15:0] pin;
-input [15:0] newPin;
+input [13:0] pin;
+input [13:0] newPin;
 output reg [3:0] acc_index_out;
 output reg acc_found_stat;
 output reg acc_auth_stat;
 reg [10:0] acc_num_db [9:0];
 reg [15:0] pin_db [9:0]; 
-integer fd;
-integer i;
+reg[31:0] fd;
+reg[3:0] i;
 // intializing the account number and pin in decimal format as in reference model
 initial begin
     fd = $fopen("./Database/accounts.txt", "r");

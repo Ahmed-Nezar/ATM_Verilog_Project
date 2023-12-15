@@ -7,11 +7,11 @@ input clk;
 input rst;
 input [2:0] operation;
 input [3:0] acc_num;
-input [15:0] pin;
-input [15:0] newPin;
-input [31:0] amount;
+input [13:0] pin;
+input [13:0] newPin;
+input [13:0] amount;
 input language;
-output reg [31:0] balance;
+output reg [13:0] balance;
 output reg success;
 output reg [2:0] state;
 
@@ -21,9 +21,9 @@ wire [3:0] acc_index;
 wire acc_found_stat;
 wire acc_auth_stat;
 reg authenticatedFlag = 1;
-integer fd;
-integer i;
-integer counter;
+reg[31:0] fd;
+reg[3:0] i;
+reg[3:0] counter;
 
 reg [31:0] balance_database [9:0];
 
