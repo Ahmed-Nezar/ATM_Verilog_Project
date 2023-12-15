@@ -12,4 +12,4 @@ It consists of Refrence_Code folder which contains the python code of the ATM sy
 vlog +acc ./Verilog_Code/atm.v
 vsim -debugdb=+acc work.ATM
 ```
-- Then click on view -> schematics -> You will schematics of each module
+- Then click on view -> schematics -> Click on View Incremental and Check Follow -> Select module you want to see from instances tab
