@@ -1,2 +1,2 @@
-var g_data = {"4":{"pr":"/\\atm_tb#atm_instance ","ty":2,"dui":1,"dun":"work.ATM","asserts":[{"n":["withdraw_NotSufficientFunds",1,150],"h":[0,1]},{"n":["withdraw",1,149],"h":[0,1]},{"n":["deposit",1,148],"h":[0,1]},{"n":["show_balance",1,147],"h":[0,1]}],"ad":0}}
+var g_data = {"4":{"pr":"/\\atm_tb#atm_instance ","ty":2,"dui":1,"dun":"work.ATM","asserts":[{"n":["withdraw_NotSufficientFunds"],"h":[0,1]},{"n":["withdraw"],"h":[0,1]},{"n":["deposit"],"h":[0,1]},{"n":["show_balance"],"h":[0,1]}],"ad":0}}
 processAssertionsData(g_data);
