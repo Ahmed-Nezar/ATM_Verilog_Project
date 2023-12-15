@@ -205,8 +205,8 @@ if __name__ == "__main__":
             inputs["Amount"] += [0] * (target_size - len(inputs["Amount"]))
             inputs["Newpin"] += [0] * (target_size - len(inputs["Newpin"]))
             inputs["Operations"]+=[0] * (target_size - len(inputs["Operations"]))
-            data.to_csv("Reference_Code\Python\outputs.csv")
-            pd.DataFrame(inputs).to_csv("Reference_Code\Python\inputs.csv")
+            data.to_csv("Reference_Code\Python\outputs.csv", header= False, index=False)
+            pd.DataFrame(inputs).to_csv("Reference_Code\Python\inputs.csv", header= False, index=False)
         else:
             print("Card not accepted")
             print("Please try again")
