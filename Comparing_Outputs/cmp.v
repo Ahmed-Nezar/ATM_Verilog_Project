@@ -14,7 +14,7 @@ reg language_inp [9:0];
     initial begin
         fd = $fopen("./Reference_Code/Python/inputs.csv", "r");
         for (i = 0; i < 10 ; i = i +1 ) begin
-            $fscanf(fd, "%d,%f,%d,%d,%d,%d\n", acc_num_inp[i], amount_inp[i], operation_inp[i], pin_inp[i], Newpin_inp[i],language_inp[i]);
+            $fscanf(fd, "%d,%d,%d,%d,%d,%d\n", acc_num_inp[i], amount_inp[i], operation_inp[i], pin_inp[i], Newpin_inp[i],language_inp[i]);
         end
         $fclose(fd);
 

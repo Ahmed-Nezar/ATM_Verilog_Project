@@ -114,7 +114,7 @@ def withdraw(account_number):
         This function takes in the amount to be withdrawn as input and
         prints the balance after withdrawal
     '''
-    amount = float(input("Enter the amount to withdraw: "))
+    amount = int(input("Enter the amount to withdraw: "))
     index = data[data["Account Number"] == account_number].index[0]
     balance = data.at[index, "Balance"]
     inputs["Amount"].append(amount)
@@ -134,7 +134,7 @@ def deposit(account_number):
         This function takes in the amount to be deposited as input and
         prints the balance after deposit
     '''
-    amount = float(input("Enter the amount to deposit: "))
+    amount = int(input("Enter the amount to deposit: "))
     inputs["Amount"].append(amount)
     index = data[data["Account Number"] == account_number].index[0]
     data.at[index, "Balance"] += amount
