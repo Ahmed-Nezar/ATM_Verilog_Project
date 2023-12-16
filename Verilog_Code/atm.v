@@ -39,7 +39,7 @@ reg [31:0] balance_database [9:0];
 
 Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat, newPin);
 ATM_Functions functions ();
-always @(negedge clk) begin
+always @(posedge clk) begin
     $display("counter = %d",counter );
     counter = counter + 1;
     if (counter >= 4) begin

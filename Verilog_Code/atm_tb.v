@@ -135,7 +135,7 @@ module atm_tb;
 
         // Testing counter
         rst = 1; operation = 7; acc_num = 1; pin = pin_db[0]; amount = 0; language = 0; Newpin = 0;
-        repeat(6) @(negedge clk);
+        repeat(7) @(negedge clk);
         
         /***************************************************************************************************/
          
