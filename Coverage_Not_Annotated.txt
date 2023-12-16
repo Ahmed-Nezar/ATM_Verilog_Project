@@ -49,12 +49,12 @@
 #     39                                               
 #     40                                               Authenticator authenticator (acc_num, pin, acc_index, acc_found_stat, acc_auth_stat, newPin);
 #     41                                               ATM_Functions functions ();
-#     42              1                        348     always @(negedge clk) begin
+#     42              1                        348     always @(posedge clk) begin
 #     43              1                        348         $display("counter = %d",counter );
 #     44              1                        348         counter = counter + 1;
 #     45                                                   if (counter >= 4) begin
-#     46              1                          7             next_state =  `WAITING;
-#     47              1                          7             counter = 0;
+#     46              1                          6             next_state =  `WAITING;
+#     47              1                          6             counter = 0;
 #     48                                                   end
 #     49                                               end
 #     50                                               
@@ -170,8 +170,8 @@
 # 
 # ------------------------------------IF Branch------------------------------------
 #     45                                       348     Count coming in to IF
-#     45              1                          7         if (counter >= 4) begin
-#                                              341     All False Count
+#     45              1                          6         if (counter >= 4) begin
+#                                              342     All False Count
 # Branch totals: 2 hits of 2 branches = 100.0%
 # 
 # ------------------------------------IF Branch------------------------------------
