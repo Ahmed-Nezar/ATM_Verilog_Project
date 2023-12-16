@@ -344,9 +344,9 @@
 #   File ./Verilog_Code/atm.v
 # ------------------------------------IF Branch------------------------------------
 #     45                                       348     Count coming in to IF
-#     45              1                          7         if (counter >= 4) begin
+#     45              1                          6         if (counter >= 4) begin
 # 
-#                                              341     All False Count
+#                                              342     All False Count
 # Branch totals: 2 hits of 2 branches = 100.00%
 # 
 # ------------------------------------IF Branch------------------------------------
@@ -601,7 +601,7 @@
 # 
 #     41                                               ATM_Functions functions ();
 # 
-#     42              1                        348     always @(negedge clk) begin
+#     42              1                        348     always @(posedge clk) begin
 # 
 #     43              1                        348         $display("counter = %d",counter );
 # 
@@ -609,9 +609,9 @@
 # 
 #     45                                                   if (counter >= 4) begin
 # 
-#     46              1                          7             next_state =  `WAITING;
+#     46              1                          6             next_state =  `WAITING;
 # 
-#     47              1                          7             counter = 0;
+#     47              1                          6             counter = 0;
 # 
 #     48                                                   end
 # 
